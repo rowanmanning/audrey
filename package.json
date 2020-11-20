@@ -1,0 +1,39 @@
+{
+  "name": "@rowanmanning/audrey",
+  "version": "0.0.0",
+  "private": true,
+  "description": "A simple single-user feed reader",
+  "keywords": [
+    "atom",
+    "feed",
+    "reader",
+    "rss"
+  ],
+  "author": "Rowan Manning (https://rowanmanning.com/)",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rowanmanning/audrey.git"
+  },
+  "homepage": "https://github.com/rowanmanning/audrey",
+  "bugs": "https://github.com/rowanmanning/audrey/issues",
+  "license": "MIT",
+  "engines": {
+    "node": ">=14"
+  },
+  "dependencies": {
+    "@rowanmanning/app": "^1.0.0-alpha.22",
+    "dotenv": "^8.2.0",
+    "lodash": "^4.17.20",
+    "uuid": "^8.3.1"
+  },
+  "devDependencies": {
+    "@rowanmanning/eslint-config": "^2.2.0",
+    "@rowanmanning/make": "^2.1.0",
+    "eslint": "^7.13.0",
+    "nodemon": "^2.0.6"
+  },
+  "main": "./index.js",
+  "scripts": {
+    "start": "node ."
+  }
+}

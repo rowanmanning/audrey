@@ -1,0 +1,24 @@
+{
+	"name": "Audrey",
+	"description": "A simple single-user feed reader",
+	"keywords": [
+		"atom",
+		"feed",
+		"reader",
+		"rss"
+	],
+	"website": "https://github.com/rowanmanning/audrey",
+	"repository": "https://github.com/rowanmanning/audrey",
+	"success_url": "/",
+	"buildpacks": [
+		{
+			"url": "heroku/nodejs"
+		}
+	],
+	"env": {
+		"SESSION_SECRET": {
+			"description": "A secret key for hashing sessions.",
+			"generator": "secret"
+		}
+	}
+}

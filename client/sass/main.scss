@@ -1,0 +1,265 @@
+@charset "utf-8";
+
+// Root CSS Variables
+:root {
+	--spacing-xs: 5px;
+	--spacing-s: 10px;
+	--spacing-m: 20px;
+	--color-bg-page: #fff;
+	--color-bg-body: #eee;
+	--color-bg-medium: #ccc;
+	--color-text: #333;
+	--color-focus: #31a6ff;
+	--color-error: #ff3131;
+	--color-error-light: #fcc;
+}
+
+// Resets
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+body {
+	font-family: sans-serif;
+	color: var(--color-text);
+	background: var(--color-bg-body);
+	font-size: 16px;
+}
+
+// Site Header
+.site-header {
+	--color-bg-header-main: #333;
+	--color-bg-header-focus: #555;
+	--color-text-header: #fff;
+
+	display: flex;
+	align-items: stretch;
+	background: var(--color-bg-header-main);
+	color: var(--color-text-header);
+	padding: var(--spacing-xs);
+}
+.site-header a {
+	display: block;
+	padding: var(--spacing-s);
+	line-height: 1;
+	color: inherit;
+	text-decoration: none;
+}
+.site-header__name {
+	margin-right: var(--spacing-s);
+}
+.site-header__navigation {
+	padding-left: var(--spacing-s);
+	border-left: 1px solid var(--color-bg-header-focus);
+}
+.site-header__navigation > ul {
+	display: flex;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+.site-header__navigation > ul > li > a:hover {
+	background: var(--color-bg-header-focus);
+}
+.site-header__navigation > ul > li > a[aria-current=true] {
+	background: var(--color-bg-page);
+	color: var(--color-text);
+	padding-bottom: calc(var(--spacing-s) + var(--spacing-xs));
+	margin-bottom: calc(var(--spacing-s) * -1);
+}
+.site-header__navigation--context {
+	padding-right: var(--spacing-s);
+	margin-left: auto;
+}
+
+// Page styles
+.page {
+	padding: var(--spacing-m);
+	background: var(--color-bg-page);
+}
+
+// Site Footer
+.site-footer {
+	padding: var(--spacing-m);
+}
+
+// Error stack
+.error-stack {
+	padding: var(--spacing-m);
+	background: var(--color-bg-body);
+	overflow: auto;
+}
+
+// Forms
+.form {
+	margin-bottom: var(--spacing-m);
+}
+.form__errors {
+	background-color: var(--color-error-light);
+	border: solid 2px var(--color-error);
+	padding: var(--spacing-s);
+	padding-bottom: var(--spacing-m);
+	margin-bottom: var(--spacing-m);
+	font-weight: bold;
+}
+.form__errors > ul {
+	margin: var(--spacing-s) 0 0 0;
+	padding: 0;
+	padding-left: var(--spacing-m);
+	font-weight: normal;
+}
+.form__submit {
+	margin-bottom: var(--spacing-m);
+	border: none;
+	background-color: var(--color-bg-medium);
+	font-size: 14px;
+	padding: var(--spacing-xs);
+	border: 2px solid var(--color-bg-medium);
+	font-size: 14px;
+	line-height: var(--spacing-m);
+}
+.form__submit:focus {
+	border-color: var(--color-focus);
+	background-color: var(--color-focus);
+	outline: none;
+}
+.field {
+	max-width: 400px;
+	margin-bottom: var(--spacing-s);
+}
+.field--child {
+	display: flex;
+	align-items: center;
+	margin-bottom: var(--spacing-xs);
+}
+
+.field__label {
+	margin-bottom: var(--spacing-xs);
+}
+.field--child .field__label {
+	flex: 1;
+	margin-bottom: 0;
+	margin-right: var(--spacing-s);
+}
+.field--child .field__label-text {
+	font-weight: normal;
+}
+.field__label-text {
+	font-weight: bold;
+	display: block;
+}
+.field__description {
+	font-size: 14px;
+}
+
+.field--child .field__input {
+	flex: 3;
+}
+.field--email input,
+.field--password input,
+.field--text input {
+	width: 100%;
+	display: block;
+	box-sizing: border-box;
+	padding: var(--spacing-xs);
+	border: 2px solid var(--color-bg-medium);
+	font-size: 14px;
+	line-height: var(--spacing-m);
+}
+.field--email input:focus,
+.field--password input:focus,
+.field--text input:focus {
+	border-color: var(--color-focus);
+	outline: none;
+}
+.field--email input:disabled,
+.field--password input:disabled,
+.field--text input:disabled {
+	background-color: var(--color-bg-body);
+}
+
+.field--radio input {
+	display: block;
+	margin: 0;
+	width: calc(var(--spacing-m) + var(--spacing-xs));
+	height: calc(var(--spacing-m) + var(--spacing-xs));
+	position: relative;
+	outline: none;
+}
+.field--radio input:after {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: #fff;
+	box-sizing: border-box;
+	border: 2px solid var(--color-bg-medium);
+	border-radius: 50%;
+}
+.field--radio input:focus:after {
+	border-color: var(--color-focus);
+}
+.field--radio input:checked:before {
+	content: "";
+	display: block;
+	position: absolute;
+	z-index: 1;
+	top: var(--spacing-xs);
+	left: var(--spacing-xs);
+	width: calc(100% - (var(--spacing-xs) * 2));
+	height: calc(100% - (var(--spacing-xs) * 2));
+	background-color: var(--color-text);
+	box-sizing: border-box;
+	border-radius: 50%;
+}
+.field--radio.field--child .field__input {
+	order: -1;
+	flex-grow: 0;
+	margin-right: var(--spacing-s);
+}
+.field--radio.field--child .field__label {
+	flex: 0 1 1;
+	margin-right: 0;
+}
+.edit-json {
+	width: 100%;
+	max-width: 800px;
+	min-height: 400px;
+	padding: 10px;
+	box-sizing: border-box;
+	font-family: monospace;
+	font-size: 14px;
+}
+
+// tables
+.table {
+	border: solid 2px #ccc;
+}
+.table > thead > tr {
+	background-color: #ddd;
+}
+.table > tbody > tr:nth-child(odd) {
+	background-color: #fff;
+}
+.table > tbody > tr:nth-child(even) {
+	background-color: #f2f2f2;
+}
+.table th {
+	text-align: left;
+	font-weight: bold;
+}
+.table th,
+.table td {
+	vertical-align: top;
+	padding: var(--spacing-xs);
+}
+.table pre {
+	margin: 0;
+}
+.table-cell--issues {
+	width: 500px;
+}
