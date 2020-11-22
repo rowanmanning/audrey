@@ -6,7 +6,6 @@ const {Schema} = require('@rowanmanning/app');
 const shortid = require('shortid');
 const uniqueValidator = require('mongoose-unique-validator');
 
-
 module.exports = function defineFeedSchema(app) {
 
 	const feedSchema = new Schema({
@@ -23,6 +22,18 @@ module.exports = function defineFeedSchema(app) {
 			unique: true
 		},
 		htmlUrl: {
+			type: String
+		},
+		author: {
+			type: String
+		},
+		categories: [{
+			type: String
+		}],
+		copyright: {
+			type: String
+		},
+		generator: {
 			type: String
 		},
 		language: {
@@ -67,7 +78,11 @@ module.exports = function defineFeedSchema(app) {
 					this.title = meta.title;
 					this.xmlUrl = meta.xmlUrl;
 					this.htmlUrl = meta.link;
-					this.language = meta.language;
+					this.author = meta.author ?? this.author;
+					this.categories = meta.categories ?? this.categories;
+					this.copyright = meta.copyright ?? this.copyright;
+					this.generator = meta.generator ?? this.generator;
+					this.language = meta.language ?? this.language;
 					this.syncedAt = new Date();
 				})
 				.on('readable', async function() {
@@ -79,7 +94,9 @@ module.exports = function defineFeedSchema(app) {
 							guid: entry.guid,
 							htmlUrl: entry.origlink ?? entry.link,
 							content: entry.description,
+							summary: entry.summary,
 							author: entry.author,
+							categories: entry.categories,
 							syncedAt: new Date(),
 							publishedAt: entry.pubDate,
 							modifiedAt: entry.date
@@ -93,7 +110,7 @@ module.exports = function defineFeedSchema(app) {
 	feedSchema.static('fetchAll', function(query) {
 		return this
 			.find(query)
-			.sort('name');
+			.sort('title');
 	});
 
 	return feedSchema;

@@ -31,6 +31,6 @@ module.exports = function renderEntriesViewPage(context) {
 
 			</p>
 		</header>
-		<div dangerouslySetInnerHTML=${cleanContent}></div>
+		<div class="content-body" dangerouslySetInnerHTML=${cleanContent}></div>
 	`);
 };

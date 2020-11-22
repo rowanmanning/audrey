@@ -34,9 +34,15 @@ module.exports = function defineEntrySchema() {
 		content: {
 			type: String
 		},
+		summary: {
+			type: String
+		},
 		author: {
 			type: String
 		},
+		categories: [{
+			type: String
+		}],
 		isRead: {
 			type: Boolean,
 			required: true,

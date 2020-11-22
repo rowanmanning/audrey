@@ -13,6 +13,10 @@ module.exports = function renderFeedsListPage(context) {
 		<header class="content-head">
 			<h1 class="content-head__title">${context.pageTitle}</h1>
 		</header>
+		<form method="post" action="${context.currentPath}">
+			<input type="url" name="url" />
+			<input type="submit" value="Add feed" />
+		</form>
 		<${FeedList} feeds=${feeds} />
 	`);
 };
