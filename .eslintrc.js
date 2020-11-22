@@ -9,6 +9,7 @@ module.exports = {
 		complexity: 'off',
 		'max-depth': 'off',
 		'max-statements': 'off',
+		'no-cond-assign': 'off',
 		'no-invalid-this': 'off',
 		'no-underscore-dangle': 'off'
 	}

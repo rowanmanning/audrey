@@ -20,9 +20,12 @@ module.exports = function renderMainLayout(context, content) {
 		<${Header}
 			title=${context.app.name}
 			currentPath=${context.currentPath}
-			currentUser=${context.currentUser}
 		/>
-		<main class="page">${content}</main>
+		<main role="main" class="main">
+			<div class="main__inner">
+				${content}
+			</div>
+		</main>
 		<${Footer}/>
 	`);
 };

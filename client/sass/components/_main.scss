@@ -1,0 +1,21 @@
+
+// Main block
+.main {
+	@extend %base-typography;
+	--color-main-background: var(--color-content-background);
+	
+	background-color: var(--color-main-background);
+}
+
+// Main inner element
+.main__inner {
+	@extend %layout-inner;
+	padding-bottom: var(--spacingvalue-xxxl);
+	padding-top: var(--spacingvalue-xxxl);
+	overflow: hidden;
+}
+
+// Main block, "wide" modifier
+.main--wide .main__inner {
+	max-width: 100%;
+}

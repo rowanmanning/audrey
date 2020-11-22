@@ -1,0 +1,45 @@
+
+// Tag block
+.tag {
+	--tag-background-color: var(--colorvalue-cream);
+	background-color: var(--tag-background-color);
+	border-radius: var(--spacing-rule);
+	display: inline-block;
+	padding: 0 var(--spacing-rule);
+	text-decoration: none;
+
+	&:not(:last-child) {
+		margin-right: 0.8ch;
+	}
+}
+
+// Tag block link-specific styles
+a.tag {
+	&:hover {
+		text-decoration: underline;
+	}
+	&, &:visited {
+		color: inherit;
+	}
+}
+
+// Define tag colors, each tag name maps to a highlight colour name.
+// TODO see if we can move these to site config or data
+$_tag-colors: (
+	"accessibility": "blue",
+	"css": "purple",
+	"design": "orange",
+	"javascript": "yellow",
+	"node-js": "lime",
+	"open-source": "pink",
+	"side-projects": "pink",
+	"thinking": "cyan",
+	"writing": "cyan"
+);
+
+// Tag block modifiers
+@each $tag, $color in $_tag-colors {
+	.tag--#{$tag} {
+		--tag-background-color: var(--highlight-#{$color}-light);
+	}
+}

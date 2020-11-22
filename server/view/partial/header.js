@@ -15,8 +15,6 @@ module.exports = class Header extends Partial {
 	 *     Data to pass into the header.
 	 * @param {String} [context.currentPath='/']
 	 *     The path to the current page in the application.
-	 * @param {Object} [context.currentUser]
-	 *     The user currently logged into the application.
 	 * @param {String} context.title
 	 *     The header title.
 	 */
@@ -25,11 +23,18 @@ module.exports = class Header extends Partial {
 		this.context.currentPath = this.context.currentPath || '/';
 		this.context.navigationItems = [
 			{
-				label: 'Home',
+				label: 'Unread',
 				url: '/'
+			},
+			{
+				label: 'All Feeds',
+				url: '/feeds'
+			},
+			{
+				label: 'All Entries',
+				url: '/entries'
 			}
 		];
-		this.context.contextNavigationItems = [];
 	}
 
 	/**
@@ -43,20 +48,19 @@ module.exports = class Header extends Partial {
 		const navigationItems = this.context.navigationItems.map(item => {
 			return this.renderNavigationItem(item);
 		});
-		const contextNavigationItems = this.context.contextNavigationItems.map(item => {
-			return this.renderNavigationItem(item);
-		});
 		return html`
-			<header class="site-header" data-test="site-header">
-				<a class="site-header__name" href="/">
-					${this.context.title}
-				</a>
-				<nav class="site-header__navigation">
-					<ul>${navigationItems}</ul>
-				</nav>
-				<nav class="site-header__navigation site-header__navigation--context">
-					<ul>${contextNavigationItems}</ul>
-				</nav>
+			<header role="banner" class="header">
+				<div class="header__inner">
+
+					<a href="/" class="header__site-name">
+						${this.context.title}
+					</a>
+
+					<nav role="navigation" class="header__navigation">
+						<ul>${navigationItems}</ul>
+					</nav>
+
+				</div>
 			</header>
 		`;
 	}
@@ -78,12 +82,11 @@ module.exports = class Header extends Partial {
 				currentPath === item.url || currentPath.startsWith(`${item.url}/`)
 		);
 		return html`
-			<li>
-				<a
-					href=${item.url}
-					aria-current=${isCurrentUrl}
-					data-test="site-header-nav-link"
-				>${item.label}</a>
+			<li class="
+				header__navigation-item
+				${isCurrentUrl ? 'header__navigation-item--selected' : ''}
+			">
+				<a href=${item.url}>${item.label}</a>
 			</li>
 		`;
 	}

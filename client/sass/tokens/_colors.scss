@@ -1,0 +1,66 @@
+
+// Define highlight colours as Sass variables
+$_highlight-colors: (
+	"blue": (
+		default: #2190c4,
+		light: lighten(#2190c4, 45%)
+	),
+	"purple": (
+		default: #6c4b9e,
+		light: lighten(#6c4b9e, 45%)
+	),
+	"orange": (
+		default: #f39e24,
+		light: lighten(#f39e24, 35%)
+	),
+	"yellow": (
+		default: #ffd600,
+		light: lighten(#ffd600, 35%)
+	),
+	"lime": (
+		default: #8bc84b,
+		light: lighten(#8bc84b, 30%)
+	),
+	"pink": (
+		default: #ff90fb,
+		light: lighten(#ff90fb, 17%)
+	),
+	"cyan": (
+		default: #5edad6,
+		light: lighten(#5edad6, 30%)
+	)
+);
+
+:root {
+
+	// Define color values (for site UI)
+	--colorvalue-cream-dark: #eae3d1;
+	--colorvalue-cream: #f7f5f0;
+	--colorvalue-gray-light: #707070;
+	--colorvalue-gray: #333;
+	--colorvalue-gray-dark: #222;
+	--colorvalue-green-dark: #3f6f3b;
+	--colorvalue-green-light: #cae8a7;
+	--colorvalue-green: #7db578;
+	--colorvalue-purple: #7f629c;
+	--colorvalue-white: #fff;
+	--colorvalue-white-dark: #dedede;
+	--colorvalue-yellow: #fff2b3;
+	--colorvalue-yellow-dark: #ffd600;
+
+	// Define color values (for highlights)
+	@each $highlight, $colors in $_highlight-colors {
+		--highlight-#{$highlight}: #{map-get($colors, default)};
+		--highlight-#{$highlight}-light: #{map-get($colors, light)};
+	}
+
+	// Define color use-cases
+	--color-site-background: var(--colorvalue-cream);
+	--color-content-background: var(--colorvalue-white);
+	--color-content-text: var(--colorvalue-gray);
+	--color-accent-primary: var(--colorvalue-green);
+	--color-accent-secondary: var(--colorvalue-green-light);
+	--color-link: var(--colorvalue-green-dark);
+	--color-link-visited: var(--colorvalue-purple);
+
+}

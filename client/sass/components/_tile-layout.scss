@@ -1,0 +1,32 @@
+
+// Tile layout block
+.tile-layout {
+	--tile-gutter: var(--spacing-line);
+	--tile-max-width: #{$layout-width-small-mobile};
+	--tile-min-width: 250px;
+
+	align-items: stretch;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	width: calc(100% + var(--tile-gutter));
+
+	@media (max-width: $layout-width-mobile) {
+		display: block;
+	}
+}
+
+// Tile layout tile element
+.tile-layout__tile {
+	@extend %base-typography;
+	flex: 1 1 0;
+	margin-bottom: var(--tile-gutter);
+	margin-right: var(--tile-gutter);
+	max-width: var(--tile-max-width);
+	min-width: var(--tile-min-width);
+
+	@media (max-width: $layout-width-mobile) {
+		display: block;
+		margin-bottom: var(--spacing-double-line);
+	}
+}

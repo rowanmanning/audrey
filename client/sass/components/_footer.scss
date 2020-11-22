@@ -1,0 +1,21 @@
+
+// Footer block
+.footer {
+	@extend %base-typography;
+	--color-footer-background: var(--color-site-background);
+	
+	background-color: var(--color-footer-background);
+}
+
+// Footer inner element
+.footer__inner {
+	@extend %layout-inner;
+	padding-bottom: var(--spacingvalue-xl);
+	padding-top: var(--spacingvalue-xl);
+}
+
+// Footer copyright element
+.footer__copyright {
+	font-size: var(--font-size-small);
+	line-height: var(--line-height-small);
+}

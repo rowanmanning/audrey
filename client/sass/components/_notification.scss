@@ -1,0 +1,44 @@
+
+// Notification block
+.notification {
+	--notification-border-color: var(--colorvalue-cream-dark);
+	--notification-background-color: var(--colorvalue-cream);
+
+	@extend %base-typography;
+	display: flex;
+	padding: var(--spacing-rule) var(--spacing-half-line);
+	padding-left: var(--spacing-line);
+	font-size: var(--font-size-small);
+	line-height: var(--line-height-small);
+	border-left: calc(var(--spacing-rule) * 0.5) solid var(--notification-border-color);
+	background-color: var(--notification-background-color);
+
+	&::before {
+		@extend %icon;
+		width: var(--line-height-small);
+		height: var(--line-height-small);
+		margin-right: var(--spacing-rule);
+		flex-grow: 0;
+		flex-shrink: 0;
+	}
+	a {
+		@extend %link;
+	}
+}
+
+// Notification block, "source" modifier
+.notification--source::before {
+	content: "";
+	background-image: url('/icons/link.svg');
+}
+
+// Notification block, "draft" modifier
+.notification--draft {
+	--notification-border-color: var(--colorvalue-yellow-dark);
+	--notification-background-color: var(--colorvalue-yellow);
+
+	&::before {
+		content: "";
+		background-image: url('/icons/draft.svg');
+	}	
+}

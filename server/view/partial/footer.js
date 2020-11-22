@@ -16,10 +16,12 @@ module.exports = class Footer extends Partial {
 	 */
 	render() {
 		return html`
-			<footer class="site-footer">
-				<small class="site-footer__copyright">
-					Copyright © ${this.getCurrentYear()}.
-				</small>
+			<footer role="contentinfo" class="footer">
+				<div class="footer__inner">
+					<small class="footer__copyright">
+						Copyright © ${this.getCurrentYear()}
+					</small>
+				</div>
 			</footer>
 		`;
 	}

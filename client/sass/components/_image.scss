@@ -1,0 +1,29 @@
+
+// Image block
+.image {
+	@extend %base-typography;
+	--color-media-background: var(--colorvalue-cream);
+	
+	background-color: var(--color-media-background);
+	border: solid var(--spacing-rule) var(--color-media-background);
+	border-radius: var(--spacing-rule);
+	
+	a {
+		display: block;
+	}
+	img {
+		display: block;
+		max-width: 100%;
+		min-width: 100%;
+	}
+}
+
+// Image caption element
+.image__caption {
+	padding: var(--spacing-rule);
+	padding-bottom: 0;
+	font-size: var(--font-size-small);
+	line-height: var(--line-height-small);
+	font-style: italic;
+	text-align: center;
+}

@@ -22,11 +22,12 @@ module.exports = function renderDefaultLayout(context, content) {
 				<meta charset="utf-8" />
 				<title>${pageTitle}</title>
 				${renderPageDescription(pageDescription)}
+				<meta name="robots" content="noindex" />
 				<meta name="viewport" content="width=device-width" />
+				<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap" />
 				<link rel="stylesheet" href="/main.css" />
-				<script type="module" src="/main.js" defer></script>
 			</head>
-			<body>
+			<body class="page">
 				${content}
 			</body>
 		</html>

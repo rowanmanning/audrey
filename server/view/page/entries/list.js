@@ -1,13 +1,13 @@
 'use strict';
 
-const EntryList = require('../partial/entry-list');
+const EntryList = require('../../partial/entry-list');
 const {html} = require('@rowanmanning/app');
-const layout = require('../layout/main');
+const layout = require('../../layout/main');
 
-module.exports = function renderHomePage(context) {
-	const {entries, app} = context;
+module.exports = function renderEntriesListPage(context) {
+	const {entries} = context;
 
-	context.pageTitle = app.name;
+	context.pageTitle = 'Entries';
 
 	return layout(context, html`
 		<header class="content-head">

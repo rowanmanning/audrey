@@ -1,0 +1,18 @@
+
+// Pin block
+.pin {
+	margin-bottom: var(--spacing-line);
+	max-width: 33%;
+}
+
+// Pin block, "left" modifier
+.pin--left {
+	float: left;
+	margin-right: var(--spacing-line);
+}
+
+// Pin block, "right" modifier
+.pin--right {
+	float: right;
+	margin-left: var(--spacing-line);
+}

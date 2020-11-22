@@ -1,0 +1,24 @@
+
+// Content highlight block
+.content-highlight {
+	--content-highlight-border-color: var(--colorvalue-cream-dark);
+	--content-highlight-gradient-color: var(--colorvalue-cream);
+
+	// Using RGBA here fixes a known Safari bug with transparent gradients
+	// https://stackoverflow.com/q/38391457/186241
+	background-image: linear-gradient(90deg, var(--content-highlight-gradient-color), rgba(255,255,255,0));
+
+	background-repeat: no-repeat;
+	background-size: var(--spacing-half-line) 100%;
+	border-left: calc(var(--spacing-rule) * 0.5) solid var(--content-highlight-border-color);
+	padding-left: var(--spacing-line);
+	position: relative;
+}
+
+// Content highlight block modifiers
+@each $highlight, $colors in $_highlight-colors {
+	.content-highlight--#{$highlight} {
+		--content-highlight-border-color: var(--highlight-#{$highlight});
+		--content-highlight-gradient-color: var(--highlight-#{$highlight}-light);
+	}
+}

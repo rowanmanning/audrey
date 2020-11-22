@@ -1,0 +1,52 @@
+
+// Content foot block
+.content-foot {
+	@extend %base-typography;
+	background-color: var(--colorvalue-cream);
+	border-radius: var(--spacing-rule);
+	margin-top: var(--spacingvalue-xxxl);
+	padding: var(--spacing-line);
+
+	// Link elements
+	a {
+		@extend %link;
+	}
+}
+
+// Content foot thanks element
+.content-foot__thanks {
+	margin-top: 0;
+	margin-bottom: var(--spacing-line);
+}
+
+// Content foot links element
+.content-foot__links {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+
+	> li:not(:last-child) {
+		margin-bottom: var(--spacing-half-line);
+		line-height: var(--line-height-body);
+	}
+}
+
+// Content foot icon element
+.content-foot__icon {
+	background-position: left center;
+	background-repeat: no-repeat;
+	background-size: contain;
+	display: inline-block;
+	padding-left: calc(var(--spacing-line) + var(--spacing-rule));
+	height: var(--spacing-line);
+}
+
+// Content foot icon element, "feed" modifier
+.content-foot__icon--feed {
+	background-image: url("/icons/feed.svg");
+}
+
+// Content foot icon element, "twitter" modifier
+.content-foot__icon--twitter {
+	background-image: url("/icons/twitter.svg");
+}

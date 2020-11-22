@@ -22,8 +22,14 @@
   },
   "dependencies": {
     "@rowanmanning/app": "^1.0.0-alpha.22",
+    "dompurify": "^2.2.2",
     "dotenv": "^8.2.0",
+    "feedparser": "^2.2.10",
+    "got": "^11.8.0",
+    "jsdom": "^16.4.0",
     "lodash": "^4.17.20",
+    "mongoose-unique-validator": "^2.0.3",
+    "shortid": "^2.2.16",
     "uuid": "^8.3.1"
   },
   "devDependencies": {

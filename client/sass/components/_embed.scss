@@ -1,0 +1,40 @@
+
+// Embed block
+.embed {
+	@extend %base-typography;
+	--color-embed-background: var(--colorvalue-cream);
+
+	display: block;
+	margin-bottom: var(--spacing-line);
+
+	> iframe {
+		display: block;
+		background-color: var(--color-embed-background);
+		border: solid var(--spacing-rule) var(--color-embed-background);
+		border-radius: var(--spacing-rule);
+		width: calc(100% - (var(--spacing-rule) * 2));
+	}
+}
+
+// Embed caption element
+.embed__caption {
+	@extend %hidden;
+}
+
+// Embed spotify track element
+.embed__spotify-track {
+	max-width: 300px;
+	height: 80px;
+}
+
+// Embed YouTube video element
+.embed__youtube-video {
+	min-height: 400px;
+
+	@media all and (max-width: $layout-width-mobile) {
+		min-height: 260px;
+	}
+	@media all and (max-width: $layout-width-small-mobile) {
+		min-height: 200px;
+	}
+}

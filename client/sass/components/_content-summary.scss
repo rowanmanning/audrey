@@ -1,0 +1,54 @@
+
+// Content summary block
+.content-summary {
+	@extend %base-typography;
+}
+
+// Content summary "read" modifier
+.content-summary--read {
+	opacity: 0.6;
+}
+
+// Content summary headline element
+.content-summary__headline {
+	border: none;
+	font-family: var(--font-family-heading);
+	font-size: var(--font-size-subheading);
+	font-weight: normal;
+	line-height: var(--line-height-subheading);
+	margin-bottom: var(--spacing-half-line);
+	margin-top: 0;
+
+	a {
+		color: inherit;
+		text-decoration: none;
+	}
+	a:hover {
+		text-decoration: underline;
+		text-decoration-color: var(--content-highlight-border-color);
+	}
+}
+
+// Content summary meta element
+.content-summary__meta {
+	font-size: var(--font-size-small);
+	line-height: var(--line-height-small);
+	margin-bottom: var(--spacing-rule);
+	margin-top: 0;
+}
+
+// Content summary cross-post element
+.content-summary__cross-post {
+	a {
+		@extend %link;
+	}
+}
+
+// Content summary preview element
+.content-summary__preview {
+	margin: 0;
+
+	a {
+		@extend %link;
+	}
+}
