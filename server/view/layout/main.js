@@ -18,7 +18,7 @@ const layout = require('./default');
 module.exports = function renderMainLayout(context, content) {
 	return layout(context, html`
 		<${Header}
-			title=${context.app.name}
+			title=${context.settings.siteTitle}
 			currentPath=${context.currentPath}
 		/>
 		<main role="main" class="main">

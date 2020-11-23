@@ -12,4 +12,17 @@ module.exports = class AudreyApp extends App {
 		super(options);
 	}
 
+	setupControllers() {
+		this.router.use(async (request, response, next) => {
+			try {
+				const {Settings} = this.models;
+				request.settings = response.locals.settings = await Settings.get();
+				next();
+			} catch (error) {
+				next(error);
+			}
+		});
+		super.setupControllers();
+	}
+
 };

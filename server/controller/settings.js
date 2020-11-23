@@ -8,25 +8,14 @@ module.exports = function mountSettingsController(app) {
 	const {Settings} = app.models;
 
 	router.get('/settings', [
-		listSettings,
 		handleUpdateSettingsForm,
 		render('page/settings/list')
 	]);
 
 	router.post('/settings', [
-		listSettings,
 		handleUpdateSettingsForm,
 		render('page/settings/list')
 	]);
-
-	async function listSettings(request, response, next) {
-		try {
-			request.settings = response.locals.settings = await Settings.get();
-			next();
-		} catch (error) {
-			next(error);
-		}
-	}
 
 	// Middleware to handle updating of site settings
 	async function handleUpdateSettingsForm(request, response, next) {
@@ -36,6 +25,7 @@ module.exports = function mountSettingsController(app) {
 			action: request.url,
 			errors: [],
 			data: {
+				siteTitle: request.body.siteTitle || request.settings.siteTitle,
 				removeOldPosts: (
 					typeof request.body.removeOldPosts === 'undefined' ?
 						request.settings.removeOldPosts :
@@ -53,6 +43,7 @@ module.exports = function mountSettingsController(app) {
 			// On POST, attempt to save the settings
 			if (request.method === 'POST') {
 				const settings = await Settings.get();
+				settings.siteTitle = updateSettingsForm.data.siteTitle;
 				settings.removeOldPosts = updateSettingsForm.data.removeOldPosts;
 				settings.daysToRetainOldPosts = updateSettingsForm.data.daysToRetainOldPosts;
 				await settings.save();

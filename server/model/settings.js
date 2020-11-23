@@ -11,6 +11,13 @@ module.exports = function defineSettingsSchema(app) {
 			type: String,
 			default: shortid.generate
 		},
+		siteTitle: {
+			type: String,
+			required: [true, 'Site title setting is required'],
+			maxlength: [20, 'Site title setting must be between 3 and 20 characters in length'],
+			minlength: [3, 'Site title setting must be between 3 and 20 characters in length'],
+			default: app.name
+		},
 		removeOldPosts: {
 			type: Boolean,
 			required: [true, 'Remove old posts setting is required'],

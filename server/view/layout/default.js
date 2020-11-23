@@ -15,12 +15,13 @@ const {html} = require('@rowanmanning/app');
  *     Returns an HTML element.
  */
 module.exports = function renderDefaultLayout(context, content) {
-	const {pageDescription, pageTitle} = context;
+	const {pageDescription, pageTitle, settings} = context;
+	const title = pageTitle ? `${pageTitle} | ${settings.siteTitle}` : settings.siteTitle;
 	return html`
 		<html lang="en">
 			<head>
 				<meta charset="utf-8" />
-				<title>${pageTitle}</title>
+				<title>${title}</title>
 				${renderPageDescription(pageDescription)}
 				<meta name="robots" content="noindex" />
 				<meta name="viewport" content="width=device-width" />

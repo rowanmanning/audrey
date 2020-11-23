@@ -17,6 +17,17 @@ module.exports = function renderSettingsListPage(context) {
 		<${Form} action=${updateSettingsForm.action}>
 			<${Form.Errors} errors=${updateSettingsForm.errors} />
 
+			<${Form.Field.Text}
+				name="siteTitle"
+				label="Site title"
+				description="
+					The title of this installation of Audrey, displayed
+					in the header section of all pages. Between 3 and 20
+					characters in length
+				"
+				value=${updateSettingsForm.data.siteTitle}
+			/>
+
 			<${Form.Field.Group}
 				label="Remove old posts"
 				description="
