@@ -25,8 +25,12 @@ module.exports = function renderEntriesViewPage(context) {
 
 				<ul class="content-head__actions">
 					<li><a href=${entry.htmlUrl}>View on website</a></li>
-					<li>TODO mark as unread</li>
-					<li>TODO report a formatting issue</li>
+					<li>
+						<form method="post" action=${entry.markUrl}>
+							<input type="hidden" name="setReadStatus" value=${entry.isRead ? 'unread' : 'read'} />
+							<input type="submit" value="Mark as ${entry.isRead ? 'unread' : 'read'}" />
+						</form>
+					</li>
 				</ul>
 
 			</p>

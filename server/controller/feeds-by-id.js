@@ -57,7 +57,7 @@ module.exports = function mountFeedsByIdController(app) {
 	// Middleware to handle feed refreshing
 	async function handleRefreshFeedForm(request, response, next) {
 
-		// Add settings form details to the render context
+		// Add refresh feed form details to the render context
 		const refreshFeedForm = response.locals.refreshFeedForm = {
 			action: request.feed.refreshUrl,
 			errors: [],
@@ -84,7 +84,7 @@ module.exports = function mountFeedsByIdController(app) {
 	// Middleware to handle feed editing
 	async function handleEditFeedForm(request, response, next) {
 
-		// Add settings form details to the render context
+		// Add edit feed form details to the render context
 		const editFeedForm = response.locals.editFeedForm = {
 			action: request.feed.editUrl,
 			errors: [],

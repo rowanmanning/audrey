@@ -26,15 +26,20 @@ module.exports = function mountSettingsController(app) {
 			errors: [],
 			data: {
 				siteTitle: request.body.siteTitle || request.settings.siteTitle,
-				removeOldPosts: (
-					typeof request.body.removeOldPosts === 'undefined' ?
-						request.settings.removeOldPosts :
-						Boolean(request.body.removeOldPosts)
+				removeOldEntries: (
+					typeof request.body.removeOldEntries === 'undefined' ?
+						request.settings.removeOldEntries :
+						Boolean(request.body.removeOldEntries)
 				),
-				daysToRetainOldPosts: (
-					typeof request.body.daysToRetainOldPosts === 'undefined' ?
-						request.settings.daysToRetainOldPosts :
-						parseInt(request.body.daysToRetainOldPosts, 10)
+				daysToRetainOldEntries: (
+					typeof request.body.daysToRetainOldEntries === 'undefined' ?
+						request.settings.daysToRetainOldEntries :
+						parseInt(request.body.daysToRetainOldEntries, 10)
+				),
+				autoMarkAsRead: (
+					typeof request.body.autoMarkAsRead === 'undefined' ?
+						request.settings.autoMarkAsRead :
+						Boolean(request.body.autoMarkAsRead)
 				)
 			}
 		};
@@ -47,8 +52,9 @@ module.exports = function mountSettingsController(app) {
 				// with displayed properties outside of the form
 				const settings = await Settings.get();
 				settings.siteTitle = updateSettingsForm.data.siteTitle;
-				settings.removeOldPosts = updateSettingsForm.data.removeOldPosts;
-				settings.daysToRetainOldPosts = updateSettingsForm.data.daysToRetainOldPosts;
+				settings.removeOldEntries = updateSettingsForm.data.removeOldEntries;
+				settings.daysToRetainOldEntries = updateSettingsForm.data.daysToRetainOldEntries;
+				settings.autoMarkAsRead = updateSettingsForm.data.autoMarkAsRead;
 				await settings.save();
 				return response.redirect('/settings');
 			}

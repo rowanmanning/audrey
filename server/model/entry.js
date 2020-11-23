@@ -79,6 +79,11 @@ module.exports = function defineEntrySchema() {
 		return `/entries/${this.get('id')}`;
 	});
 
+	// Virtual internal entry mark URL
+	entrySchema.virtual('markUrl').get(function() {
+		return `/entries/${this.get('id')}/mark`;
+	});
+
 	// Virtual clean entry content
 	entrySchema.virtual('cleanContent').get(function() {
 		const window = new JSDOM('').window;
@@ -88,10 +93,17 @@ module.exports = function defineEntrySchema() {
 
 	entrySchema.method('markAsRead', function() {
 		if (!this.isRead) {
-			return this.update({$set: {
-				isRead: true,
-				readAt: new Date()
-			}});
+			this.isRead = true;
+			this.readAt = new Date();
+			return this.save();
+		}
+	});
+
+	entrySchema.method('markAsUnread', function() {
+		if (this.isRead) {
+			this.isRead = false;
+			this.readAt = null;
+			return this.save();
 		}
 	});
 

@@ -134,7 +134,7 @@ module.exports = function defineFeedSchema(app) {
 
 				// Handle feed entries, saving them as necessary
 				feedParser.on('readable', async function() {
-					const cutOffDate = new Date(Date.now() - (day * settings.daysToRetainOldPosts));
+					const cutOffDate = new Date(Date.now() - (day * settings.daysToRetainOldEntries));
 					let entry;
 					while (entry = this.read()) {
 						try {

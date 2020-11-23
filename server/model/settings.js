@@ -18,17 +18,22 @@ module.exports = function defineSettingsSchema(app) {
 			minlength: [3, 'Site title setting must be between 3 and 20 characters in length'],
 			default: app.name
 		},
-		removeOldPosts: {
+		removeOldEntries: {
 			type: Boolean,
-			required: [true, 'Remove old posts setting is required'],
+			required: [true, 'Remove old entries setting is required'],
 			default: true
 		},
-		daysToRetainOldPosts: {
+		daysToRetainOldEntries: {
 			type: Number,
-			required: [true, 'Days to retain old posts setting is required'],
-			validate: [Number.isInteger, 'Days to retain old posts setting must be a whole number'],
-			min: [1, 'Days to retain old posts setting must be 1 or greater'],
+			required: [true, 'Days to retain old entries setting is required'],
+			validate: [Number.isInteger, 'Days to retain old entries setting must be a whole number'],
+			min: [1, 'Days to retain old entries setting must be 1 or greater'],
 			default: 60
+		},
+		autoMarkAsRead: {
+			type: Boolean,
+			required: [true, 'Auto mark as read setting is required'],
+			default: true
 		}
 	}, {
 		timestamps: true,
