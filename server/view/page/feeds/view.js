@@ -1,11 +1,12 @@
 'use strict';
 
 const EntryList = require('../../partial/entry-list');
+const Form = require('../../partial/form');
 const {html} = require('@rowanmanning/app');
 const layout = require('../../layout/main');
 
 module.exports = function renderFeedsViewPage(context) {
-	const {entries, feed} = context;
+	const {entries, feed, refreshFeedForm} = context;
 
 	context.pageTitle = feed.title;
 
@@ -15,12 +16,11 @@ module.exports = function renderFeedsViewPage(context) {
 		</header>
 		<ul>
 			<li><a href=${feed.htmlUrl}>View feed website</a></li>
-			<li>
-				<form method="post" action="${feed.url}/sync">
-					<input type="submit" value="Sync" />
-				</form>
-			</li>
 		</ul>
+		<${Form} action=${refreshFeedForm.action}>
+			<${Form.Errors} errors=${refreshFeedForm.errors} />
+			<${Form.Submit} label="Refresh feed" />
+		<//>
 		<${EntryList} entries=${entries} />
 	`);
 };

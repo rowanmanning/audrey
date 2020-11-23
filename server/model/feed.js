@@ -59,6 +59,11 @@ module.exports = function defineFeedSchema(app) {
 		return `/feeds/${this.get('id')}`;
 	});
 
+	// Virtual internal feed refresh URL
+	feedSchema.virtual('refreshUrl').get(function() {
+		return `${this.get('url')}/refresh`;
+	});
+
 	// When a feed is created, perform a fetch
 	feedSchema.pre('save', async function(done) {
 		if (this.isNew) {

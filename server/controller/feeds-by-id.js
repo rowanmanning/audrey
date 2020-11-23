@@ -1,6 +1,7 @@
 'use strict';
 
 const render = require('../middleware/render');
+const {ValidationError} = require('@rowanmanning/app');
 
 module.exports = function mountFeedsByIdController(app) {
 	const {router} = app;
@@ -8,18 +9,21 @@ module.exports = function mountFeedsByIdController(app) {
 
 	router.get('/feeds/:feedId', [
 		fetchFeedById,
+		handleRefreshFeedForm,
 		fetchFeedEntries,
 		render('page/feeds/view')
 	]);
 
-	router.post('/feeds/:feedId/sync', [
+	router.post('/feeds/:feedId/refresh', [
 		fetchFeedById,
-		syncFeed
+		handleRefreshFeedForm,
+		fetchFeedEntries,
+		render('page/feeds/view')
 	]);
 
 	async function fetchFeedById(request, response, next) {
 		try {
-			response.locals.feed = await Feed.findById(request.params.feedId);
+			request.feed = response.locals.feed = await Feed.findById(request.params.feedId);
 			if (response.locals.feed) {
 				return next();
 			}
@@ -38,11 +42,30 @@ module.exports = function mountFeedsByIdController(app) {
 		}
 	}
 
-	async function syncFeed(request, response, next) {
+	// Middleware to handle feed refreshing
+	async function handleRefreshFeedForm(request, response, next) {
+
+		// Add settings form details to the render context
+		const refreshFeedForm = response.locals.refreshFeedForm = {
+			action: request.feed.refreshUrl,
+			errors: [],
+			data: {}
+		};
+
 		try {
-			await response.locals.feed.sync();
-			return response.redirect(response.locals.feed.url);
+			// On POST, attempt to refresh the feed
+			if (request.method === 'POST') {
+				await request.feed.sync();
+				return response.redirect(request.feed.url);
+			}
+			next();
 		} catch (error) {
+			console.log('ERROR?', error);
+			if (error instanceof ValidationError) {
+				refreshFeedForm.errors = Object.values(error.errors);
+				response.status(400);
+				return next();
+			}
 			next(error);
 		}
 	}
