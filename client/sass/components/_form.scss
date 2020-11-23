@@ -23,10 +23,10 @@
 .form__submit {
 	margin-bottom: var(--spacing-line);
 	border: none;
-	background-color: var(--colorvalue-cream);
+	background-color: var(--colorvalue-cream-dark);
 	font-size: var(--font-size-small);
 	padding: var(--spacing-rule);
-	border: 2px solid var(--colorvalue-cream);
+	border: 2px solid var(--colorvalue-cream-dark);
 	line-height: var(--line-height-small);
 }
 .form__submit:focus {
@@ -75,7 +75,7 @@
 	display: block;
 	box-sizing: border-box;
 	padding: var(--spacing-rule);
-	border: 2px solid var(--colorvalue-cream);
+	border: 2px solid var(--colorvalue-cream-dark);
 	font-size: 14px;
 	line-height: var(--spacing-line);
 }
@@ -113,7 +113,7 @@
 	height: 100%;
 	background-color: #fff;
 	box-sizing: border-box;
-	border: 2px solid var(--colorvalue-cream);
+	border: 2px solid var(--colorvalue-cream-dark);
 	border-radius: 50%;
 }
 .field--radio input:focus:after {

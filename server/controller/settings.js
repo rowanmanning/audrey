@@ -9,13 +9,13 @@ module.exports = function mountSettingsController(app) {
 
 	router.get('/settings', [
 		listSettings,
-		handleSettingsForm,
+		handleUpdateSettingsForm,
 		render('page/settings/list')
 	]);
 
 	router.post('/settings', [
 		listSettings,
-		handleSettingsForm,
+		handleUpdateSettingsForm,
 		render('page/settings/list')
 	]);
 
@@ -29,10 +29,10 @@ module.exports = function mountSettingsController(app) {
 	}
 
 	// Middleware to handle updating of site settings
-	async function handleSettingsForm(request, response, next) {
+	async function handleUpdateSettingsForm(request, response, next) {
 
 		// Add settings form details to the render context
-		const settingsForm = response.locals.settingsForm = {
+		const updateSettingsForm = response.locals.updateSettingsForm = {
 			action: request.url,
 			errors: [],
 			data: {
@@ -53,15 +53,15 @@ module.exports = function mountSettingsController(app) {
 			// On POST, attempt to save the settings
 			if (request.method === 'POST') {
 				const settings = await Settings.get();
-				settings.removeOldPosts = settingsForm.data.removeOldPosts;
-				settings.daysToRetainOldPosts = settingsForm.data.daysToRetainOldPosts;
+				settings.removeOldPosts = updateSettingsForm.data.removeOldPosts;
+				settings.daysToRetainOldPosts = updateSettingsForm.data.daysToRetainOldPosts;
 				await settings.save();
 				return response.redirect('/settings');
 			}
 			next();
 		} catch (error) {
 			if (error instanceof ValidationError) {
-				settingsForm.errors = Object.values(error.errors);
+				updateSettingsForm.errors = Object.values(error.errors);
 				response.status(400);
 				return next();
 			}

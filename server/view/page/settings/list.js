@@ -5,7 +5,7 @@ const {html} = require('@rowanmanning/app');
 const layout = require('../../layout/main');
 
 module.exports = function renderSettingsListPage(context) {
-	const {settings, settingsForm} = context;
+	const {settings, updateSettingsForm} = context;
 
 	context.pageTitle = 'Settings';
 
@@ -14,8 +14,8 @@ module.exports = function renderSettingsListPage(context) {
 			<h1 class="content-head__title">${context.pageTitle}</h1>
 		</header>
 
-		<${Form} action=${settingsForm.action}>
-			<${Form.Errors} errors=${settingsForm.errors} />
+		<${Form} action=${updateSettingsForm.action}>
+			<${Form.Errors} errors=${updateSettingsForm.errors} />
 
 			<${Form.Field.Group}
 				label="Remove old posts"
@@ -30,13 +30,13 @@ module.exports = function renderSettingsListPage(context) {
 					name="removeOldPosts"
 					label="Yes, remove old posts"
 					value="true"
-					checked=${settingsForm.data.removeOldPosts}
+					checked=${updateSettingsForm.data.removeOldPosts}
 				/>
 				<${Form.Field.Radio}
 					name="removeOldPosts"
 					label="No, do not remove anything automatically"
 					value=""
-					checked=${!settingsForm.data.removeOldPosts}
+					checked=${!updateSettingsForm.data.removeOldPosts}
 				/>
 			<//>
 
@@ -48,7 +48,7 @@ module.exports = function renderSettingsListPage(context) {
 					have configured them to be automatically removed.
 					Posts older than this will not be ingested
 				"
-				value=${settingsForm.data.daysToRetainOldPosts}
+				value=${updateSettingsForm.data.daysToRetainOldPosts}
 				min="1"
 			/>
 
