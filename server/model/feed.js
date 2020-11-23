@@ -18,7 +18,7 @@ module.exports = function defineFeedSchema(app) {
 		},
 		xmlUrl: {
 			type: String,
-			required: true,
+			required: [true, 'Feed URL is required'],
 			unique: true
 		},
 		htmlUrl: {
@@ -65,7 +65,8 @@ module.exports = function defineFeedSchema(app) {
 		done();
 	});
 
-	feedSchema.method('sync', function() {
+	feedSchema.method('sync', async function() {
+		const settings = await app.models.Settings.get();
 		return new Promise((resolve, reject) => {
 			const feedId = this._id;
 			app.log.info(`[feeds:${feedId}]: syncing`);
@@ -86,22 +87,28 @@ module.exports = function defineFeedSchema(app) {
 					this.syncedAt = new Date();
 				})
 				.on('readable', async function() {
+					const day = 1000 * 60 * 60 * 24;
+					const cutOffDate = new Date(Date.now() - (day * settings.daysToRetainOldPosts));
 					let entry;
 					while (entry = this.read()) {
-						await app.models.Entry.createOrUpdate({
-							feed: feedId,
-							title: entry.title,
-							guid: entry.guid,
-							htmlUrl: entry.origlink ?? entry.link,
-							content: entry.description,
-							summary: entry.summary,
-							author: entry.author,
-							categories: entry.categories,
-							syncedAt: new Date(),
-							publishedAt: entry.pubDate,
-							modifiedAt: entry.date
-						});
-						app.log.info(`[feeds:${feedId}]: found entry ${entry.guid}`);
+						if (entry.date > cutOffDate) {
+							await app.models.Entry.createOrUpdate({
+								feed: feedId,
+								title: entry.title,
+								guid: entry.guid,
+								htmlUrl: entry.origlink ?? entry.link,
+								content: entry.description,
+								summary: entry.summary,
+								author: entry.author,
+								categories: entry.categories,
+								syncedAt: new Date(),
+								publishedAt: entry.pubDate,
+								modifiedAt: entry.date
+							});
+							app.log.info(`[feeds:${feedId}]: found entry ${entry.guid}`);
+						} else {
+							app.log.info(`[feeds:${feedId}]: entry ${entry.guid} is too old`);
+						}
 					}
 				});
 		});

@@ -109,12 +109,7 @@
 	}
 }
 
-// Header icon element, "github" modifier
-.header__icon--github {
-	background-image: url("/icons/github.svg");
-}
-
-// Header icon element, "twitter" modifier
-.header__icon--twitter {
-	background-image: url("/icons/twitter.svg");
+// Header icon element, "cog" modifier
+.header__icon--cog {
+	background-image: url("/icons/cog.svg");
 }

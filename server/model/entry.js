@@ -17,15 +17,16 @@ module.exports = function defineEntrySchema() {
 		feed: {
 			type: String,
 			index: true,
-			required: true,
+			required: [true, 'Entry feed ID is required'],
 			ref: 'Feed'
 		},
 		title: {
-			type: String
+			type: String,
+			required: [true, 'Entry title required']
 		},
 		guid: {
 			type: String,
-			required: true,
+			required: [true, 'Entry GUID is required'],
 			unique: true
 		},
 		htmlUrl: {
@@ -45,14 +46,16 @@ module.exports = function defineEntrySchema() {
 		}],
 		isRead: {
 			type: Boolean,
-			required: true,
+			required: [true, 'Entry read status is required'],
 			default: false
 		},
 		syncedAt: {
-			type: Date
+			type: Date,
+			required: [true, 'Entry sync date is required']
 		},
 		publishedAt: {
-			type: Date
+			type: Date,
+			required: [true, 'Entry publish date is required']
 		},
 		readAt: {
 			type: Date,
@@ -62,7 +65,7 @@ module.exports = function defineEntrySchema() {
 			type: Date
 		}
 	}, {
-		timestamps: true,
+		timestamps: false,
 		collation: {locale: 'en'}
 	});
 

@@ -47,6 +47,9 @@ $_highlight-colors: (
 	--colorvalue-white-dark: #dedede;
 	--colorvalue-yellow: #fff2b3;
 	--colorvalue-yellow-dark: #ffd600;
+	--colorvalue-blue: #31a6ff;
+	--colorvalue-red: #ff3131;
+	--colorvalue-red-light: #fcc;
 
 	// Define color values (for highlights)
 	@each $highlight, $colors in $_highlight-colors {
@@ -62,5 +65,8 @@ $_highlight-colors: (
 	--color-accent-secondary: var(--colorvalue-green-light);
 	--color-link: var(--colorvalue-green-dark);
 	--color-link-visited: var(--colorvalue-purple);
+	--color-focus: #31a6ff;
+	--color-error: #ff3131;
+	--color-error-light: #fcc;
 
 }

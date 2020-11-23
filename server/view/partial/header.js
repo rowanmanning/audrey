@@ -33,6 +33,11 @@ module.exports = class Header extends Partial {
 			{
 				label: 'All Entries',
 				url: '/entries'
+			},
+			{
+				label: 'Settings',
+				url: '/settings',
+				icon: 'cog'
 			}
 		];
 	}
@@ -76,17 +81,22 @@ module.exports = class Header extends Partial {
 	 */
 	renderNavigationItem(item) {
 		const {currentPath} = this.context;
+		const {label, url, icon} = item;
 		const isCurrentUrl = (
-			item.url === '/' ?
-				currentPath === item.url :
-				currentPath === item.url || currentPath.startsWith(`${item.url}/`)
+			url === '/' ?
+				currentPath === url :
+				currentPath === url || currentPath.startsWith(`${url}/`)
 		);
 		return html`
 			<li class="
 				header__navigation-item
 				${isCurrentUrl ? 'header__navigation-item--selected' : ''}
 			">
-				<a href=${item.url}>${item.label}</a>
+				<a
+					href=${url}
+					title=${icon ? label : undefined}
+					class=${icon ? `header__icon header__icon--${icon}` : undefined}
+				>${label}</a>
 			</li>
 		`;
 	}
