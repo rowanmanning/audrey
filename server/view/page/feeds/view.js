@@ -17,6 +17,7 @@ module.exports = function renderFeedsViewPage(context) {
 		<ul>
 			<li><a href=${feed.htmlUrl}>View feed website</a></li>
 			<li><a href=${feed.editUrl}>Edit feed</a></li>
+			<li><a href=${feed.deleteUrl}>Delete feed</a></li>
 			<li>
 				<form method="post" action=${refreshFeedForm.action}>
 					<input type="submit" value="Refresh feed" />

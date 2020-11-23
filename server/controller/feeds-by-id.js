@@ -32,6 +32,18 @@ module.exports = function mountFeedsByIdController(app) {
 		handleEditFeedForm,
 		render('page/feeds/edit')
 	]);
+	
+	router.get('/feeds/:feedId/delete', [
+		fetchFeedById,
+		handleDeleteFeedForm,
+		render('page/feeds/delete')
+	]);
+
+	router.post('/feeds/:feedId/delete', [
+		fetchFeedById,
+		handleDeleteFeedForm,
+		render('page/feeds/delete')
+	]);
 
 	async function fetchFeedById(request, response, next) {
 		try {
@@ -114,6 +126,41 @@ module.exports = function mountFeedsByIdController(app) {
 		} catch (error) {
 			if (error instanceof ValidationError) {
 				editFeedForm.errors = Object.values(error.errors);
+				response.status(400);
+				return next();
+			}
+			next(error);
+		}
+	}
+
+	// Middleware to handle feed deletion
+	async function handleDeleteFeedForm(request, response, next) {
+
+		// Add edit feed form details to the render context
+		const deleteFeedForm = response.locals.deleteFeedForm = {
+			action: request.feed.deleteUrl,
+			errors: [],
+			data: {
+				confirm: Boolean(request.body.confirm)
+			}
+		};
+
+		try {
+			// On POST, attempt to delete the feed
+			if (request.method === 'POST') {
+				if (deleteFeedForm.data.confirm) {
+					await request.feed.delete();
+					response.redirect('/feeds');
+				} else {
+					const error = new ValidationError();
+					error.errors.confirm = new Error('Please confirm that you want to delete this feed');
+					throw error;
+				}
+			}
+			next();
+		} catch (error) {
+			if (error instanceof ValidationError) {
+				deleteFeedForm.errors = Object.values(error.errors);
 				response.status(400);
 				return next();
 			}

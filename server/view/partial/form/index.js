@@ -33,6 +33,7 @@ module.exports.Errors = require('./errors');
 module.exports.Submit = require('./submit');
 module.exports.Field = require('./field');
 module.exports.Field.Group = require('./field/group');
+module.exports.Field.Checkbox = require('./field/checkbox');
 module.exports.Field.Email = require('./field/email');
 module.exports.Field.Number = require('./field/number');
 module.exports.Field.Password = require('./field/password');

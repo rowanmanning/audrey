@@ -1,11 +1,10 @@
 'use strict';
 
-const EntryList = require('../../partial/entry-list');
 const Form = require('../../partial/form');
 const {html} = require('@rowanmanning/app');
 const layout = require('../../layout/main');
 
-module.exports = function renderFeedsViewPage(context) {
+module.exports = function renderFeedsEditPage(context) {
 	const {feed, editFeedForm} = context;
 
 	context.pageTitle = `Editing ${feed.displayTitle}`;

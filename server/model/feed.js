@@ -72,6 +72,11 @@ module.exports = function defineFeedSchema(app) {
 		return `${this.get('url')}/refresh`;
 	});
 
+	// Virtual internal feed delete URL
+	feedSchema.virtual('deleteUrl').get(function() {
+		return `${this.get('url')}/delete`;
+	});
+
 	// Virtual internal feed edit URL
 	feedSchema.virtual('editUrl').get(function() {
 		return `${this.get('url')}/edit`;
@@ -186,6 +191,16 @@ module.exports = function defineFeedSchema(app) {
 
 			throw caughtError;
 		}
+	});
+
+	// Feed sync method, used for creating and refreshing feeds
+	feedSchema.method('delete', async function() {
+		await app.models.Entry.remove({
+			feed: this._id
+		});
+		await app.models.Feed.remove({
+			_id: this._id
+		});
 	});
 
 	feedSchema.static('fetchAll', function(query) {

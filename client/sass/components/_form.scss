@@ -95,15 +95,18 @@
 	background-color: var(--color-bg-body);
 }
 
-.field--radio input {
+.field--radio input,
+.field--checkbox input {
 	display: block;
 	margin: 0;
 	width: calc(var(--spacing-line) + var(--spacing-rule));
 	height: calc(var(--spacing-line) + var(--spacing-rule));
 	position: relative;
 	outline: none;
+	appearance: none;
 }
-.field--radio input:after {
+.field--radio input:after,
+.field--checkbox input:after {
 	content: "";
 	display: block;
 	position: absolute;
@@ -116,10 +119,12 @@
 	border: 2px solid var(--colorvalue-cream-dark);
 	border-radius: 50%;
 }
-.field--radio input:focus:after {
+.field--radio input:focus:after,
+.field--checkbox input:focus:after {
 	border-color: var(--color-focus);
 }
-.field--radio input:checked:before {
+.field--radio input:checked:before,
+.field--checkbox input:checked:before {
 	content: "";
 	display: block;
 	position: absolute;
@@ -132,12 +137,14 @@
 	box-sizing: border-box;
 	border-radius: 50%;
 }
-.field--radio.field--child .field__input {
+.field--radio.field--child .field__input,
+.field--checkbox.field--child .field__input {
 	order: -1;
 	flex-grow: 0;
 	margin-right: var(--spacing-half-line);
 }
-.field--radio.field--child .field__label {
+.field--radio.field--child .field__label,
+.field--checkbox.field--child .field__label {
 	flex: 0 1 1;
 	margin-right: 0;
 }
