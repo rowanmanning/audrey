@@ -59,7 +59,7 @@ module.exports = class EntryList extends Partial {
 					<footer>
 						<p class="content-summary__meta">
 							Posted <time datetime=${entry.publishedAt.toISOString()}>TODO ${entry.publishedAt.toISOString()}</time>
-							${' '} on <a href=${entry.feed.url}>${entry.feed.title}</a>
+							${' '} on <a href=${entry.feed.url}>${entry.feed.displayTitle}</a>
 							${entry.author ? ` by ${entry.author}` : ''}.
 							${entry.isRead ? ` You read this TODO ${entry.readAt.toISOString()}.` : ''}
 						</p>

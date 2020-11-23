@@ -56,15 +56,4 @@ module.exports = function mountFeedsController(app) {
 		}
 	}
 
-	async function createFeed(request, response, next) {
-		try {
-			await Feed.create({
-				xmlUrl: request.body.url
-			});
-			next();
-		} catch (error) {
-			next(error);
-		}
-	}
-
 };

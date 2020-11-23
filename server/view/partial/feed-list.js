@@ -50,7 +50,7 @@ module.exports = class FeedList extends Partial {
 	renderFeed(feed) {
 		return html`
 			<li>
-				<a href=${feed.url}>${feed.title}</a>
+				<a href=${feed.url}>${feed.displayTitle}</a>
 			</li>
 		`;
 	}

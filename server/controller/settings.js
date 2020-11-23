@@ -42,6 +42,9 @@ module.exports = function mountSettingsController(app) {
 		try {
 			// On POST, attempt to save the settings
 			if (request.method === 'POST') {
+
+				// We use a fresh settings object so that we don't interfere
+				// with displayed properties outside of the form
 				const settings = await Settings.get();
 				settings.siteTitle = updateSettingsForm.data.siteTitle;
 				settings.removeOldPosts = updateSettingsForm.data.removeOldPosts;

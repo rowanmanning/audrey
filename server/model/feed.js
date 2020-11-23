@@ -18,6 +18,9 @@ module.exports = function defineFeedSchema(app) {
 		title: {
 			type: String
 		},
+		customTitle: {
+			type: String
+		},
 		xmlUrl: {
 			type: String,
 			required: [true, 'Feed URL is required'],
@@ -54,6 +57,11 @@ module.exports = function defineFeedSchema(app) {
 		message: `A feed with that {PATH} already exists`
 	});
 
+	// Virtual display title
+	feedSchema.virtual('displayTitle').get(function() {
+		return this.customTitle || this.title;
+	});
+
 	// Virtual internal feed URL
 	feedSchema.virtual('url').get(function() {
 		return `/feeds/${this.get('id')}`;
@@ -62,6 +70,11 @@ module.exports = function defineFeedSchema(app) {
 	// Virtual internal feed refresh URL
 	feedSchema.virtual('refreshUrl').get(function() {
 		return `${this.get('url')}/refresh`;
+	});
+
+	// Virtual internal feed edit URL
+	feedSchema.virtual('editUrl').get(function() {
+		return `${this.get('url')}/edit`;
 	});
 
 	// When a feed is created, perform a fetch

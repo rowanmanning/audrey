@@ -8,7 +8,7 @@ const layout = require('../../layout/main');
 module.exports = function renderFeedsViewPage(context) {
 	const {entries, feed, refreshFeedForm} = context;
 
-	context.pageTitle = feed.title;
+	context.pageTitle = feed.displayTitle;
 
 	return layout(context, html`
 		<header class="content-head">
@@ -16,11 +16,14 @@ module.exports = function renderFeedsViewPage(context) {
 		</header>
 		<ul>
 			<li><a href=${feed.htmlUrl}>View feed website</a></li>
+			<li><a href=${feed.editUrl}>Edit feed</a></li>
+			<li>
+				<${Form} action=${refreshFeedForm.action}>
+					<${Form.Submit} label="Refresh feed" />
+				<//>
+			</li>
 		</ul>
-		<${Form} action=${refreshFeedForm.action}>
-			<${Form.Errors} errors=${refreshFeedForm.errors} />
-			<${Form.Submit} label="Refresh feed" />
-		<//>
+		<${Form.Errors} errors=${refreshFeedForm.errors} />
 		<${EntryList} entries=${entries} />
 	`);
 };
