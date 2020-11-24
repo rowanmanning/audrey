@@ -1,5 +1,6 @@
 'use strict';
 
+const Breadcrumb = require('../partial/breadcrumb');
 const Footer = require('../partial/footer');
 const Header = require('../partial/header');
 const {html} = require('@rowanmanning/app');
@@ -23,6 +24,7 @@ module.exports = function renderMainLayout(context, content) {
 		/>
 		<main role="main" class="main">
 			<div class="main__inner">
+				<${Breadcrumb} items=${context.breadcrumbs} />
 				${content}
 			</div>
 		</main>

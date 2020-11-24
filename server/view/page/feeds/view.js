@@ -10,6 +10,12 @@ module.exports = function renderFeedsViewPage(context) {
 
 	context.pageTitle = feed.displayTitle;
 
+	// Add breadcrumbs
+	context.breadcrumbs.push({
+		label: 'Feeds',
+		url: '/feeds'
+	});
+
 	return layout(context, html`
 		<header class="content-head">
 			<h1 class="content-head__title">${context.pageTitle}</h1>

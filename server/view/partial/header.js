@@ -27,12 +27,12 @@ module.exports = class Header extends Partial {
 				url: '/'
 			},
 			{
-				label: 'All Feeds',
-				url: '/feeds'
+				label: 'All',
+				url: '/entries'
 			},
 			{
-				label: 'All Entries',
-				url: '/entries'
+				label: 'Feeds',
+				url: '/feeds'
 			},
 			{
 				label: 'Settings',

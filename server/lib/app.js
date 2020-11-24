@@ -13,6 +13,8 @@ module.exports = class AudreyApp extends App {
 	}
 
 	setupControllers() {
+
+		// Load settings into each request
 		this.router.use(async (request, response, next) => {
 			try {
 				const {Settings} = this.models;
@@ -22,6 +24,19 @@ module.exports = class AudreyApp extends App {
 				next(error);
 			}
 		});
+
+		// Add a home breadcrumb if we're not on the home page
+		this.router.use((request, response, next) => {
+			response.locals.breadcrumbs = [];
+			if (request.path !== '/') {
+				response.locals.breadcrumbs.push({
+					label: request.settings.siteTitle,
+					url: '/'
+				});
+			}
+			next();
+		});
+
 		super.setupControllers();
 	}
 

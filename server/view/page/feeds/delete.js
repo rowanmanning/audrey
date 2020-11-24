@@ -9,6 +9,16 @@ module.exports = function renderFeedsDeletePage(context) {
 
 	context.pageTitle = `Deleting ${feed.displayTitle}`;
 
+	// Add breadcrumbs
+	context.breadcrumbs.push({
+		label: 'Feeds',
+		url: '/feeds'
+	});
+	context.breadcrumbs.push({
+		label: feed.displayTitle,
+		url: feed.url
+	});
+
 	return layout(context, html`
 		<header class="content-head">
 			<h1 class="content-head__title">${context.pageTitle}</h1>

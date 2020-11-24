@@ -8,6 +8,16 @@ module.exports = function renderEntriesViewPage(context) {
 
 	context.pageTitle = entry.title;
 
+	// Add breadcrumbs
+	context.breadcrumbs.push({
+		label: 'Feeds',
+		url: '/feeds'
+	});
+	context.breadcrumbs.push({
+		label: entry.feed.displayTitle,
+		url: entry.feed.url
+	});
+
 	const cleanContent = {__html: entry.cleanContent};
 
 	return layout(context, html`
