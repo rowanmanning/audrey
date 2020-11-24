@@ -22,6 +22,7 @@
   },
   "dependencies": {
     "@rowanmanning/app": "^1.0.0-alpha.22",
+    "date-fns": "^2.16.1",
     "dompurify": "^2.2.2",
     "dotenv": "^8.2.0",
     "feedparser": "^2.2.10",

@@ -1,5 +1,6 @@
 'use strict';
 
+const FormattedDate = require('./formatted-date');
 const {html, Partial} = require('@rowanmanning/app');
 
 /**
@@ -58,10 +59,10 @@ module.exports = class EntryList extends Partial {
 					</header>
 					<footer>
 						<p class="content-summary__meta">
-							Posted <time datetime=${entry.publishedAt.toISOString()}>TODO ${entry.publishedAt.toISOString()}</time>
+							Posted <${FormattedDate} date=${entry.publishedAt} />
 							${' '} on <a href=${entry.feed.url}>${entry.feed.displayTitle}</a>
 							${entry.author ? ` by ${entry.author}` : ''}.
-							${entry.isRead ? ` You read this TODO ${entry.readAt.toISOString()}.` : ''}
+							${entry.isRead ? html` You read this <${FormattedDate} date=${entry.readAt} />.` : ''}
 						</p>
 					</footer>
 					<p class="content-summary__preview">

@@ -1,5 +1,6 @@
 'use strict';
 
+const FormattedDate = require('../../partial/formatted-date');
 const {html} = require('@rowanmanning/app');
 const layout = require('../../layout/main');
 
@@ -27,10 +28,10 @@ module.exports = function renderEntriesViewPage(context) {
 			<div class="content-head__meta content-highlight">
 
 				<p>
-					Posted <time datetime=${entry.publishedAt.toISOString()}>TODO ${entry.publishedAt.toISOString()}</time>
+					Posted <${FormattedDate} date=${entry.publishedAt} />
 					${' '} on <a href=${entry.feed.url}>${entry.feed.title}</a>
 					${entry.author ? ` by ${entry.author}` : ''}.
-					${entry.isRead ? ` You read this TODO ${entry.readAt.toISOString()}.` : ''}
+					${entry.isRead ? html` You read this <${FormattedDate} date=${entry.readAt} />.` : ''}
 				</p>
 
 				<ul class="content-head__actions">
