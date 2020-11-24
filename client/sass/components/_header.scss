@@ -109,7 +109,12 @@
 	}
 }
 
-// Header icon element, "cog" modifier
-.header__icon--cog {
-	background-image: url("/icons/cog.svg");
+// Header icon element, "settings" modifier
+.header__icon--settings {
+	background-image: url("/icons/settings.svg");
+}
+
+// Header icon element, "subscribe" modifier
+.header__icon--subscribe {
+	background-image: url("/icons/subscribe.svg");
 }

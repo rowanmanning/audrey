@@ -7,13 +7,15 @@ module.exports = function mountHomeController(app) {
 	const {Entry} = app.models;
 
 	router.get('/', [
-		fetchAllUnreadEntries,
+		fetchFilteredEntries,
 		render('page/home')
 	]);
 
-	async function fetchAllUnreadEntries(request, response, next) {
+	async function fetchFilteredEntries(request, response, next) {
 		try {
-			response.locals.entries = await Entry.fetchAllUnread();
+			response.locals.entries = await Entry.fetchFiltered({
+				status: request.query.status
+			});
 			next();
 		} catch (error) {
 			next(error);

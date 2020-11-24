@@ -1,23 +1,13 @@
 'use strict';
 
-const render = require('../middleware/render');
+const redirect = require('../middleware/redirect');
 
 module.exports = function mountEntriesController(app) {
 	const {router} = app;
 	const {Entry} = app.models;
 
 	router.get('/entries', [
-		fetchAllEntries,
-		render('page/entries/list')
+		redirect('/')
 	]);
-
-	async function fetchAllEntries(request, response, next) {
-		try {
-			response.locals.entries = await Entry.fetchAll();
-			next();
-		} catch (error) {
-			next(error);
-		}
-	}
 
 };

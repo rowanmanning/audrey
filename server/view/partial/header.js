@@ -23,21 +23,22 @@ module.exports = class Header extends Partial {
 		this.context.currentPath = this.context.currentPath || '/';
 		this.context.navigationItems = [
 			{
-				label: 'Unread',
+				label: 'Entries',
 				url: '/'
-			},
-			{
-				label: 'All',
-				url: '/entries'
 			},
 			{
 				label: 'Feeds',
 				url: '/feeds'
 			},
 			{
+				label: 'Subscribe',
+				url: '/subscribe',
+				icon: 'subscribe'
+			},
+			{
 				label: 'Settings',
 				url: '/settings',
-				icon: 'cog'
+				icon: 'settings'
 			}
 		];
 	}

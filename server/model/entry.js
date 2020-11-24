@@ -125,6 +125,23 @@ module.exports = function defineEntrySchema() {
 			.populate('feed');
 	});
 
+	entrySchema.static('fetchFiltered', function(filters = {}) {
+		const query = {};
+
+		// Filter based on read status
+		switch (filters.status) {
+			case 'all':
+				break;
+			case 'read':
+				query.isRead = true;
+				break;
+			default:
+				query.isRead = false;
+		}
+
+		return this.fetchAll(query);
+	});
+
 	entrySchema.static('fetchAllUnread', function() {
 		return this.fetchAll({isRead: false});
 	});

@@ -12,3 +12,4 @@ A simple single-user feed reader.
 - [ ] Build a custom home page (feed count / summary etc in hero?)
 - [ ] Add the ability to import OPML
 - [ ] Add the ability to export OPML
+- [ ] Add a link to report formatting issues with feeds (GitHub issue link)
