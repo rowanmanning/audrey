@@ -36,7 +36,12 @@ module.exports = class EntryList extends Partial {
 				<ol class="content-list">${entries}</ol>
 			`;
 		}
-		return html`<p>No entries</p>`;
+		return html`
+			<p>
+				There's nothing to read!<br/>
+				<a href="/subscribe">You can subscribe to feeds here</a>.
+			</p>
+		`;
 	}
 
 	/**

@@ -35,7 +35,12 @@ module.exports = class FeedList extends Partial {
 				<ul>${feeds}</ul>
 			`;
 		}
-		return html`<p>No feeds</p>`;
+		return html`
+			<p>
+				You are not subscribed to any feeds yet.<br/>
+				<a href="/subscribe">You can subscribe to feeds here</a>.
+			</p>
+		`;
 	}
 
 	/**
