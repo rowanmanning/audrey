@@ -9,7 +9,10 @@
     "reader",
     "rss"
   ],
-  "author": "Rowan Manning (https://rowanmanning.com/)",
+  "author": {
+    "name" : "Rowan Manning",
+    "url" : "https://rowanmanning.com/"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/rowanmanning/audrey.git"

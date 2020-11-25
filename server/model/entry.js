@@ -112,17 +112,18 @@ module.exports = function defineEntrySchema() {
 			guid: entry.guid
 		};
 		return this.findOneAndUpdate(query, entry, {
-			upsert: true,
+			context: 'query',
 			new: true,
-			setDefaultsOnInsert: true
+			runValidators: true,
+			setDefaultsOnInsert: true,
+			upsert: true
 		});
 	});
 
 	entrySchema.static('fetchAll', function(query) {
 		return this
 			.find(query)
-			.sort({publishedAt: -1})
-			.populate('feed');
+			.sort({publishedAt: -1});
 	});
 
 	entrySchema.static('fetchFiltered', function(filters = {}) {
@@ -140,10 +141,6 @@ module.exports = function defineEntrySchema() {
 		}
 
 		return this.fetchAll(query);
-	});
-
-	entrySchema.static('fetchAllUnread', function() {
-		return this.fetchAll({isRead: false});
 	});
 
 	entrySchema.static('fetchAllByFeedId', function(feedId) {

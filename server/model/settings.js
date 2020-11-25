@@ -2,7 +2,6 @@
 
 const {Schema} = require('@rowanmanning/app');
 const shortid = require('shortid');
-const settings = require('../controller/settings');
 
 module.exports = function defineSettingsSchema(app) {
 

@@ -2,9 +2,6 @@
 // Main block
 .main {
 	@extend %base-typography;
-	--color-main-background: var(--color-content-background);
-	
-	background-color: var(--color-main-background);
 }
 
 // Main inner element

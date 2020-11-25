@@ -13,9 +13,9 @@ module.exports = function mountHomeController(app) {
 
 	async function fetchFilteredEntries(request, response, next) {
 		try {
-			response.locals.entries = await Entry.fetchFiltered({
-				status: request.query.status
-			});
+			response.locals.entries = await Entry
+				.fetchFiltered({status: request.query.status})
+				.populate('feed');
 			next();
 		} catch (error) {
 			next(error);

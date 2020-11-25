@@ -2,7 +2,14 @@
 // Content body block
 .content-body {
 	@extend %base-typography;
+	
+	background-color: var(--color-content-background);
+	border-radius: var(--spacingvalue-xs);
+	padding: var(--spacingvalue-xxl) var(--spacingvalue-xl);
 
+	> :first-child {
+		margin-top: 0 !important;
+	}
 	> :last-child {
 		margin-bottom: 0 !important;
 	}

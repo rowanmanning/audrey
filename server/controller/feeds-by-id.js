@@ -21,33 +21,36 @@ module.exports = function mountFeedsByIdController(app) {
 		render('page/feeds/view')
 	]);
 
-	router.get('/feeds/:feedId/edit', [
+	router.get('/feeds/:feedId/settings', [
 		fetchFeedById,
-		handleEditFeedForm,
-		render('page/feeds/edit')
+		handleFeedSettingsForm,
+		render('page/feeds/settings')
 	]);
 
-	router.post('/feeds/:feedId/edit', [
+	router.post('/feeds/:feedId/settings', [
 		fetchFeedById,
-		handleEditFeedForm,
-		render('page/feeds/edit')
-	]);
-	
-	router.get('/feeds/:feedId/delete', [
-		fetchFeedById,
-		handleDeleteFeedForm,
-		render('page/feeds/delete')
+		handleFeedSettingsForm,
+		render('page/feeds/settings')
 	]);
 
-	router.post('/feeds/:feedId/delete', [
+	router.get('/feeds/:feedId/unsubscribe', [
 		fetchFeedById,
-		handleDeleteFeedForm,
-		render('page/feeds/delete')
+		handleUnsubscribeForm,
+		render('page/feeds/unsubscribe')
+	]);
+
+	router.post('/feeds/:feedId/unsubscribe', [
+		fetchFeedById,
+		handleUnsubscribeForm,
+		render('page/feeds/unsubscribe')
 	]);
 
 	async function fetchFeedById(request, response, next) {
 		try {
-			request.feed = response.locals.feed = await Feed.findById(request.params.feedId);
+			request.feed = response.locals.feed = await Feed
+				.findById(request.params.feedId)
+				.populate('errors')
+				.populate('entries');
 			if (response.locals.feed) {
 				return next();
 			}
@@ -79,7 +82,7 @@ module.exports = function mountFeedsByIdController(app) {
 		try {
 			// On POST, attempt to refresh the feed
 			if (request.method === 'POST') {
-				await request.feed.sync();
+				await request.feed.refresh();
 				return response.redirect(request.feed.url);
 			}
 			next();
@@ -93,20 +96,19 @@ module.exports = function mountFeedsByIdController(app) {
 		}
 	}
 
-	// Middleware to handle feed editing
-	async function handleEditFeedForm(request, response, next) {
+	// Middleware to handle feed settings
+	async function handleFeedSettingsForm(request, response, next) {
 
-		// Add edit feed form details to the render context
-		const editFeedForm = response.locals.editFeedForm = {
-			action: request.feed.editUrl,
+		// Add feed settings form details to the render context
+		const feedSettingsForm = response.locals.feedSettingsForm = {
+			action: request.feed.settingsUrl,
 			errors: [],
 			data: {
 				customTitle: (
 					request.body.customTitle === undefined ?
 						request.feed.customTitle :
 						request.body.customTitle
-				),
-				xmlUrl: request.body.xmlUrl || request.feed.xmlUrl
+				)
 			}
 		};
 
@@ -117,15 +119,14 @@ module.exports = function mountFeedsByIdController(app) {
 				// We use a fresh feed object so that we don't interfere
 				// with displayed properties outside of the form
 				const feed = await Feed.findById(request.feed._id);
-				feed.customTitle = editFeedForm.data.customTitle;
-				feed.xmlUrl = editFeedForm.data.xmlUrl;
+				feed.customTitle = feedSettingsForm.data.customTitle;
 				await feed.save();
 				return response.redirect(feed.url);
 			}
 			next();
 		} catch (error) {
 			if (error instanceof ValidationError) {
-				editFeedForm.errors = Object.values(error.errors);
+				feedSettingsForm.errors = Object.values(error.errors);
 				response.status(400);
 				return next();
 			}
@@ -133,12 +134,12 @@ module.exports = function mountFeedsByIdController(app) {
 		}
 	}
 
-	// Middleware to handle feed deletion
-	async function handleDeleteFeedForm(request, response, next) {
+	// Middleware to handle feed unsubscribe
+	async function handleUnsubscribeForm(request, response, next) {
 
-		// Add edit feed form details to the render context
-		const deleteFeedForm = response.locals.deleteFeedForm = {
-			action: request.feed.deleteUrl,
+		// Add unsubscribe form details to the render context
+		const unsubscribeForm = response.locals.unsubscribeForm = {
+			action: request.feed.unsubscribeUrl,
 			errors: [],
 			data: {
 				confirm: Boolean(request.body.confirm)
@@ -146,21 +147,21 @@ module.exports = function mountFeedsByIdController(app) {
 		};
 
 		try {
-			// On POST, attempt to delete the feed
+			// On POST, attempt to unsubscribe from the feed
 			if (request.method === 'POST') {
-				if (deleteFeedForm.data.confirm) {
-					await request.feed.delete();
+				if (unsubscribeForm.data.confirm) {
+					await request.feed.unsubscribe();
 					response.redirect('/feeds');
 				} else {
 					const error = new ValidationError();
-					error.errors.confirm = new Error('Please confirm that you want to delete this feed');
+					error.errors.confirm = new Error('Please confirm that you want to unsubscribe from this feed');
 					throw error;
 				}
 			}
 			next();
 		} catch (error) {
 			if (error instanceof ValidationError) {
-				deleteFeedForm.errors = Object.values(error.errors);
+				unsubscribeForm.errors = Object.values(error.errors);
 				response.status(400);
 				return next();
 			}

@@ -1,36 +1,4 @@
 
-// Define highlight colours as Sass variables
-$_highlight-colors: (
-	"blue": (
-		default: #2190c4,
-		light: lighten(#2190c4, 45%)
-	),
-	"purple": (
-		default: #6c4b9e,
-		light: lighten(#6c4b9e, 45%)
-	),
-	"orange": (
-		default: #f39e24,
-		light: lighten(#f39e24, 35%)
-	),
-	"yellow": (
-		default: #ffd600,
-		light: lighten(#ffd600, 35%)
-	),
-	"lime": (
-		default: #8bc84b,
-		light: lighten(#8bc84b, 30%)
-	),
-	"pink": (
-		default: #ff90fb,
-		light: lighten(#ff90fb, 17%)
-	),
-	"cyan": (
-		default: #5edad6,
-		light: lighten(#5edad6, 30%)
-	)
-);
-
 :root {
 
 	// Define color values (for site UI)
@@ -52,12 +20,6 @@ $_highlight-colors: (
 	--colorvalue-red: #ff3131;
 	--colorvalue-red-light: #fcc;
 
-	// Define color values (for highlights)
-	@each $highlight, $colors in $_highlight-colors {
-		--highlight-#{$highlight}: #{map-get($colors, default)};
-		--highlight-#{$highlight}-light: #{map-get($colors, light)};
-	}
-
 	// Define color use-cases
 	--color-site-background: var(--colorvalue-cream);
 	--color-content-background: var(--colorvalue-white);
@@ -66,8 +28,8 @@ $_highlight-colors: (
 	--color-accent-secondary: var(--colorvalue-green-light);
 	--color-link: var(--colorvalue-green-dark);
 	--color-link-visited: var(--colorvalue-purple);
-	--color-focus: #31a6ff;
-	--color-error: #ff3131;
-	--color-error-light: #fcc;
+	--color-focus: var(--colorvalue-blue);
+	--color-error: var(--colorvalue-red);
+	--color-error-light: var(--colorvalue-red-light);
 
 }

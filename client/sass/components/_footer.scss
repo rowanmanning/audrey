@@ -5,6 +5,11 @@
 	--color-footer-background: var(--color-site-background);
 	
 	background-color: var(--color-footer-background);
+	text-align: center;
+
+	a {
+		@extend %link;
+	}
 }
 
 // Footer inner element

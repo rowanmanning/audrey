@@ -3,24 +3,19 @@
 .content-list {
 	list-style: none;
 	padding-left: 0;
-	margin-top: var(--spacing-onepointfive-line);
+	margin: 0;
 
 	> li {
 		display: block;
 	}
 	> li:not(:last-child) {
-		margin-bottom: var(--spacing-onepointfive-line);
+		margin-bottom: var(--spacing-line);
 	}
 }
 
-// Content list, "condensed" modifier
-.content-list--condensed {
-	margin-top: var(--spacing-line);
-
-	> li {
-		display: block;
-	}
-	> li:not(:last-child) {
-		margin-bottom: var(--spacing-onepointfive-line);
-	}
+// Content list item element
+.content-list__item {
+	background-color: var(--color-content-background);
+	padding: var(--spacingvalue-m);
+	border-radius: var(--spacingvalue-xs);
 }

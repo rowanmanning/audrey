@@ -5,9 +5,9 @@ const {html} = require('@rowanmanning/app');
 const layout = require('../../layout/main');
 
 module.exports = function renderFeedsDeletePage(context) {
-	const {feed, deleteFeedForm} = context;
+	const {feed, unsubscribeForm} = context;
 
-	context.pageTitle = `Deleting ${feed.displayTitle}`;
+	context.pageTitle = `Unsubscribe from ${feed.displayTitle}`;
 
 	// Add breadcrumbs
 	context.breadcrumbs.push({
@@ -24,24 +24,26 @@ module.exports = function renderFeedsDeletePage(context) {
 			<h1 class="content-head__title">${context.pageTitle}</h1>
 		</header>
 
-		<${Form} action=${deleteFeedForm.action}>
-			<${Form.Errors} errors=${deleteFeedForm.errors} />
+		<${Form} action=${unsubscribeForm.action}>
+			<${Form.Errors} errors=${unsubscribeForm.errors} />
 
 			<${Form.Field.Group}
-				label="Confirm deletion"
+				label="Confirm unsubscribe"
 				description="
-					Deleting this feed will also delete all associated entries,
-					and deletion is permanent. Are you sure?
+					Unsubscribing from this feed will delete the
+					feed and all associated entries including any
+					you've saved. This deletion is permanent.
+					Are you sure?
 				"
 			>
 				<${Form.Field.Checkbox}
 					name="confirm"
-					label="I confirm I want to delete this"
+					label="I confirm I want to unsubscribe"
 					value="true"
 				/>
 			<//>
 
-			<${Form.Submit} label="Delete feed" />
+			<${Form.Submit} label="Unsubscribe" />
 		<//>
 	`);
 };

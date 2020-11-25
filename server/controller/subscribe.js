@@ -32,7 +32,8 @@ module.exports = function mountSubscribeController(app) {
 		try {
 			// On POST, attempt to create a feed
 			if (request.method === 'POST') {
-				const feed = await Feed.create(subscribeForm.data);
+				const feed = await Feed.subscribe(subscribeForm.data.xmlUrl);
+				await feed.refresh();
 				return response.redirect(feed.url);
 			}
 			next();

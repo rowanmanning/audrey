@@ -1,14 +1,18 @@
 'use strict';
 
 const App = require('@rowanmanning/app');
+const mongoose = require('mongoose');
 const uuid = require('uuid');
+
+// TODO move this into the connection config in @rowanmanning/app
+mongoose.set('useFindAndModify', false);
 
 module.exports = class AudreyApp extends App {
 
 	constructor(options = {}) {
 		options.name = 'Audrey';
-		options.databaseUrl = options.databaseUrl ?? 'mongodb://localhost:27017/audrey';
-		options.sessionSecret = options.sessionSecret ?? uuid.v4();
+		options.databaseUrl = options.databaseUrl || 'mongodb://localhost:27017/audrey';
+		options.sessionSecret = options.sessionSecret || uuid.v4();
 		super(options);
 	}
 
@@ -34,6 +38,12 @@ module.exports = class AudreyApp extends App {
 					url: '/'
 				});
 			}
+			next();
+		});
+
+		// Add the full request to the view
+		this.router.use((request, response, next) => {
+			response.locals.request = request;
 			next();
 		});
 

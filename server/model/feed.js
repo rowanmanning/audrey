@@ -1,7 +1,7 @@
 'use strict';
 
-const FeedParser = require('feedparser');
-const got = require('got');
+const fetchFeed = require('../lib/feed/fetch');
+const fetchFeedInfo = require('../lib/feed/fetch-info');
 const {Schema, ValidationError} = require('@rowanmanning/app');
 const shortid = require('shortid');
 const uniqueValidator = require('mongoose-unique-validator');
@@ -9,6 +9,9 @@ const uniqueValidator = require('mongoose-unique-validator');
 const day = 1000 * 60 * 60 * 24;
 
 module.exports = function defineFeedSchema(app) {
+	const feedRefreshFlags = {
+		inProgress: false
+	};
 
 	const feedSchema = new Schema({
 		_id: {
@@ -24,7 +27,8 @@ module.exports = function defineFeedSchema(app) {
 		xmlUrl: {
 			type: String,
 			required: [true, 'Feed URL is required'],
-			unique: true
+			unique: true,
+			index: true
 		},
 		htmlUrl: {
 			type: String
@@ -72,129 +76,106 @@ module.exports = function defineFeedSchema(app) {
 		return `${this.get('url')}/refresh`;
 	});
 
-	// Virtual internal feed delete URL
-	feedSchema.virtual('deleteUrl').get(function() {
-		return `${this.get('url')}/delete`;
+	// Virtual internal feed unsubscribe URL
+	feedSchema.virtual('unsubscribeUrl').get(function() {
+		return `${this.get('url')}/unsubscribe`;
 	});
 
-	// Virtual internal feed edit URL
-	feedSchema.virtual('editUrl').get(function() {
-		return `${this.get('url')}/edit`;
+	// Virtual internal feed settings URL
+	feedSchema.virtual('settingsUrl').get(function() {
+		return `${this.get('url')}/settings`;
 	});
 
-	// When a feed is created, perform a fetch
-	feedSchema.pre('save', async function(done) {
-		if (this.isNew) {
-			try {
-				await this.sync(false);
-			} catch (error) {
-				done(error);
-			}
-		}
-		done();
+	// Virtual to populate feed errors
+	feedSchema.virtual('errors', {
+		ref: 'FeedError',
+		localField: '_id',
+		foreignField: 'feed',
+		justOne: false
 	});
 
-	// Feed sync method, used for creating and refreshing feeds
-	feedSchema.method('sync', async function(saveFeedChanges = true) {
+	// Virtual to populate feed entries
+	feedSchema.virtual('entries', {
+		ref: 'Entry',
+		localField: '_id',
+		foreignField: 'feed',
+		justOne: false
+	});
 
-		// Get the feed ID and app settings
+	// Feed refresh method, used to refresh feed information and load entries
+	feedSchema.method('refresh', async function() {
+
+		// Get the feed ID, app settings, and cut-off date
 		const feedId = this._id;
 		const settings = await app.models.Settings.get();
-		app.log.info(`[feeds:${feedId}]: syncing`);
+		await app.models.FeedError.deleteAllByFeedId(feedId);
+		const cutOffDate = new Date(Date.now() - (day * settings.daysToRetainOldEntries));
 
-		try {
-			await new Promise((resolve, reject) => {
-
-				// Request the XMl and stream the response
-				const xmlStream = got.stream(this.get('xmlUrl'));
-				xmlStream.on('error', reject);
-
-				// Create a feed parser
-				const feedParser = new FeedParser();
-				feedParser.on('error', reject);
-				feedParser.on('end', () => resolve());
-
-				// Handle the feed meta (the information about the feed itself),
-				// update the feed document to include all the newly parsed data
-				feedParser.on('meta', async meta => {
-					this.title = meta.title;
-					this.xmlUrl = meta.xmlUrl;
-					this.htmlUrl = meta.link;
-					this.author = meta.author ?? this.author;
-					this.categories = meta.categories ?? this.categories;
-					this.copyright = meta.copyright ?? this.copyright;
-					this.generator = meta.generator ?? this.generator;
-					this.language = meta.language ?? this.language;
-					this.syncedAt = new Date();
-					if (saveFeedChanges) {
-						try {
-							await this.save();
-						} catch (error) {
-							// The save does not resolve or reject the promise,
-							// so errors can't be thrown
-							app.log.error(`[feeds:${feedId}]: failed to save: ${error.message}`);
-						}
-					}
-				});
-
-				// Handle feed entries, saving them as necessary
-				feedParser.on('readable', async function() {
-					const cutOffDate = new Date(Date.now() - (day * settings.daysToRetainOldEntries));
-					let entry;
-					while (entry = this.read()) {
-						try {
-							if (entry.date > cutOffDate) {
-								await app.models.Entry.createOrUpdate({
-									feed: feedId,
-									title: entry.title,
-									guid: entry.guid,
-									htmlUrl: entry.origlink ?? entry.link,
-									content: entry.description,
-									summary: entry.summary,
-									author: entry.author,
-									categories: entry.categories,
-									syncedAt: new Date(),
-									publishedAt: entry.pubDate,
-									modifiedAt: entry.date
-								});
-								app.log.info(`[feeds:${feedId}]: found entry ${entry.guid}`);
-							} else {
-								app.log.info(`[feeds:${feedId}]: entry ${entry.guid} is too old`);
-							}
-						} catch (error) {
-							// Each entry saving does not resolve or reject the promise,
-							// so errors can't be thrown
-							app.log.error(`[feeds:${feedId}]: failed to save entry ${entry.guid}: ${error.message}`);
-						}
-					}
-				});
-
-				// Pipe the XML response into the feed parser
-				xmlStream.pipe(feedParser);
-			});
-		} catch (caughtError) {
-			app.log.error(`[feeds:${feedId}]: failed to sync: ${caughtError.message}`);
-
-			// Handle not a feed message from node-feedparser
-			if (caughtError.message === 'Not a feed') {
-				const error = new ValidationError(this);
-				error.errors.xmlUrl = new Error('Feed URL must be a valid ATOM or RSS feed');
-				throw error;
+		async function throwFeedError(error) {
+			const validationError = app.models.Feed._feedErrorToValidationError(error);
+			let message = validationError.message;
+			const validationMessages = Object.values(validationError.errors);
+			if (validationMessages.length) {
+				message = validationMessages.map(error => error.message).join(', ');
 			}
-
-			// Handle HTTP errors
-			if (caughtError.name === 'HTTPError') {
-				const error = new ValidationError(this);
-				error.errors.xmlUrl = new Error('Feed URL responded with an error, please check that the URL is correct');
-				throw error;
-			}
-
-			throw caughtError;
+			await app.models.FeedError.throw(feedId, message);
 		}
+
+		// Fetch the feed
+		return new Promise(resolve => {
+			app.log.info(`[feeds:${feedId}]: refreshing`);
+			fetchFeed(this.xmlUrl)
+
+				// Handle errors in the feed fetching and parsing
+				.on('error', async error => {
+					app.log.error(`[feeds:${feedId}]: failed to load: ${error.message}`);
+					await throwFeedError(error);
+					resolve();
+				})
+
+				// Update feed information, the refresh is considered complete
+				// when the feed is saved
+				.on('info', async info => {
+					try {
+						const infoArray = Object.entries(app.models.Feed._transformFeedInfo(info));
+						for (const [property, value] of infoArray) {
+							this[property] = value;
+						}
+						this.syncedAt = new Date();
+						await this.save();
+						app.log.info(`[feeds:${feedId}]: feed info refreshed`);
+					} catch (error) {
+						app.log.error(`[feeds:${feedId}]: failed to save: ${error.message}`);
+						await throwFeedError(error);
+					}
+					resolve();
+				})
+
+				// Handle feed entries, these are added in the background, errors adding entries
+				// only appear in
+				.on('entry', async entry => {
+					try {
+						if (entry.date > cutOffDate) {
+							await app.models.Entry.createOrUpdate({
+								feed: feedId,
+								syncedAt: new Date(),
+								...app.models.Feed._transformFeedEntry(entry)
+							});
+							app.log.info(`[feeds:${feedId}]: found entry ${entry.guid}`);
+						} else {
+							app.log.info(`[feeds:${feedId}]: entry ${entry.guid} is too old`);
+						}
+					} catch (error) {
+						app.log.error(`[feeds:${feedId}]: failed to save entry ${entry.guid}: ${error.message}`);
+						await throwFeedError(error);
+					}
+				});
+		});
 	});
 
-	// Feed sync method, used for creating and refreshing feeds
-	feedSchema.method('delete', async function() {
+	// Feed unsubscribe method, used for deleting a feed
+	feedSchema.method('unsubscribe', async function() {
+		await app.models.FeedError.deleteAllByFeedId(this._id);
 		await app.models.Entry.remove({
 			feed: this._id
 		});
@@ -203,10 +184,140 @@ module.exports = function defineFeedSchema(app) {
 		});
 	});
 
+	// Fetch all feeds
 	feedSchema.static('fetchAll', function(query) {
 		return this
 			.find(query)
 			.sort('title');
+	});
+
+	// Refresh all feeds
+	feedSchema.static('refreshAll', async function() {
+
+		// Return if we're already refreshing feeds
+		if (feedRefreshFlags.inProgress) {
+			return;
+		}
+
+		feedRefreshFlags.inProgress = true;
+		try {
+			app.log.error(`[feeds]: refreshing all`);
+			const feeds = await this.fetchAll();
+			for (const feed of feeds) {
+				try {
+					await feed.refresh();
+				} catch (error) {
+					app.log.error(`[feeds:${feed._id}]: error refreshing: ${error.message}`);
+				}
+			}
+		} catch (error) {
+			app.log.error(`[feeds]: error loading feeds: ${error.message}`);
+		}
+		feedRefreshFlags.inProgress = false;
+
+	});
+
+	feedSchema.static('isRefreshInProgress', () => {
+		return feedRefreshFlags.inProgress;
+	});
+
+	// Subscribe to a feed, first validating that it hasn't been added already
+	feedSchema.static('subscribe', async function(xmlUrl) {
+		try {
+			const feedInfo = await fetchFeedInfo(xmlUrl);
+			const feed = await this.create({
+				xmlUrl: feedInfo.xmlUrl,
+				...this._transformFeedInfo(feedInfo)
+			});
+			app.log.info(`[feeds:${feed._id}]: subscribed`);
+			return feed;
+		} catch (error) {
+			throw this._feedErrorToValidationError(error);
+		}
+	});
+
+	// Normalize feed info into an object which can be inserted
+	feedSchema.static('_transformFeedInfo', feedInfo => {
+		return {
+			author: feedInfo.author,
+			categories: feedInfo.categories,
+			copyright: feedInfo.copyright,
+			generator: feedInfo.generator,
+			htmlUrl: feedInfo.link,
+			language: feedInfo.language,
+			title: feedInfo.title
+		};
+	});
+
+	// Normalize feed entry into an object which can be inserted
+	feedSchema.static('_transformFeedEntry', feedEntry => {
+		return {
+			title: feedEntry.title,
+			guid: feedEntry.guid,
+			htmlUrl: feedEntry.origlink ?? feedEntry.link,
+			content: feedEntry.description,
+			summary: feedEntry.summary,
+			author: feedEntry.author,
+			categories: feedEntry.categories,
+			publishedAt: feedEntry.pubDate,
+			modifiedAt: feedEntry.date
+		};
+	});
+
+	// Handle errors from the feed parser
+	feedSchema.static('_feedErrorToValidationError', error => {
+		if (error instanceof ValidationError) {
+			return error;
+		}
+
+		const validationError = new ValidationError();
+		validationError.errors.xmlUrl = new Error(
+			`The feed could not be parsed: ${error.message}`
+		);
+
+		// Handle not a feed message from node-feedparser
+		if (error.message === 'Not a feed') {
+			validationError.errors.xmlUrl = new Error(
+				'Feed URL must be a valid ATOM or RSS feed'
+			);
+		}
+
+		// Handle HTTP errors
+		if (error.name === 'HTTPError') {
+			validationError.errors.xmlUrl = new Error(
+				'Feed URL responded with an error, please check that the URL is correct'
+			);
+		}
+
+		return validationError;
+	});
+	
+	// Handle errors from the feed parser
+	feedSchema.static('_feedErrorToValidationError', error => {
+		if (error instanceof ValidationError) {
+			return error;
+		}
+
+		const validationError = new ValidationError();
+		validationError.errors.xmlUrl = new Error(
+			`The feed could not be parsed: ${error.message}`
+		);
+
+		// Handle not a feed message from node-feedparser
+		if (error.message === 'Not a feed') {
+			validationError.errors.xmlUrl = new Error(
+				'Feed URL is not a valid ATOM or RSS feed'
+			);
+		}
+
+		// Handle HTTP errors
+		if (error.name === 'HTTPError') {
+			validationError.errors.xmlUrl = new Error(
+				'Feed URL responded with an error status'
+			);
+		}
+
+		return validationError;
 	});
 
 	return feedSchema;

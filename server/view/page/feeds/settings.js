@@ -4,10 +4,10 @@ const Form = require('../../partial/form');
 const {html} = require('@rowanmanning/app');
 const layout = require('../../layout/main');
 
-module.exports = function renderFeedsEditPage(context) {
-	const {feed, editFeedForm} = context;
+module.exports = function renderFeedSettingsPage(context) {
+	const {feed, feedSettingsForm} = context;
 
-	context.pageTitle = `Editing ${feed.displayTitle}`;
+	context.pageTitle = `Settings for ${feed.displayTitle}`;
 
 	// Add breadcrumbs
 	context.breadcrumbs.push({
@@ -24,8 +24,8 @@ module.exports = function renderFeedsEditPage(context) {
 			<h1 class="content-head__title">${context.pageTitle}</h1>
 		</header>
 
-		<${Form} action=${editFeedForm.action}>
-			<${Form.Errors} errors=${editFeedForm.errors} />
+		<${Form} action=${feedSettingsForm.action}>
+			<${Form.Errors} errors=${feedSettingsForm.errors} />
 
 			<${Form.Field.Text}
 				name="customTitle"
@@ -35,22 +35,17 @@ module.exports = function renderFeedsEditPage(context) {
 					If you leave this field blank, the original
 					title of the feed will be used
 				"
-				value=${editFeedForm.data.customTitle}
-			/>
-
-			<${Form.Field.Url}
-				name="xmlUrl"
-				label="Feed URL"
-				description="
-					Change the URL for the feed if it's moved.
-					This must be a valid ATOM or RSS feed,
-					changing a feed URL may cause duplication
-					of content
-				"
-				value=${editFeedForm.data.xmlUrl}
+				value=${feedSettingsForm.data.customTitle}
 			/>
 
 			<${Form.Submit} label="Save changes" />
 		<//>
+
+		<h2>The Danger Zone</h2>
+
+		<ul>
+			<li><a href=${feed.unsubscribeUrl}>Unsubscribe from this feed</a></li>
+		</ul>
+
 	`);
 };

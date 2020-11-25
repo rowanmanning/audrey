@@ -1,11 +1,11 @@
 'use strict';
 
-const FeedList = require('../../partial/feed-list');
+const FeedList = require('../../partial/list/feeds');
 const {html} = require('@rowanmanning/app');
 const layout = require('../../layout/main');
 
 module.exports = function renderFeedsListPage(context) {
-	const {feeds, createFeedForm} = context;
+	const {feeds, isRefreshInProgress} = context;
 
 	context.pageTitle = 'Feeds';
 
@@ -16,8 +16,15 @@ module.exports = function renderFeedsListPage(context) {
 
 		<ul>
 			<li><a href="/subscribe">Subscribe to a feed</a></li>
+			<li>
+				<form method="post" action="/feeds/refresh">
+					<input type="submit" value="Refresh all feeds" disabled=${isRefreshInProgress} />${' '}
+				</form>
+			</li>
 		</ul>
 
-		<${FeedList} feeds=${feeds} />
+		${isRefreshInProgress ? html`<p>Feeds are currently being refreshed. Reload this page in a minute or two</p>` : ''}
+
+		<${FeedList} items=${feeds} />
 	`);
 };

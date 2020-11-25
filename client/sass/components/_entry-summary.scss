@@ -1,0 +1,40 @@
+
+// Entry summary block
+.entry-summary {
+	@extend %base-typography;
+}
+
+// Entry summary "read" modifier
+.entry-summary--read {
+	opacity: 0.6;
+}
+
+// Entry summary headline element
+.entry-summary__headline {
+	font-family: var(--font-family-heading);
+	font-size: var(--font-size-h3);
+	font-weight: normal;
+	line-height: var(--line-height-h3);
+	margin-bottom: var(--spacing-half-line);
+	margin-top: 0;
+
+	a {
+		color: inherit;
+		text-decoration: none;
+	}
+	a:hover {
+		text-decoration: underline;
+		text-decoration-color: var(--content-highlight-border-color);
+	}
+}
+
+// Entry summary meta element
+.entry-summary__meta {
+	font-size: var(--font-size-small);
+	line-height: var(--line-height-small);
+	margin: 0;
+
+	a {
+		@extend %link;
+	}
+}

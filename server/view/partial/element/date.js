@@ -6,16 +6,16 @@ const formatDistance = require('date-fns/formatDistance');
 const {html, Partial} = require('@rowanmanning/app');
 
 /**
- * Represents a formatted date.
+ * Represents a date element.
  */
-module.exports = class FormattedDate extends Partial {
+module.exports = class DateElement extends Partial {
 
 	/**
 	 * Class constructor.
 	 *
 	 * @access public
 	 * @param {Object} [context={}]
-	 *     Data to pass into the formatted date.
+	 *     Data to pass into the date element.
 	 * @param {Date} context.date
 	 *     The date to format.
 	 */
@@ -25,11 +25,11 @@ module.exports = class FormattedDate extends Partial {
 	}
 
 	/**
-	 * Render the formatted date.
+	 * Render the date element.
 	 *
 	 * @access private
 	 * @returns {Object}
-	 *     Returns an HTML element representing the formatted datedate.
+	 *     Returns an HTML element representing the date element.
 	 */
 	render() {
 		const isoDate = formatISO(this.date);
