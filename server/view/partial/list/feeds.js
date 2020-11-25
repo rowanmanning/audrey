@@ -42,6 +42,7 @@ module.exports = class FeedList extends ContentList {
 					<a href=${feed.url}>Read entries from this feed</a> ${' | '}
 					<a href=${feed.htmlUrl || feed.xmlUrl}>View the feed website</a> ${' | '}
 					<a href=${feed.settingsUrl}>Feed settings</a>
+					${feed.errors && feed.errors.length ? ` | ${feed.errors.length} errors` : ''}
 				</p>
 			</article>
 		`);
