@@ -1,5 +1,6 @@
 'use strict';
 
+const Breadcrumb = require('../../partial/breadcrumb');
 const DateElement = require('../../partial/element/date');
 const {html} = require('@rowanmanning/app');
 const layout = require('../../layout/main');
@@ -29,6 +30,7 @@ module.exports = function renderEntriesViewPage(context) {
 
 		// Content heading
 		heading: html`
+			<${Breadcrumb} items=${context.breadcrumbs} />
 			<div class="content-head">
 				<h1 class="content-head__title">${context.pageTitle}</h1>
 			</div>

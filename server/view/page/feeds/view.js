@@ -1,5 +1,6 @@
 'use strict';
 
+const Breadcrumb = require('../../partial/breadcrumb');
 const EntryList = require('../../partial/list/entries');
 const FeedErrorList = require('../../partial/feed-error-list');
 const DateElement = require('../../partial/element/date');
@@ -38,6 +39,7 @@ module.exports = function renderFeedsViewPage(context) {
 
 		// Content heading
 		heading: html`
+			<${Breadcrumb} items=${context.breadcrumbs} />
 			<div class="content-head">
 				<h1 class="content-head__title">${context.pageTitle}</h1>
 			</div>

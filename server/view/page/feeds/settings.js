@@ -1,5 +1,6 @@
 'use strict';
 
+const Breadcrumb = require('../../partial/breadcrumb');
 const Form = require('../../partial/form');
 const {html} = require('@rowanmanning/app');
 const layout = require('../../layout/main');
@@ -50,6 +51,7 @@ module.exports = function renderFeedSettingsPage(context) {
 
 		// Content heading
 		heading: html`
+			<${Breadcrumb} items=${context.breadcrumbs} />
 			<div class="content-head">
 				<h1 class="content-head__title">${context.pageTitle}</h1>
 			</div>

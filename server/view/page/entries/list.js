@@ -1,5 +1,6 @@
 'use strict';
 
+const Breadcrumb = require('../../partial/breadcrumb');
 const EntryList = require('../../partial/list/entries');
 const {html} = require('@rowanmanning/app');
 const layout = require('../../layout/main');
@@ -31,6 +32,7 @@ module.exports = function renderEntryiesListPage(context) {
 
 		// Content heading
 		heading: html`
+			<${Breadcrumb} items=${context.breadcrumbs} />
 			<div class="content-head">
 				<h1 class="content-head__title">${context.pageTitle}</h1>
 			</div>
