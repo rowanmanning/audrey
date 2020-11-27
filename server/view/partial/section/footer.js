@@ -20,7 +20,12 @@ module.exports = class Footer extends Partial {
 			<footer role="contentinfo" class="footer page-layout">
 				<div class="footer__inner page-layout__main">
 					<small class="footer__copyright">
-						Copyright © ${this.getCurrentYear()}, ${this.renderAuthor()}
+						<a href=${manifest.homepage}>Audrey</a> is licensed under ${' '}
+						<a href="https://www.gnu.org/licenses/gpl-3.0.en.html">GPLv3</a>.<br/>
+						Copyright © ${this.getCurrentYear()}, ${this.renderAuthor()}.<br/>
+						Powered by Audrey v${manifest.version} ${' | '}
+						<a href="${manifest.homepage}#readme">Documentation</a> ${' | '}
+						<a href=${manifest.bugs}>Report an issue</a>
 					</small>
 				</div>
 			</footer>
