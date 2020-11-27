@@ -19,11 +19,8 @@ module.exports = function renderFeedSettingsPage(context) {
 		url: feed.url
 	});
 
-	return layout(context, html`
-		<header class="content-head">
-			<h1 class="content-head__title">${context.pageTitle}</h1>
-		</header>
-
+	// Populate main content
+	const content = html`
 		<${Form} action=${feedSettingsForm.action}>
 			<${Form.Errors} errors=${feedSettingsForm.errors} />
 
@@ -46,6 +43,19 @@ module.exports = function renderFeedSettingsPage(context) {
 		<ul>
 			<li><a href=${feed.unsubscribeUrl}>Unsubscribe from this feed</a></li>
 		</ul>
+	`;
 
-	`);
+	// Populate content sub-sections
+	context.subSections = {
+
+		// Content heading
+		heading: html`
+			<div class="content-head">
+				<h1 class="content-head__title">${context.pageTitle}</h1>
+			</div>
+		`
+	};
+
+	// Wrap the content in a layout and return to render
+	return layout(context, content);
 };

@@ -1,0 +1,46 @@
+
+// Page layout block
+.page-layout {
+	--main-area-width: minmax(var(--layout-width-content-min), var(--layout-width-content-max));
+	--sidebar-area-width: var(--layout-width-sidebar-max);
+
+	display: block;
+	padding-left: var(--layout-width-gutter);
+	padding-right: var(--layout-width-gutter);
+	max-width: var(--layout-width-content-max);
+	margin: 0 auto;
+
+	@media (min-width: $breakpoint-tablet) {
+		@supports (display: grid) {
+			--sidebar-area-width: var(--layout-width-sidebar-min);
+
+			// Override the default styles
+			max-width: none;
+			margin: 0;
+			padding-left: 0;
+			padding-right: 0;
+
+			display: grid;
+			column-gap: var(--layout-width-gutter);
+			grid-template-columns: auto var(--sidebar-area-width) var(--main-area-width) var(--sidebar-area-width) auto;
+			grid-template-rows: auto;
+			grid-template-areas: ". lhs main rhs .";
+		}
+	}
+
+	@media (min-width: $breakpoint-desktop) {
+		--sidebar-area-width: var(--layout-width-sidebar-max);
+	}
+}
+
+.page-layout__lhs {
+	grid-area: lhs;
+}
+
+.page-layout__main {
+	grid-area: main;
+}
+
+.page-layout__rhs {
+	grid-area: rhs;
+}

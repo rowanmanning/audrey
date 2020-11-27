@@ -1,10 +1,10 @@
 'use strict';
 
-const Breadcrumb = require('../partial/breadcrumb');
-const Footer = require('../partial/footer');
-const Header = require('../partial/header');
+const Footer = require('../partial/section/footer');
+const Header = require('../partial/section/header');
 const {html} = require('@rowanmanning/app');
 const layout = require('./default');
+const Main = require('../partial/section/main');
 
 /**
  * Render the main website layout.
@@ -22,12 +22,9 @@ module.exports = function renderMainLayout(context, content) {
 			title=${context.settings.siteTitle}
 			currentPath=${context.currentPath}
 		/>
-		<main role="main" class="main">
-			<div class="main__inner">
-				<${Breadcrumb} items=${context.breadcrumbs} />
-				${content}
-			</div>
-		</main>
+		<${Main} subSections=${context.subSections}>
+			${content}
+		<//>
 		<${Footer}/>
 	`);
 };

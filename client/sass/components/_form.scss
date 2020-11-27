@@ -6,20 +6,6 @@
 	@extend %base-typography;
 	margin-bottom: var(--spacing-line);
 }
-.form__errors {
-	background-color: var(--color-error-light);
-	border: solid 2px var(--color-error);
-	padding: var(--spacing-half-line);
-	padding-bottom: var(--spacing-line);
-	margin-bottom: var(--spacing-line);
-	font-weight: bold;
-}
-.form__errors > ul {
-	margin: var(--spacing-half-line) 0 0 0;
-	padding: 0;
-	padding-left: var(--spacing-line);
-	font-weight: normal;
-}
 .form__submit {
 	margin-bottom: var(--spacing-line);
 	border: none;

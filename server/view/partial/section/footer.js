@@ -1,7 +1,7 @@
 'use strict';
 
 const {html, Partial} = require('@rowanmanning/app');
-const manifest = require('../../../package.json');
+const manifest = require('../../../../package.json');
 
 /**
  * Represents a website footer.
@@ -17,8 +17,8 @@ module.exports = class Footer extends Partial {
 	 */
 	render() {
 		return html`
-			<footer role="contentinfo" class="footer">
-				<div class="footer__inner">
+			<footer role="contentinfo" class="footer page-layout">
+				<div class="footer__inner page-layout__main">
 					<small class="footer__copyright">
 						Copyright © ${this.getCurrentYear()}, ${this.renderAuthor()}
 					</small>

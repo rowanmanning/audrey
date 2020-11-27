@@ -11,7 +11,6 @@
 // Shared extensible styles
 @import "shared/hidden";
 @import "shared/icon";
-@import "shared/layout";
 @import "shared/link";
 @import "shared/typography";
 
@@ -28,6 +27,8 @@
 @import "components/hero";
 @import "components/highlight";
 @import "components/main";
+@import "components/nav-list";
 @import "components/notification";
 @import "components/page";
-@import "components/tile-layout";
+@import "components/page-layout";
+@import "components/pagination";

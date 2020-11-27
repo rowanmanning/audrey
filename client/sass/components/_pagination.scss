@@ -1,0 +1,27 @@
+
+// Pagination block
+// TODO finish styling this
+.pagination {
+	@extend %base-typography;
+
+	display: grid;
+	column-gap: var(--layout-width-gutter);
+	grid-template-columns: repeat(3, 1fr);
+	grid-template-areas: "prev numbers next";
+	padding-top: var(--spacing-line);
+}
+
+.pagination__previous {
+	grid-area: prev;
+	text-align: left;
+}
+
+.pagination__next {
+	grid-area: next;
+	text-align: right;
+}
+
+.pagination__numbers {
+	grid-area: numbers;
+	text-align: center;
+}

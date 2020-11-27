@@ -1,5 +1,6 @@
 'use strict';
 
+const paginate = require('../middleware/paginate');
 const render = require('../middleware/render');
 const {ValidationError} = require('@rowanmanning/app');
 
@@ -9,7 +10,11 @@ module.exports = function mountFeedsByIdController(app) {
 
 	router.get('/feeds/:feedId', [
 		fetchFeedById,
-		handleRefreshFeedForm,
+		paginate({
+			perPage: 50,
+			property: 'entryPagination',
+			total: ({feed}) => Entry.countAllByFeedId(feed)
+		}),
 		fetchFeedEntries,
 		render('page/feeds/view')
 	]);
@@ -17,7 +22,6 @@ module.exports = function mountFeedsByIdController(app) {
 	router.post('/feeds/:feedId/refresh', [
 		fetchFeedById,
 		handleRefreshFeedForm,
-		fetchFeedEntries,
 		render('page/feeds/view')
 	]);
 
@@ -49,8 +53,7 @@ module.exports = function mountFeedsByIdController(app) {
 		try {
 			request.feed = response.locals.feed = await Feed
 				.findById(request.params.feedId)
-				.populate('errors')
-				.populate('entries');
+				.populate('errors');
 			if (response.locals.feed) {
 				return next();
 			}
@@ -62,7 +65,10 @@ module.exports = function mountFeedsByIdController(app) {
 
 	async function fetchFeedEntries(request, response, next) {
 		try {
-			response.locals.entries = await Entry.fetchAllByFeedId(response.locals.feed._id);
+			response.locals.entries = await Entry
+				.fetchAllByFeedId(response.locals.feed._id)
+				.skip(request.entryPagination.currentPageStartIndex)
+				.limit(request.entryPagination.perPage);
 			next();
 		} catch (error) {
 			next(error);
@@ -71,27 +77,10 @@ module.exports = function mountFeedsByIdController(app) {
 
 	// Middleware to handle feed refreshing
 	async function handleRefreshFeedForm(request, response, next) {
-
-		// Add refresh feed form details to the render context
-		const refreshFeedForm = response.locals.refreshFeedForm = {
-			action: request.feed.refreshUrl,
-			errors: [],
-			data: {}
-		};
-
 		try {
-			// On POST, attempt to refresh the feed
-			if (request.method === 'POST') {
-				await request.feed.refresh();
-				return response.redirect(request.feed.url);
-			}
-			next();
+			await request.feed.refresh();
+			return response.redirect(request.feed.url);
 		} catch (error) {
-			if (error instanceof ValidationError) {
-				refreshFeedForm.errors = Object.values(error.errors);
-				response.status(400);
-				return next();
-			}
 			next(error);
 		}
 	}

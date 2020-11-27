@@ -191,6 +191,10 @@ module.exports = function defineFeedSchema(app) {
 			.sort('title');
 	});
 
+	feedSchema.static('countAll', function() {
+		return this.countDocuments();
+	});
+
 	// Refresh all feeds
 	feedSchema.static('refreshAll', async function() {
 

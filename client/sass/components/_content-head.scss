@@ -3,8 +3,6 @@
 .content-head {
 	@extend %base-typography;
 	margin-bottom: var(--spacing-line);
-	display: flex;
-	flex-wrap: wrap;
 }
 
 // Content head title element

@@ -40,6 +40,11 @@ module.exports = function mountSettingsController(app) {
 					typeof request.body.autoMarkAsRead === 'undefined' ?
 						request.settings.autoMarkAsRead :
 						Boolean(request.body.autoMarkAsRead)
+				),
+				showHelpText: (
+					typeof request.body.showHelpText === 'undefined' ?
+						request.settings.showHelpText :
+						Boolean(request.body.showHelpText)
 				)
 			}
 		};
@@ -55,6 +60,7 @@ module.exports = function mountSettingsController(app) {
 				settings.removeOldEntries = updateSettingsForm.data.removeOldEntries;
 				settings.daysToRetainOldEntries = updateSettingsForm.data.daysToRetainOldEntries;
 				settings.autoMarkAsRead = updateSettingsForm.data.autoMarkAsRead;
+				settings.showHelpText = updateSettingsForm.data.showHelpText;
 				await settings.save();
 				return response.redirect('/settings');
 			}

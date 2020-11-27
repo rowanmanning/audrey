@@ -9,11 +9,8 @@ module.exports = function renderSettingsListPage(context) {
 
 	context.pageTitle = 'Settings';
 
-	return layout(context, html`
-		<header class="content-head">
-			<h1 class="content-head__title">${context.pageTitle}</h1>
-		</header>
-
+	// Populate main content
+	const content = html`
 		<${Form} action=${updateSettingsForm.action}>
 			<${Form.Errors} errors=${updateSettingsForm.errors} />
 
@@ -86,8 +83,58 @@ module.exports = function renderSettingsListPage(context) {
 				/>
 			<//>
 
+			<${Form.Field.Group}
+				label="Show help text"
+				description="
+					Whether to show help text across the site.
+				"
+			>
+				<${Form.Field.Radio}
+					name="showHelpText"
+					label="Yes, show help text"
+					value="true"
+					checked=${updateSettingsForm.data.showHelpText}
+				/>
+				<${Form.Field.Radio}
+					name="showHelpText"
+					label="No, I don't need help"
+					value=""
+					checked=${!updateSettingsForm.data.showHelpText}
+				/>
+			<//>
+
 			<${Form.Submit} label="Save changes" />
 		<//>
+	`;
 
-	`);
+	// Populate content sub-sections
+	context.subSections = {
+
+		// Content heading
+		heading: html`
+			<div class="content-head">
+				<h1 class="content-head__title">${context.pageTitle}</h1>
+			</div>
+		`
+	};
+
+	// Right-hand sidebar
+	if (settings.showHelpText) {
+		context.subSections.rhs = html`
+			<div class="notification notification--help">
+				<p>
+					These are site-wide settings which help customise your ${' '}
+					use of ${settings.siteTitle}.
+				</p>
+				<p>
+					These boxes in the sidebar display help text to help you get used to
+					using ${settings.siteTitle}. Once you're familiar, you can turn them
+					off using the "Show help text" setting on this page.
+				</p>
+			</div>
+		`;
+	}
+
+	// Wrap the content in a layout and return to render
+	return layout(context, content);
 };

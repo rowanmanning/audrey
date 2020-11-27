@@ -2,43 +2,55 @@
 // Notification block
 .notification {
 	--notification-border-color: var(--colorvalue-cream-dark);
-	--notification-background-color: var(--colorvalue-cream);
+	--notification-background-color: var(--colorvalue-white);
 
 	@extend %base-typography;
-	display: flex;
-	padding: var(--spacing-rule) var(--spacing-half-line);
-	padding-left: var(--spacing-line);
-	font-size: var(--font-size-small);
-	line-height: var(--line-height-small);
+	padding: var(--spacing-line);
 	border-left: calc(var(--spacing-rule) * 0.5) solid var(--notification-border-color);
 	background-color: var(--notification-background-color);
+	margin-bottom: var(--spacing-line);
 
-	&::before {
-		@extend %icon;
-		width: var(--line-height-small);
-		height: var(--line-height-small);
-		margin-right: var(--spacing-rule);
-		flex-grow: 0;
-		flex-shrink: 0;
-	}
 	a {
 		@extend %link;
 	}
+
+	p, ol, ul {
+		margin-top: 0;
+		margin-bottom: 0;
+
+		&:not(:last-child) {
+			margin-bottom: var(--spacing-half-line);
+		}
+	}
+
+	ol, ul {
+		padding-left: var(--spacing-onepointfive-line);
+		ol, ul {
+			margin-bottom: 0;
+		}
+	}
 }
 
-// Notification block, "source" modifier
-.notification--source::before {
-	content: "";
-	background-image: url('/icons/link.svg');
+// Notification block, "help" modifier
+.notification--help {
+	--notification-border-color: var(--colorvalue-blue);
+	--notification-background-color: var(--colorvalue-blue-light);
 }
 
-// Notification block, "draft" modifier
-.notification--draft {
+// Notification block, "info" modifier
+.notification--info {
+	--notification-border-color: var(--colorvalue-cream-darker);
+	--notification-background-color: var(--colorvalue-cream-dark);
+}
+
+// Notification block, "warning" modifier
+.notification--warning {
 	--notification-border-color: var(--colorvalue-yellow-dark);
 	--notification-background-color: var(--colorvalue-yellow);
+}
 
-	&::before {
-		content: "";
-		background-image: url('/icons/draft.svg');
-	}	
+// Notification block, "error" modifier
+.notification--error {
+	--notification-border-color: var(--color-error);
+	--notification-background-color: var(--color-error-light);
 }

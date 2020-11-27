@@ -23,8 +23,12 @@ module.exports = class Header extends Partial {
 		this.context.currentPath = this.context.currentPath || '/';
 		this.context.navigationItems = [
 			{
-				label: 'Entries',
+				label: 'Unread',
 				url: '/'
+			},
+			{
+				label: 'Entries',
+				url: '/entries'
 			},
 			{
 				label: 'Feeds',
@@ -55,8 +59,8 @@ module.exports = class Header extends Partial {
 			return this.renderNavigationItem(item);
 		});
 		return html`
-			<header role="banner" class="header">
-				<div class="header__inner">
+			<header role="banner" class="header page-layout">
+				<div class="header__inner page-layout__main">
 
 					<a href="/" class="header__site-name">
 						${this.context.title}

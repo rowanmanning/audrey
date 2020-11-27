@@ -9,11 +9,8 @@ module.exports = function renderSubscribePage(context) {
 
 	context.pageTitle = 'Subscribe to a feed';
 
-	return layout(context, html`
-		<header class="content-head">
-			<h1 class="content-head__title">${context.pageTitle}</h1>
-		</header>
-
+	// Populate main content
+	const content = html`
 		<${Form} action=${subscribeForm.action}>
 			<${Form.Errors} errors=${subscribeForm.errors} />
 
@@ -28,5 +25,19 @@ module.exports = function renderSubscribePage(context) {
 
 			<${Form.Submit} label="Subscribe" />
 		<//>
-	`);
+	`;
+
+	// Populate content sub-sections
+	context.subSections = {
+
+		// Content heading
+		heading: html`
+			<div class="content-head">
+				<h1 class="content-head__title">${context.pageTitle}</h1>
+			</div>
+		`
+	};
+
+	// Wrap the content in a layout and return to render
+	return layout(context, content);
 };

@@ -2,4 +2,11 @@
 // Page block
 .page {
 	background-color: var(--color-site-background);
+	border-top: var(--spacing-rule) solid var(--color-accent-primary);
+
+	&::before {
+		content: "";
+		display: block;
+		border-top: var(--spacing-rule) solid var(--color-accent-secondary);
+	}
 }

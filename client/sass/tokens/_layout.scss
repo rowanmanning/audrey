@@ -1,13 +1,24 @@
 
-$layout-width-max: 720px;
-$layout-width-mobile: 640px;
-$layout-width-small-mobile: 480px;
+// Sass variables to help calculate breakpoints
+$layout-width-content-min: 480px;
+$layout-width-content-max: 720px;
+$layout-width-sidebar-min: 180px;
+$layout-width-sidebar-max: 240px;
+$layout-width-gutter: 24px;
+
+// Calculated breakpoints
+$breakpoint-desktop: $layout-width-content-min + ($layout-width-gutter * 4) + ($layout-width-sidebar-max * 2);
+$breakpoint-tablet: $layout-width-content-min + ($layout-width-gutter * 4) + ($layout-width-sidebar-min * 2);
+$breakpoint-mobile: 640px;
+$breakpoint-small-mobile: 480px;
 
 :root {
 
 	// Define layout width values
-	--layout-width-max: #{$layout-width-max};
-	--layout-width-mobile: #{$layout-width-mobile};
-	--layout-width-small-mobile: #{$layout-width-small-mobile};
+	--layout-width-sidebar-min: #{$layout-width-sidebar-min};
+	--layout-width-sidebar-max: #{$layout-width-sidebar-max};
+	--layout-width-content-min: #{$layout-width-content-min};
+	--layout-width-content-max: #{$layout-width-content-max};
+	--layout-width-gutter: #{$layout-width-gutter};
 
 }

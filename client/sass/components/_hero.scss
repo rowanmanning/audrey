@@ -13,7 +13,6 @@
 
 // Hero inner element
 .hero__inner {
-	@extend %layout-inner;
 	padding-bottom: var(--spacingvalue-xxxl);
 	padding-top: var(--spacingvalue-xxxl);
 }
@@ -32,6 +31,6 @@
 .hero__body {
 	text-align: center;
 	margin: var(--spacing-line) auto 0 auto;
-	max-width: #{$layout-width-mobile};
+	max-width: #{$breakpoint-mobile};
 	color: var(--color-hero-text);
 }

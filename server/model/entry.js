@@ -126,21 +126,20 @@ module.exports = function defineEntrySchema() {
 			.sort({publishedAt: -1});
 	});
 
-	entrySchema.static('fetchFiltered', function(filters = {}) {
-		const query = {};
+	entrySchema.static('countAll', function() {
+		return this.countDocuments();
+	});
 
-		// Filter based on read status
-		switch (filters.status) {
-			case 'all':
-				break;
-			case 'read':
-				query.isRead = true;
-				break;
-			default:
-				query.isRead = false;
-		}
+	entrySchema.static('fetchUnread', function() {
+		return this.fetchAll({isRead: false});
+	});
 
-		return this.fetchAll(query);
+	entrySchema.static('countUnread', function() {
+		return this.countDocuments({isRead: false});
+	});
+
+	entrySchema.static('countAllByFeedId', function(feedId) {
+		return this.countDocuments({feed: feedId});
 	});
 
 	entrySchema.static('fetchAllByFeedId', function(feedId) {

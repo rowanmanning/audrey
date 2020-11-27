@@ -9,8 +9,8 @@ module.exports = class FormErrors extends Partial {
 			return '';
 		}
 		return html`
-			<div class="form__errors" data-test="form-errors">
-				There was a problem processing the form:
+			<div class="notification notification--error">
+				<p><strong>There were some issues with the form:</strong></p>
 				<ul>
 					${this.context.errors.map(this.renderError)}
 				</ul>
@@ -20,7 +20,7 @@ module.exports = class FormErrors extends Partial {
 
 	renderError(error) {
 		return html`
-			<li class="form__error" data-test="form-error">${error.message}</li>
+			<li>${error.message}</li>
 		`;
 	}
 

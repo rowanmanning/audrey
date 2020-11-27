@@ -31,8 +31,8 @@ module.exports = class FeedErrorList extends Partial {
 	render() {
 		if (this.errors.length) {
 			return html`
-				<div class="form__errors" data-test="form-errors">
-					There were issues when this feed was last refreshed:
+				<div class="notification notification--error">
+					<p><strong>There were issues when this feed was last refreshed:</strong></p>
 					<ul>
 						${this.errors.map(this.renderError)}
 					</ul>
@@ -53,7 +53,7 @@ module.exports = class FeedErrorList extends Partial {
 	 */
 	renderError(error) {
 		return html`
-			<li class="form__error">${error.message}</li>
+			<li>${error.message}</li>
 		`;
 	}
 

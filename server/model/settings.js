@@ -33,6 +33,11 @@ module.exports = function defineSettingsSchema(app) {
 			type: Boolean,
 			required: [true, 'Auto mark as read setting is required'],
 			default: true
+		},
+		showHelpText: {
+			type: Boolean,
+			required: [true, 'Show help text setting is required'],
+			default: true
 		}
 	}, {
 		timestamps: true,

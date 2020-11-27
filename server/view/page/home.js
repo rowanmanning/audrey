@@ -3,26 +3,72 @@
 const EntryList = require('../partial/list/entries');
 const {html} = require('@rowanmanning/app');
 const layout = require('../layout/main');
+const Pagination = require('../partial/pagination');
 
 module.exports = function renderHomePage(context) {
-	const {entries, request, settings} = context;
+	const {entries, entryPagination, settings, totalFeedCount} = context;
 
-	return layout(context, html`
-		<header class="content-head hidden">
-			<h1 class="content-head__title">${settings.siteTitle}</h1>
-		</header>
-
-		<ul>
-			<li><a href="/?status=all">All posts</a></li>
-			<li><a href="/">Unread</a></li>
-			<li><a href="/?status=read">Read</a></li>
-		</ul>
-
+	// Populate main content
+	const content = html`
 		<${EntryList} items=${entries}>
+			${totalFeedCount ? renderNothingToRead() : renderWelcome()}
+		<//>
+		<${Pagination} data=${entryPagination} />
+	`;
+
+	// Render a welcome message
+	function renderWelcome() {
+		return html`
+			<div class="notification notification--help">
+				<p><strong>Welcome to ${settings.siteTitle}!</strong></p>
+				<p>
+					To get started, the first thing you'll need to do is ${' '}
+					<a href="/subscribe">subscribe to a feed</a>. There's a useful ${' '}
+					shortcut button in the header above ↑ (look for the orange plus icon).
+				</p>
+				<p>
+					You can also visit the <a href="/settings">settings page</a> ${' '}
+					to configure ${settings.siteTitle} just the way you like it. See the ${' '}
+					green cog icon in the header.
+				</p>
+			</div>
+		`;
+	}
+
+	// Render a "nothing to read" message
+	function renderNothingToRead() {
+		return html`
 			<p>
 				There's nothing to read!<br/>
 				<a href="/subscribe">You can subscribe to feeds here</a>.
 			</p>
-		<//>
-	`);
+		`;
+	}
+
+	// Populate content sub-sections
+	context.subSections = {
+
+		// Content heading
+		hideHeading: true,
+		heading: html`
+			<div class="content-head">
+				<h1 class="content-head__title">${settings.siteTitle}</h1>
+			</div>
+		`
+	};
+
+	// Right-hand sidebar
+	if (totalFeedCount && settings.showHelpText) {
+		context.subSections.rhs = html`
+			<div class="notification notification--help">
+				<p>
+					This is the main page, showing entries from all feeds that you have not ${' '} 
+					yet read. <a href="/entries">You can find <em>all</em> entries here</a>.
+				</p>
+			</div>
+		`;
+	}
+
+	// Wrap the content in a layout and return to render
+	return layout(context, content);
 };

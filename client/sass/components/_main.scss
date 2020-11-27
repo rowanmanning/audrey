@@ -2,17 +2,29 @@
 // Main block
 .main {
 	@extend %base-typography;
-}
 
-// Main inner element
-.main__inner {
-	@extend %layout-inner;
 	padding-bottom: var(--spacingvalue-xxxl);
 	padding-top: var(--spacingvalue-xxxl);
 	overflow: hidden;
 }
 
-// Main block, "wide" modifier
-.main--wide .main__inner {
-	max-width: 100%;
+.main__content,
+.main__lhs,
+.main__rhs {
+	overflow: hidden;
+
+	> :last-child {
+		margin-bottom: 0 !important;
+	}
+}
+
+.main__content,
+.main__lhs {
+	margin-bottom: var(--spacingvalue-xxl);
+	
+	@media (min-width: $breakpoint-tablet) {
+		@supports (display: grid) {
+			margin-bottom: 0;
+		}
+	}
 }

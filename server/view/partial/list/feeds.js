@@ -1,7 +1,6 @@
 'use strict';
 
 const ContentList = require('./content');
-const DateElement = require('../element/date');
 const {html} = require('@rowanmanning/app');
 
 /**

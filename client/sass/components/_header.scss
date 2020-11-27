@@ -5,13 +5,6 @@
 	--color-header-background: var(--color-site-background);
 	
 	background-color: var(--color-header-background);
-	border-top: var(--spacing-rule) solid var(--color-accent-primary);
-
-	&::before {
-		content: "";
-		display: block;
-		border-top: var(--spacing-rule) solid var(--color-accent-secondary);
-	}
 }
 
 // Header link style overrides
@@ -27,13 +20,12 @@
 
 // Header inner element
 .header__inner {
-	@extend %layout-inner;
 	display: flex;
 	justify-content: space-between;
 	padding-bottom: var(--spacingvalue-s);
 	padding-top: var(--spacingvalue-s);
 
-	@media (max-width: $layout-width-mobile) {
+	@media (max-width: $breakpoint-mobile) {
 		flex-direction: column;
 	}
 }
@@ -45,7 +37,7 @@
 	font-weight: normal;
 	margin-right: var(--spacingvalue-xs);
 
-	@media (max-width: $layout-width-mobile) {
+	@media (max-width: $breakpoint-mobile) {
 		margin-bottom: var(--spacingvalue-xs);
 		margin-right: 0;
 	}
@@ -53,7 +45,7 @@
 
 // Header navigation element
 .header__navigation {
-	@media (max-width: $layout-width-mobile) {
+	@media (max-width: $breakpoint-mobile) {
 		font-size: var(--font-size-small);
 		margin-left: calc(-1 * var(--spacingvalue-xxs));
 	}
@@ -65,7 +57,7 @@
 		margin: 0;
 		padding: 0;
 
-		> li:not(:first-child) {
+		> li {
 			margin-left: var(--spacingvalue-xxs);
 		}
 	}
@@ -103,7 +95,7 @@
 		padding-right: 0 !important;
 		width: var(--spacing-line);
 
-		@media all and (max-width: $layout-width-mobile) {
+		@media all and (max-width: $breakpoint-mobile) {
 			width: calc(var(--spacing-line) - var(--spacingvalue-xxs));
 		}
 	}

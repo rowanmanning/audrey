@@ -1,20 +1,43 @@
 'use strict';
 
+const paginate = require('../middleware/paginate');
 const render = require('../middleware/render');
 
 module.exports = function mountHomeController(app) {
 	const {router} = app;
-	const {Entry} = app.models;
+	const {Entry, Feed} = app.models;
 
 	router.get('/', [
-		fetchFilteredEntries,
+		fetchStats,
+		paginate({
+			perPage: 50,
+			property: 'entryPagination',
+			total: () => Entry.countUnread()
+		}),
+		fetchUnreadEntries,
 		render('page/home')
 	]);
 
-	async function fetchFilteredEntries(request, response, next) {
+	async function fetchStats(request, response, next) {
+		try {
+			const [totalEntryCount, totalFeedCount] = await Promise.all([
+				Entry.count(),
+				Feed.count()
+			]);
+			response.locals.totalEntryCount = totalEntryCount;
+			response.locals.totalFeedCount = totalFeedCount;
+			next();
+		} catch (error) {
+			next(error);
+		}
+	}
+
+	async function fetchUnreadEntries(request, response, next) {
 		try {
 			response.locals.entries = await Entry
-				.fetchFiltered({status: request.query.status})
+				.fetchUnread()
+				.skip(request.entryPagination.currentPageStartIndex)
+				.limit(request.entryPagination.perPage)
 				.populate('feed');
 			next();
 		} catch (error) {

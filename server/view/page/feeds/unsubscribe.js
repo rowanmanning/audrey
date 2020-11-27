@@ -19,11 +19,8 @@ module.exports = function renderFeedsDeletePage(context) {
 		url: feed.url
 	});
 
-	return layout(context, html`
-		<header class="content-head">
-			<h1 class="content-head__title">${context.pageTitle}</h1>
-		</header>
-
+	// Populate main content
+	const content = html`
 		<${Form} action=${unsubscribeForm.action}>
 			<${Form.Errors} errors=${unsubscribeForm.errors} />
 
@@ -45,5 +42,19 @@ module.exports = function renderFeedsDeletePage(context) {
 
 			<${Form.Submit} label="Unsubscribe" />
 		<//>
-	`);
+	`;
+
+	// Populate content sub-sections
+	context.subSections = {
+
+		// Content heading
+		heading: html`
+			<div class="content-head">
+				<h1 class="content-head__title">${context.pageTitle}</h1>
+			</div>
+		`
+	};
+
+	// Wrap the content in a layout and return to render
+	return layout(context, content);
 };
