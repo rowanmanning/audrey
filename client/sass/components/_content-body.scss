@@ -114,6 +114,12 @@
 		@extend %link;
 	}
 
+	// Image elements
+	img {
+		width: auto;
+		max-width: 100%;
+	}
+
 	// Text-level semantic elements
 	abbr {
 		cursor: help;

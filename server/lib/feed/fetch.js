@@ -10,7 +10,7 @@ module.exports = function fetchFeed(url) {
 	const emitter = new EventEmitter();
 
 	// Create a feed parser
-	const feedParser = new FeedParser();
+	const feedParser = new FeedParser({feedurl: url});
 	feedParser.on('error', error => emitter.emit('error', error));
 	feedParser.on('meta', meta => {
 		emitter.emit('info', meta);

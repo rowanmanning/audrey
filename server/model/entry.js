@@ -6,7 +6,6 @@ const {Schema} = require('@rowanmanning/app');
 const shortid = require('shortid');
 const uniqueValidator = require('mongoose-unique-validator');
 
-
 module.exports = function defineEntrySchema() {
 
 	const entrySchema = new Schema({
@@ -86,9 +85,26 @@ module.exports = function defineEntrySchema() {
 
 	// Virtual clean entry content
 	entrySchema.virtual('cleanContent').get(function() {
-		const window = new JSDOM('').window;
+		const {window} = new JSDOM(this.get('content'));
+		const {document} = window;
+
+		const baseUrl = this.get('htmlUrl');
+		const linkAttributes = ['href', 'src'];
+
+		// Make links relative
+		for (const attribute of linkAttributes) {
+			for (const element of [...document.querySelectorAll(`[${attribute}]`)]) {
+				const url = new URL(element.getAttribute(attribute), baseUrl);
+				element.setAttribute(attribute, url.toString());
+			}
+		}
+
+		// Purify the DOM
 		const DOMPurify = createDOMPurify(window);
-		return DOMPurify.sanitize(this.get('content'));
+		return DOMPurify.sanitize(document.body.innerHTML, {
+			ALLOW_DATA_ATTR: false,
+			FORBID_ATTR: ['class']
+		});
 	});
 
 	entrySchema.method('markAsRead', function() {

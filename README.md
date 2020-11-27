@@ -13,7 +13,7 @@ A simple single-user feed reader.
 - [x] Add breadcrumbs back in
 - [x] Style pagination
 - [x] Add GitHub links etc to the footer
-- [ ] Sort out relative links in posts
+- [x] Sort out relative links in posts
 - [ ] Auto-delete entries that have passed the retention date
 - [ ] Style feed lists
 - [ ] Style entry lists
