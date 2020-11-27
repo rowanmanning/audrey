@@ -3,12 +3,17 @@
 .page-layout {
 	--main-area-width: minmax(var(--layout-width-content-min), var(--layout-width-content-max));
 	--sidebar-area-width: var(--layout-width-sidebar-max);
+	--gutter-width: var(--layout-width-gutter-small);
 
 	display: block;
-	padding-left: var(--layout-width-gutter);
-	padding-right: var(--layout-width-gutter);
+	padding-left: var(--gutter-width);
+	padding-right: var(--gutter-width);
 	max-width: var(--layout-width-content-max);
 	margin: 0 auto;
+
+	@media (min-width: $breakpoint-mobile) {
+		--gutter-width: var(--layout-width-gutter);
+	}
 
 	@media (min-width: $breakpoint-tablet) {
 		@supports (display: grid) {
@@ -21,7 +26,7 @@
 			padding-right: 0;
 
 			display: grid;
-			column-gap: var(--layout-width-gutter);
+			column-gap: var(--gutter-width);
 			grid-template-columns: auto var(--sidebar-area-width) var(--main-area-width) var(--sidebar-area-width) auto;
 			grid-template-rows: auto;
 			grid-template-areas: ". lhs main rhs .";

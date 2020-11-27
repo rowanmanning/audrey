@@ -12,6 +12,7 @@ A simple single-user feed reader.
 - [x] Add the ability to refresh all feeds
 - [ ] Add breadcrumbs back in
 - [ ] Add GitHub links etc to the footer
+- [ ] Sort out relative links in posts
 - [ ] Auto-delete entries that have passed the retention date
 - [ ] Style pagination
 - [ ] Style feed lists

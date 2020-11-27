@@ -2,10 +2,16 @@
 // Content body block
 .content-body {
 	@extend %base-typography;
+
+	--gutter-width: var(--spacingvalue-l);
 	
 	background-color: var(--color-content-background);
 	border-radius: var(--spacingvalue-xs);
-	padding: var(--spacingvalue-xxl) var(--spacingvalue-xl);
+	padding: var(--spacingvalue-xxl) var(--gutter-width);
+
+	@media (min-width: $breakpoint-mobile) {
+		--gutter-width: var(--spacingvalue-xl);
+	}
 
 	> :first-child {
 		margin-top: 0 !important;

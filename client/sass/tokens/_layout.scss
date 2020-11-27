@@ -5,6 +5,7 @@ $layout-width-content-max: 720px;
 $layout-width-sidebar-min: 180px;
 $layout-width-sidebar-max: 240px;
 $layout-width-gutter: 24px;
+$layout-width-gutter-small: 16px;
 
 // Calculated breakpoints
 $breakpoint-desktop: $layout-width-content-min + ($layout-width-gutter * 4) + ($layout-width-sidebar-max * 2);
@@ -20,5 +21,6 @@ $breakpoint-small-mobile: 480px;
 	--layout-width-content-min: #{$layout-width-content-min};
 	--layout-width-content-max: #{$layout-width-content-max};
 	--layout-width-gutter: #{$layout-width-gutter};
+	--layout-width-gutter-small: #{$layout-width-gutter-small};
 
 }
