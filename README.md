@@ -10,6 +10,8 @@ A simple single-user feed reader.
 - [x] Check duplicate key error for adding a feed where feed XML is different to given URL
 - [x] Don't allow feed URL changes
 - [x] Add the ability to refresh all feeds
+- [ ] Add breadcrumbs back in
+- [ ] Add GitHub links etc to the footer
 - [ ] Auto-delete entries that have passed the retention date
 - [ ] Style pagination
 - [ ] Style feed lists

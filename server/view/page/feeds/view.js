@@ -91,7 +91,7 @@ module.exports = function renderFeedsViewPage(context) {
 			return html`
 				<div class="notification notification--help">
 					<p>
-						This page shows all of the entries for the feed "${feed.title}". ${' '}
+						This page shows all of the entries for the feed "${feed.displayTitle}". ${' '}
 						From here you can read, refresh, and configure the feed.
 					</p>
 				</div>

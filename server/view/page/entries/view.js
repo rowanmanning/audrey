@@ -53,7 +53,7 @@ module.exports = function renderEntriesViewPage(context) {
 			<div class="notification notification--info notification--small">
 				<p>
 					This entry was posted on ${' '}
-					<a href=${entry.feed.url}>${entry.feed.title}</a> ${' '}
+					<a href=${entry.feed.url}>${entry.feed.displayTitle}</a> ${' '}
 					<${DateElement} date=${entry.publishedAt} />.
 				</p>
 				${entry.author ? html`<p>Authored by ${entry.author}.</p>` : ''}

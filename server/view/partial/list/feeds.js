@@ -34,7 +34,7 @@ module.exports = class FeedList extends ContentList {
 			<article class="feed-summary">
 				<header>
 					<h2 class="feed-summary__headline">
-						<a href=${feed.url}>${feed.title}</a>
+						<a href=${feed.url}>${feed.displayTitle}</a>
 					</h2>
 				</header>
 				<p class="feed-summary__meta">
