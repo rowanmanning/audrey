@@ -11,13 +11,14 @@ A simple single-user feed reader.
 - [x] Don't allow feed URL changes
 - [x] Add the ability to refresh all feeds
 - [x] Add breadcrumbs back in
+- [x] Style pagination
 - [ ] Add GitHub links etc to the footer
 - [ ] Sort out relative links in posts
 - [ ] Auto-delete entries that have passed the retention date
-- [ ] Style pagination
 - [ ] Style feed lists
 - [ ] Style entry lists
 - [ ] Style form-only pages
+- [ ] Add flash messages for creation/deletion
 - [ ] Add a stats box to the home page
 - [ ] Style the content page
 - [ ] Add icons to nav list links
