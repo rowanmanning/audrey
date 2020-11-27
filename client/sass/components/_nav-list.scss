@@ -9,6 +9,8 @@
 		margin: 0;
 		padding: 0;
 		list-style: none;
+		display: flex;
+		flex-direction: column;
 
 		> li:not(:last-child) {
 			margin-bottom: var(--spacing-half-line);
@@ -17,7 +19,7 @@
 
 	@media (min-width: $breakpoint-mobile) and (max-width: $breakpoint-tablet) {
 		> ul {
-			display: flex;
+			flex-direction: row;
 
 			> li:not(:last-child) {
 				margin-right: var(--spacing-half-line);
@@ -25,19 +27,6 @@
 			}
 		}
 	}
-
-	// @media (min-width: $breakpoint-tablet) {
-	// 	@supports (display: grid) {
-	// 		> ul {
-	// 			display: block;
-
-	// 			> li {
-	// 				margin-right: 0;
-	// 				margin-bottom: var(--spacing-half-line);
-	// 			}
-	// 		}
-	// 	}
-	// }
 }
 
 // Nav list link element

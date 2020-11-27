@@ -34,6 +34,20 @@ module.exports = function renderEntriesViewPage(context) {
 			</div>
 		`,
 
+		// Left-hand sidebar
+		lhs: html`
+			<nav class="nav-list">
+				<ul>
+					<li>
+						<form method="post" action=${entry.markUrl}>
+							<input type="hidden" name="setReadStatus" value=${entry.isRead ? 'unread' : 'read'} />
+							<input type="submit" class="nav-list__link" value="Mark as ${entry.isRead ? 'unread' : 'read'}" />
+						</form>
+					</li>
+				</ul>
+			</nav>
+		`,
+
 		// Right-hand sidebar
 		rhs: html`
 			<div class="notification notification--info notification--small">
@@ -51,10 +65,7 @@ module.exports = function renderEntriesViewPage(context) {
 						<a href=${entry.htmlUrl} class="nav-list__link">View on website</a>
 					</li>
 					<li>
-						<form method="post" action=${entry.markUrl}>
-							<input type="hidden" name="setReadStatus" value=${entry.isRead ? 'unread' : 'read'} />
-							<input type="submit" class="nav-list__link" value="Mark as ${entry.isRead ? 'unread' : 'read'}" />
-						</form>
+						<a href=${entry.feed.xmlUrl} class="nav-list__link">View raw feed XML</a>
 					</li>
 				</ul>
 			</nav>
