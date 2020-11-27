@@ -11,6 +11,13 @@ A simple single-user feed reader.
 - [x] Don't allow feed URL changes
 - [x] Add the ability to refresh all feeds
 - [ ] Auto-delete entries that have passed the retention date
+- [ ] Style pagination
+- [ ] Style feed lists
+- [ ] Style entry lists
+- [ ] Style form-only pages
+- [ ] Add a stats box to the home page
+- [ ] Style the content page
+- [ ] Add icons to nav list links
 - [ ] Add the ability to schedule refreshing feeds
 - [ ] Add password-protection
 - [ ] Add support for grouping feeds
