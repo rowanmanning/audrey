@@ -19,11 +19,11 @@ A simple single-user feed reader.
 - [x] Auto-delete entries that have passed the retention date
 - [x] Add the ability to schedule refreshing feeds
 - [x] Add flash messages for creation/deletion
-- [ ] Style entry lists
-- [ ] Style feed lists
+- [x] Style entry lists
 - [ ] Style form-only pages
-- [ ] Add a stats box to the home page
+- [ ] Style feed lists
 - [ ] Style the content page
+- [ ] Add a stats box to the home page
 - [ ] Add icons to nav list links
 - [ ] Add password-protection
 

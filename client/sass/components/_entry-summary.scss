@@ -2,22 +2,41 @@
 // Entry summary block
 .entry-summary {
 	@extend %base-typography;
+	padding-left: var(--spacing-line);
+	position: relative;
+
+	&::before {
+		@extend %icon;
+		content: "Unread";
+		position: absolute;
+		left: 0;
+		top: calc(var(--spacing-half-line) / 2);
+		background-image: url("/icons/status-unread.svg");
+		width: var(--spacing-half-line);
+		height: var(--spacing-half-line);
+	}
 }
 
 // Entry summary "read" modifier
 .entry-summary--read {
-	opacity: 0.6;
+	color: var(--colorvalue-gray-light);
+
+	&::before {
+		content: "Read";
+		background-image: url("/icons/status-read.svg");
+	}
 }
 
 // Entry summary headline element
 .entry-summary__headline {
-	font-family: var(--font-family-heading);
-	font-size: var(--font-size-h3);
-	font-weight: normal;
-	line-height: var(--line-height-h3);
-	margin-bottom: var(--spacing-half-line);
-	margin-top: 0;
-
+	> h2 {
+		font-family: var(--font-family-heading);
+		font-size: var(--font-size-h3);
+		font-weight: normal;
+		line-height: var(--line-height-h3);
+		margin-bottom: var(--spacing-half-line);
+		margin-top: 0;
+	}
 	a {
 		color: inherit;
 		text-decoration: none;

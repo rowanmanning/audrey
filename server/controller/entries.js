@@ -22,7 +22,8 @@ module.exports = function mountEntriesController(app) {
 			request.entries = response.locals.entries = await Entry
 				.fetchAll()
 				.skip(request.entryPagination.currentPageStartIndex)
-				.limit(request.entryPagination.perPage);
+				.limit(request.entryPagination.perPage)
+				.populate('feed');
 			next();
 		} catch (error) {
 			next(error);
