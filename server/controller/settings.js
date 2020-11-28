@@ -62,6 +62,7 @@ module.exports = function mountSettingsController(app) {
 				settings.autoMarkAsRead = updateSettingsForm.data.autoMarkAsRead;
 				settings.showHelpText = updateSettingsForm.data.showHelpText;
 				await settings.save();
+				request.flash('saved', true);
 				return response.redirect('/settings');
 			}
 			next();

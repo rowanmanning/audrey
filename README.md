@@ -6,6 +6,8 @@ A simple single-user feed reader.
 
 ## To-Do List
 
+### Pre-alpha
+
 - [x] Add date formatting
 - [x] Check duplicate key error for adding a feed where feed XML is different to given URL
 - [x] Don't allow feed URL changes
@@ -24,6 +26,9 @@ A simple single-user feed reader.
 - [ ] Style the content page
 - [ ] Add icons to nav list links
 - [ ] Add password-protection
+
+### Post-alpha
+
 - [ ] Add support for grouping feeds
 - [ ] Add the ability to import OPML
 - [ ] Add the ability to export OPML

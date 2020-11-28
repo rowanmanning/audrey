@@ -34,6 +34,7 @@ module.exports = function mountSubscribeController(app) {
 			if (request.method === 'POST') {
 				const feed = await Feed.subscribe(subscribeForm.data.xmlUrl);
 				await feed.refresh();
+				request.flash('subscribed', true);
 				return response.redirect(feed.url);
 			}
 			next();

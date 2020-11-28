@@ -7,12 +7,13 @@ const layout = require('../../layout/main');
 const Pagination = require('../../partial/pagination');
 
 module.exports = function renderFeedsListPage(context) {
-	const {feeds, feedPagination, isRefreshInProgress, settings} = context;
+	const {feeds, feedPagination, isRefreshInProgress, request, settings} = context;
 
 	context.pageTitle = 'Feeds';
 
 	// Populate main content
 	const content = html`
+		${showUnsubscribeSuccess()}
 		<${FeedList} items=${feeds}>
 			<div class="notification notification--help">
 				<p>
@@ -74,6 +75,20 @@ module.exports = function renderFeedsListPage(context) {
 				</p>
 			</div>
 		`;
+	}
+
+	function showUnsubscribeSuccess() {
+		const flashMessage = request.flash('unsubscribed');
+		if (flashMessage && flashMessage.length) {
+			return html`
+				<div class="notification notification--success">
+					<p>
+						You have successfully unsubscribed from "${flashMessage.pop()}".
+					</p>
+				</div>
+			`;
+		}
+		return '';
 	}
 
 	// Wrap the content in a layout and return to render

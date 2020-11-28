@@ -6,7 +6,7 @@ const {html} = require('@rowanmanning/app');
 const layout = require('../../layout/main');
 
 module.exports = function renderFeedSettingsPage(context) {
-	const {feed, feedSettingsForm} = context;
+	const {feed, feedSettingsForm, request} = context;
 
 	context.pageTitle = `Settings for ${feed.displayTitle}`;
 
@@ -24,6 +24,7 @@ module.exports = function renderFeedSettingsPage(context) {
 	const content = html`
 		<${Form} action=${feedSettingsForm.action}>
 			<${Form.Errors} errors=${feedSettingsForm.errors} />
+			${showSaveSuccess()}
 
 			<${Form.Field.Text}
 				name="customTitle"
@@ -57,6 +58,21 @@ module.exports = function renderFeedSettingsPage(context) {
 			</div>
 		`
 	};
+
+	function showSaveSuccess() {
+		const flashMessage = request.flash('saved');
+		if (flashMessage && flashMessage.length) {
+			return html`
+				<div class="notification notification--success">
+					<p>
+						Your feed settings have been saved. ${' '}
+						<a href=${feed.url}>Head back to the feed to view changes</a>.
+					</p>
+				</div>
+			`;
+		}
+		return '';
+	}
 
 	// Wrap the content in a layout and return to render
 	return layout(context, content);

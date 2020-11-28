@@ -54,3 +54,9 @@
 	--notification-border-color: var(--color-error);
 	--notification-background-color: var(--color-error-light);
 }
+
+// Notification block, "success" modifier
+.notification--success {
+	--notification-border-color: var(--colorvalue-green);
+	--notification-background-color: var(--colorvalue-green-light);
+}

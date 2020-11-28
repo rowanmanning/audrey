@@ -6,7 +6,7 @@ const {html} = require('@rowanmanning/app');
 const layout = require('../../layout/main');
 
 module.exports = function renderSettingsListPage(context) {
-	const {app, settings, updateSettingsForm} = context;
+	const {app, request, settings, updateSettingsForm} = context;
 
 	context.pageTitle = 'Settings';
 
@@ -14,6 +14,7 @@ module.exports = function renderSettingsListPage(context) {
 	const content = html`
 		<${Form} action=${updateSettingsForm.action}>
 			<${Form.Errors} errors=${updateSettingsForm.errors} />
+			${showSaveSuccess()}
 
 			<${Form.Field.Text}
 				name="siteTitle"
@@ -149,6 +150,20 @@ module.exports = function renderSettingsListPage(context) {
 				</p>
 			</div>
 		`;
+	}
+
+	function showSaveSuccess() {
+		const flashMessage = request.flash('saved');
+		if (flashMessage && flashMessage.length) {
+			return html`
+				<div class="notification notification--success">
+					<p>
+						Your settings have been saved.
+					</p>
+				</div>
+			`;
+		}
+		return '';
 	}
 
 	// Wrap the content in a layout and return to render

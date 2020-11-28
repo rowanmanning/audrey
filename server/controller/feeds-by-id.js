@@ -79,6 +79,7 @@ module.exports = function mountFeedsByIdController(app) {
 	async function handleRefreshFeedForm(request, response, next) {
 		try {
 			await request.feed.refresh();
+			request.flash('refreshed', true);
 			return response.redirect(request.feed.url);
 		} catch (error) {
 			next(error);
@@ -110,7 +111,8 @@ module.exports = function mountFeedsByIdController(app) {
 				const feed = await Feed.findById(request.feed._id);
 				feed.customTitle = feedSettingsForm.data.customTitle;
 				await feed.save();
-				return response.redirect(feed.url);
+				request.flash('saved', true);
+				return response.redirect(feed.settingsUrl);
 			}
 			next();
 		} catch (error) {
@@ -139,7 +141,9 @@ module.exports = function mountFeedsByIdController(app) {
 			// On POST, attempt to unsubscribe from the feed
 			if (request.method === 'POST') {
 				if (unsubscribeForm.data.confirm) {
+					const title = request.feed.displayTitle;
 					await request.feed.unsubscribe();
+					request.flash('unsubscribed', title);
 					response.redirect('/feeds');
 				} else {
 					const error = new ValidationError();

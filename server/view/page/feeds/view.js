@@ -9,7 +9,7 @@ const layout = require('../../layout/main');
 const Pagination = require('../../partial/pagination');
 
 module.exports = function renderFeedsViewPage(context) {
-	const {entries, entryPagination, feed, settings} = context;
+	const {entries, entryPagination, feed, request, settings} = context;
 
 	context.pageTitle = feed.displayTitle;
 
@@ -21,6 +21,8 @@ module.exports = function renderFeedsViewPage(context) {
 
 	// Populate main content
 	const content = html`
+		${showRefreshSuccess()}
+		${showSubscriptionSuccess()}
 		<${FeedErrorList} errors=${feed.errors} />
 		<${EntryList} items=${entries}>
 			<div class="notification notification--help">
@@ -95,6 +97,37 @@ module.exports = function renderFeedsViewPage(context) {
 					<p>
 						This page shows all of the entries for the feed "${feed.displayTitle}". ${' '}
 						From here you can read, refresh, and configure the feed.
+					</p>
+				</div>
+			`;
+		}
+		return '';
+	}
+
+	function showSubscriptionSuccess() {
+		const flashMessage = request.flash('subscribed');
+		if (flashMessage && flashMessage.length) {
+			return html`
+				<div class="notification notification--success">
+					<p>
+						You subscribed to "${feed.displayTitle}"! ${' '}
+						You can view entries for this feed on this page. ${' '}
+						To view entries for all feeds, head to ${' '}
+						<a href="/">the Unread page</a>.
+					</p>
+				</div>
+			`;
+		}
+		return '';
+	}
+
+	function showRefreshSuccess() {
+		const flashMessage = request.flash('refreshed');
+		if (flashMessage && flashMessage.length) {
+			return html`
+				<div class="notification notification--success">
+					<p>
+						This feed has been refreshed.
 					</p>
 				</div>
 			`;

@@ -1,6 +1,7 @@
 'use strict';
 
 const App = require('@rowanmanning/app');
+const flash = require('connect-flash');
 const mongoose = require('mongoose');
 const schedule = require('node-schedule');
 const uuid = require('uuid');
@@ -20,6 +21,9 @@ module.exports = class AudreyApp extends App {
 	}
 
 	setupControllers() {
+
+		// Enable flash messages
+		this.router.use(flash());
 
 		// Load settings into each request
 		this.router.use(async (request, response, next) => {
