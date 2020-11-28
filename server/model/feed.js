@@ -261,7 +261,6 @@ module.exports = function defineFeedSchema(app) {
 			guid: feedEntry.guid,
 			htmlUrl: feedEntry.origlink ?? feedEntry.link,
 			content: feedEntry.description,
-			summary: feedEntry.summary,
 			author: feedEntry.author,
 			categories: feedEntry.categories,
 			publishedAt: feedEntry.pubDate,

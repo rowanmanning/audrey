@@ -34,9 +34,6 @@ module.exports = function defineEntrySchema(app) {
 		content: {
 			type: String
 		},
-		summary: {
-			type: String
-		},
 		author: {
 			type: String
 		},
