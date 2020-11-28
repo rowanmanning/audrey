@@ -28,7 +28,7 @@ module.exports = function defineFeedErrorSchema(app) {
 
 	feedErrorSchema.static('deleteAllByFeedId', async function(feedId) {
 		try {
-			await this.remove({
+			await this.deleteMany({
 				feed: feedId
 			});
 		} catch (error) {

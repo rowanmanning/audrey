@@ -14,7 +14,8 @@ A simple single-user feed reader.
 - [x] Style pagination
 - [x] Add GitHub links etc to the footer
 - [x] Sort out relative links in posts
-- [ ] Auto-delete entries that have passed the retention date
+- [x] Auto-delete entries that have passed the retention date
+- [x] Add the ability to schedule refreshing feeds
 - [ ] Style feed lists
 - [ ] Style entry lists
 - [ ] Style form-only pages
@@ -22,7 +23,6 @@ A simple single-user feed reader.
 - [ ] Add a stats box to the home page
 - [ ] Style the content page
 - [ ] Add icons to nav list links
-- [ ] Add the ability to schedule refreshing feeds
 - [ ] Add password-protection
 - [ ] Add support for grouping feeds
 - [ ] Add the ability to import OPML

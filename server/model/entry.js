@@ -6,7 +6,7 @@ const {Schema} = require('@rowanmanning/app');
 const shortid = require('shortid');
 const uniqueValidator = require('mongoose-unique-validator');
 
-module.exports = function defineEntrySchema() {
+module.exports = function defineEntrySchema(app) {
 
 	const entrySchema = new Schema({
 		_id: {
@@ -160,6 +160,19 @@ module.exports = function defineEntrySchema() {
 
 	entrySchema.static('fetchAllByFeedId', function(feedId) {
 		return this.fetchAll({feed: feedId});
+	});
+
+	entrySchema.static('removeOldEntries', async function() {
+		const cutOffDate = await app.models.Settings.getEntryCutoffDate();
+		const {deletedCount} = await this.deleteMany({
+			publishedAt: {$lt: cutOffDate}
+		});
+		return deletedCount;
+	});
+
+	entrySchema.static('performScheduledJobs', async function() {
+		const removedEntries = await this.removeOldEntries();
+		app.log.info(`[scheduler:entries]: removed ${removedEntries} old entries`);
 	});
 
 	return entrySchema;

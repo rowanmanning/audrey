@@ -6,8 +6,6 @@ const {Schema, ValidationError} = require('@rowanmanning/app');
 const shortid = require('shortid');
 const uniqueValidator = require('mongoose-unique-validator');
 
-const day = 1000 * 60 * 60 * 24;
-
 module.exports = function defineFeedSchema(app) {
 	const feedRefreshFlags = {
 		inProgress: false
@@ -105,11 +103,10 @@ module.exports = function defineFeedSchema(app) {
 	// Feed refresh method, used to refresh feed information and load entries
 	feedSchema.method('refresh', async function() {
 
-		// Get the feed ID, app settings, and cut-off date
+		// Get the feed ID and cut-off date
 		const feedId = this._id;
-		const settings = await app.models.Settings.get();
+		const cutOffDate = await app.models.Settings.getEntryCutoffDate();
 		await app.models.FeedError.deleteAllByFeedId(feedId);
-		const cutOffDate = new Date(Date.now() - (day * settings.daysToRetainOldEntries));
 
 		async function throwFeedError(error) {
 			const validationError = app.models.Feed._feedErrorToValidationError(error);
@@ -176,10 +173,10 @@ module.exports = function defineFeedSchema(app) {
 	// Feed unsubscribe method, used for deleting a feed
 	feedSchema.method('unsubscribe', async function() {
 		await app.models.FeedError.deleteAllByFeedId(this._id);
-		await app.models.Entry.remove({
+		await app.models.Entry.deleteMany({
 			feed: this._id
 		});
-		await app.models.Feed.remove({
+		await app.models.Feed.deleteOne({
 			_id: this._id
 		});
 	});
@@ -205,7 +202,6 @@ module.exports = function defineFeedSchema(app) {
 
 		feedRefreshFlags.inProgress = true;
 		try {
-			app.log.error(`[feeds]: refreshing all`);
 			const feeds = await this.fetchAll();
 			for (const feed of feeds) {
 				try {
@@ -223,6 +219,11 @@ module.exports = function defineFeedSchema(app) {
 
 	feedSchema.static('isRefreshInProgress', () => {
 		return feedRefreshFlags.inProgress;
+	});
+
+	feedSchema.static('performScheduledJobs', async function() {
+		app.log.info(`[scheduler:feeds]: refreshing all feeds`);
+		await this.refreshAll();
 	});
 
 	// Subscribe to a feed, first validating that it hasn't been added already
@@ -266,34 +267,6 @@ module.exports = function defineFeedSchema(app) {
 			publishedAt: feedEntry.pubDate,
 			modifiedAt: feedEntry.date
 		};
-	});
-
-	// Handle errors from the feed parser
-	feedSchema.static('_feedErrorToValidationError', error => {
-		if (error instanceof ValidationError) {
-			return error;
-		}
-
-		const validationError = new ValidationError();
-		validationError.errors.xmlUrl = new Error(
-			`The feed could not be parsed: ${error.message}`
-		);
-
-		// Handle not a feed message from node-feedparser
-		if (error.message === 'Not a feed') {
-			validationError.errors.xmlUrl = new Error(
-				'Feed URL must be a valid ATOM or RSS feed'
-			);
-		}
-
-		// Handle HTTP errors
-		if (error.name === 'HTTPError') {
-			validationError.errors.xmlUrl = new Error(
-				'Feed URL responded with an error, please check that the URL is correct'
-			);
-		}
-
-		return validationError;
 	});
 	
 	// Handle errors from the feed parser

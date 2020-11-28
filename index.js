@@ -12,7 +12,8 @@ const app = new AudreyApp({
 	basePath: __dirname,
 	databaseUrl: process.env.MONGODB_URI,
 	port: process.env.PORT,
-	sessionSecret: process.env.SESSION_SECRET
+	sessionSecret: process.env.SESSION_SECRET,
+	updateSchedule: process.env.UPDATE_SCHEDULE
 });
 
 // Catch setup errors

@@ -3,6 +3,8 @@
 const {Schema} = require('@rowanmanning/app');
 const shortid = require('shortid');
 
+const day = 1000 * 60 * 60 * 24;
+
 module.exports = function defineSettingsSchema(app) {
 
 	const settingsSchema = new Schema({
@@ -50,6 +52,11 @@ module.exports = function defineSettingsSchema(app) {
 			return result;
 		}
 		return this.create({});
+	});
+
+	settingsSchema.static('getEntryCutoffDate', async function() {
+		const {daysToRetainOldEntries} = await this.get();
+		return new Date(Date.now() - (day * daysToRetainOldEntries));
 	});
 
 	return settingsSchema;

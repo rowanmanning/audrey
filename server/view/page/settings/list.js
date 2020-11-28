@@ -6,7 +6,7 @@ const {html} = require('@rowanmanning/app');
 const layout = require('../../layout/main');
 
 module.exports = function renderSettingsListPage(context) {
-	const {settings, updateSettingsForm} = context;
+	const {app, settings, updateSettingsForm} = context;
 
 	context.pageTitle = 'Settings';
 
@@ -58,6 +58,20 @@ module.exports = function renderSettingsListPage(context) {
 					Entries older than this will not be ingested
 				"
 				value=${updateSettingsForm.data.daysToRetainOldEntries}
+				min="1"
+			/>
+
+			<${Form.Field.Text}
+				name="schedule"
+				label="Scheduled jobs"
+				disabled=true
+				description="
+					The CRON expression used to schedule jobs like
+					removing old entries and refreshing feeds. This is
+					not editable via the interface, please configure
+					via the UPDATE_SCHEDULE environment variable
+				"
+				value=${app.options.updateSchedule}
 				min="1"
 			/>
 
