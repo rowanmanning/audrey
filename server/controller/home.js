@@ -21,8 +21,8 @@ module.exports = function mountHomeController(app) {
 	async function fetchStats(request, response, next) {
 		try {
 			const [totalEntryCount, totalFeedCount] = await Promise.all([
-				Entry.count(),
-				Feed.count()
+				Entry.countAll(),
+				Feed.countAll()
 			]);
 			response.locals.totalEntryCount = totalEntryCount;
 			response.locals.totalFeedCount = totalFeedCount;
