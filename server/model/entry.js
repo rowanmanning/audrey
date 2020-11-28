@@ -88,11 +88,19 @@ module.exports = function defineEntrySchema(app) {
 		const baseUrl = this.get('htmlUrl');
 		const linkAttributes = ['href', 'src'];
 
-		// Make links relative
+		// Make links absolute and proxy images
 		for (const attribute of linkAttributes) {
 			for (const element of [...document.querySelectorAll(`[${attribute}]`)]) {
 				const url = new URL(element.getAttribute(attribute), baseUrl);
-				element.setAttribute(attribute, url.toString());
+				const absoluteUrl = url.toString();
+
+				// Proxy image requests
+				if (attribute === 'src' && element.tagName === 'IMG') {
+					const proxyUrl = `/proxy-image/${encodeURIComponent(absoluteUrl)}`;
+					element.setAttribute(attribute, proxyUrl);
+				} else {
+					element.setAttribute(attribute, absoluteUrl);
+				}
 			}
 		}
 
