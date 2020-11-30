@@ -6,26 +6,30 @@ const {html} = require('@rowanmanning/app');
 const layout = require('../layout/main');
 
 module.exports = function renderSubscribePage(context) {
-	const {subscribeForm} = context;
+	const {settings, subscribeForm} = context;
 
 	context.pageTitle = 'Subscribe to a feed';
 
 	// Populate main content
 	const content = html`
-		<${Form} action=${subscribeForm.action}>
-			<${Form.Errors} errors=${subscribeForm.errors} />
+		<div class="content-body">
+			<${Form} action=${subscribeForm.action}>
+				<${Form.Errors} errors=${subscribeForm.errors} />
 
-			<${Form.Field.Url}
-				name="xmlUrl"
-				label="Feed URL"
-				description="
-					The URL for a valid ATOM or RSS feed
-				"
-				value=${subscribeForm.data.xmlUrl}
-			/>
+				<${Form.Field.Url}
+					name="xmlUrl"
+					label="Feed URL:"
+					description="
+						The URL for a valid ATOM or RSS feed. Subscribing will fetch the
+						feed and all entries, loading them into ${settings.siteTitle} for
+						you to read
+					"
+					value=${subscribeForm.data.xmlUrl}
+				/>
 
-			<${Form.Submit} label="Subscribe" />
-		<//>
+				<${Form.Submit} label="Subscribe" />
+			<//>
+		</div>
 	`;
 
 	// Populate content sub-sections

@@ -20,12 +20,13 @@ A simple single-user feed reader.
 - [x] Add the ability to schedule refreshing feeds
 - [x] Add flash messages for creation/deletion
 - [x] Style entry lists
-- [ ] Style form-only pages
+- [x] Style form-only pages
 - [ ] Style feed lists
 - [ ] Style the content page
 - [ ] Add a stats box to the home page
 - [ ] Add icons to nav list links
 - [ ] Add password-protection
+- [ ] Run srcset etc through the image absolute / proxy filter
 
 ### Post-alpha
 

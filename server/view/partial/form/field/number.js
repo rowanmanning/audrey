@@ -7,6 +7,7 @@ module.exports = class NumberField extends Field {
 	constructor(renderContext) {
 		super(renderContext);
 		this.context.type = 'number';
+		this.context.modifiers = ['text'];
 	}
 
 };

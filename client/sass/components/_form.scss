@@ -1,136 +1,32 @@
 
-// TODO read and review this
-
-/* Forms */
+// Form block
 .form {
 	@extend %base-typography;
 	margin-bottom: var(--spacing-line);
 }
+
+// Form submit element
+// TODO review this
 .form__submit {
-	margin-bottom: var(--spacing-line);
 	border: none;
 	background-color: var(--colorvalue-cream-dark);
 	font-size: var(--font-size-small);
 	padding: var(--spacing-rule);
 	border: 2px solid var(--colorvalue-cream-dark);
 	line-height: var(--line-height-small);
-}
-.form__submit:focus {
-	border-color: var(--color-focus);
-	background-color: var(--color-focus);
-	outline: none;
-}
-.field {
-	max-width: 400px;
-	margin-bottom: var(--spacing-half-line);
-}
-.field--child {
-	display: flex;
-	align-items: center;
-	margin-bottom: var(--spacing-rule);
+
+	&:focus {
+		border-color: var(--color-focus);
+		outline: none;
+	}
 }
 
-.field__label {
-	margin-bottom: var(--spacing-rule);
-}
-.field--child .field__label {
-	flex: 1;
-	margin-bottom: 0;
-	margin-right: var(--spacing-half-line);
-}
-.field--child .field__label-text {
-	font-weight: normal;
-}
-.field__label-text {
-	font-weight: bold;
-	display: block;
-}
-.field__description {
-	font-size: 14px;
-}
+// Form submit element "danger" modifier
+.form__submit--danger {
+	background-color: var(--color-error-light);
+	border-color: var(--color-error-light);
 
-.field--child .field__input {
-	flex: 3;
-}
-.field--email input,
-.field--number input,
-.field--password input,
-.field--text input,
-.field--url input {
-	width: 100%;
-	display: block;
-	box-sizing: border-box;
-	padding: var(--spacing-rule);
-	border: 2px solid var(--colorvalue-cream-dark);
-	font-size: 14px;
-	line-height: var(--spacing-line);
-}
-.field--email input:focus,
-.field--number input:focus,
-.field--password input:focus,
-.field--text input:focus,
-.field--url input:focus {
-	border-color: var(--color-focus);
-	outline: none;
-}
-.field--email input:disabled,
-.field--number input:disabled,
-.field--password input:disabled,
-.field--text input:disabled,
-.field--url input:disabled {
-	background-color: var(--color-bg-body);
-}
-
-.field--radio input,
-.field--checkbox input {
-	display: block;
-	margin: 0;
-	width: calc(var(--spacing-line) + var(--spacing-rule));
-	height: calc(var(--spacing-line) + var(--spacing-rule));
-	position: relative;
-	outline: none;
-	appearance: none;
-}
-.field--radio input:after,
-.field--checkbox input:after {
-	content: "";
-	display: block;
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	background-color: #fff;
-	box-sizing: border-box;
-	border: 2px solid var(--colorvalue-cream-dark);
-	border-radius: 50%;
-}
-.field--radio input:focus:after,
-.field--checkbox input:focus:after {
-	border-color: var(--color-focus);
-}
-.field--radio input:checked:before,
-.field--checkbox input:checked:before {
-	content: "";
-	display: block;
-	position: absolute;
-	z-index: 1;
-	top: var(--spacing-rule);
-	left: var(--spacing-rule);
-	width: calc(100% - (var(--spacing-rule) * 2));
-	height: calc(100% - (var(--spacing-rule) * 2));
-	background-color: var(--color-content-text);
-	box-sizing: border-box;
-	border-radius: 50%;
-}
-.field--radio.field--child .field__input,
-.field--checkbox.field--child .field__input {
-	order: -1;
-	flex-grow: 0;
-	margin-right: var(--spacing-half-line);
-}
-.field--radio.field--child .field__label,
-.field--checkbox.field--child .field__label {
-	flex: 0 1 1;
-	margin-right: 0;
+	&:focus {
+		border-color: var(--color-error);
+	}
 }

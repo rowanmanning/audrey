@@ -22,29 +22,30 @@ module.exports = function renderFeedSettingsPage(context) {
 
 	// Populate main content
 	const content = html`
-		<${Form} action=${feedSettingsForm.action}>
-			<${Form.Errors} errors=${feedSettingsForm.errors} />
-			${showSaveSuccess()}
+		<div class="content-body">
+			<${Form} action=${feedSettingsForm.action}>
+				<${Form.Errors} errors=${feedSettingsForm.errors} />
+				${showSaveSuccess()}
 
-			<${Form.Field.Text}
-				name="customTitle"
-				label="Feed Title"
-				description="
-					Specify a custom title for this feed.
-					If you leave this field blank, the original
-					title of the feed will be used
-				"
-				value=${feedSettingsForm.data.customTitle}
-			/>
+				<${Form.Field.Text}
+					name="customTitle"
+					label="Feed Title:"
+					description="
+						Specify a custom title for this feed.
+						If you leave this field blank, the original
+						title of the feed will be used
+					"
+					value=${feedSettingsForm.data.customTitle}
+				/>
 
-			<${Form.Submit} label="Save changes" />
-		<//>
+				<${Form.Submit} label="Save changes" />
+			<//>
 
-		<h2>The Danger Zone</h2>
-
-		<ul>
-			<li><a href=${feed.unsubscribeUrl}>Unsubscribe from this feed</a></li>
-		</ul>
+			<h2>The Danger Zone</h2>
+			<${Form} method="get" action=${feed.unsubscribeUrl}>
+				<${Form.Submit} label="Unsubscribe from this feed" danger=true />
+			<//>
+		</div>
 	`;
 
 	// Populate content sub-sections
