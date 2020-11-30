@@ -24,11 +24,12 @@ module.exports = function mountProxyImageController(app) {
 
 	function isImageResponse(httpResponse) {
 		switch (httpResponse.headers['content-type']) {
+			case 'image/apng':
+			case 'image/avif':
 			case 'image/gif':
 			case 'image/jpeg':
 			case 'image/png':
 			case 'image/webp':
-			case 'image/avif':
 				return true;
 			default:
 				return false;
