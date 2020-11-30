@@ -1,10 +1,9 @@
 
 // Content body block
 .content-body {
-	@extend %base-typography;
-
 	--gutter-width: var(--spacingvalue-l);
-	
+
+	@extend %base-typography;
 	background-color: var(--color-content-background);
 	border-radius: var(--spacingvalue-xs);
 	padding: var(--spacingvalue-xxl) var(--gutter-width);
@@ -13,6 +12,17 @@
 		--gutter-width: var(--spacingvalue-xl);
 	}
 
+
+	// GENERAL MARGINS AND SPACING
+	// ===========================
+
+	// Reset default margins
+	blockquote, caption, details, dl, figure, h1, h2, h3, h4, h5, h6, hgroup, hr, ol, p, pre, table, ul {
+		margin-top: 0;
+		margin-bottom: var(--spacing-line);
+	}
+
+	// Remove first and last child margins to avoid messing with padding
 	> :first-child {
 		margin-top: 0 !important;
 	}
@@ -20,56 +30,78 @@
 		margin-bottom: 0 !important;
 	}
 
-	// Reset default margins
-	blockquote, caption, details, dl, figure, h1, h2, h3, h4, h5, h6, hr, ol, p, pre, table, ul {
-		margin-top: 0;
-		margin-bottom: var(--spacing-line);
+
+	// INLINE TEXT
+	// ===========
+
+	// Links
+	a {
+		@extend %link;
 	}
 
-	// Caption element
-	caption {
-		margin-bottom: var(--spacing-half-line);
+	// Abbreviations
+	abbr {
+		cursor: help;
 	}
 
-	// Remove bottom margin from nested list elements
-	ol, ul {
-		padding-left: var(--spacing-onepointfive-line);
-		ol, ul {
-			margin-bottom: 0;
+	// Citations
+	cite {
+		font-style: italic;
+	}
+
+	// Inline code, keyboard input, and sampled output
+	code, kbd, samp {
+		background-color: var(--colorvalue-cream);
+		border-radius: var(--spacingvalue-xs);
+		font-family: var(--font-family-monospace);
+		padding: calc(var(--spacing-rule) / 2) var(--spacing-rule);
+	}
+
+	// Marked text
+	mark {
+		background-color: var(--colorvalue-yellow);
+		border-radius: var(--spacingvalue-xs);
+		padding: calc(var(--spacing-rule) / 2) var(--spacing-rule);
+	}
+
+	// Inline quotations
+	q {
+		font-style: italic;
+
+		&::before {
+			content: "“";
+		}
+		&::after {
+			content: "”";
 		}
 	}
+
+	// Small, subscript, and superscript
+	small, sub, sup {
+		font-size: var(--font-size-small);
+		line-height: var(--line-height-small);
+	}
+
+	// Variable elements
+	var {
+		font-style: italic;
+		font-weight: bold;
+	}
+
+
+	// HEADINGS
+	// ========
 
 	// Reset heading element font weights
 	caption, dt, h6, h5, h4, h3, h2, h1, th {
 		font-weight: normal;
 	}
 
-	// Heading level 6 elements
-	h6 {
-		font-size: var(--font-size-h6);
-		line-height: var(--line-height-h6);
-		font-weight: bold;
-	}
-
-	// Heading level 5 elements
-	h5 {
-		font-size: var(--font-size-h5);
-		line-height: var(--line-height-h5);
-		font-weight: bold;
-	}
-
-	// Heading level 4 elements
-	h4 {
+	// Heading level 1 elements
+	h1 {
+		font-size: var(--font-size-title);
+		line-height: var(--line-height-title);
 		font-family: var(--font-family-heading);
-		font-size: var(--font-size-h4);
-		line-height: var(--line-height-h4);
-	}
-
-	// Heading level 3 elements
-	h3 {
-		font-family: var(--font-family-heading);
-		font-size: var(--font-size-h3);
-		line-height: var(--line-height-h3);
 	}
 
 	// Heading level 2 elements
@@ -82,70 +114,96 @@
 		padding-bottom: var(--spacing-rule);
 	}
 
-	// Heading level 1 elements
-	h1 {
-		font-size: var(--font-size-title);
-		line-height: var(--line-height-title);
+	// Heading level 3 elements
+	h3 {
 		font-family: var(--font-family-heading);
+		font-size: var(--font-size-h3);
+		line-height: var(--line-height-h3);
 	}
 
-	// Description list elements
+	// Heading level 4 elements
+	h4 {
+		font-family: var(--font-family-heading);
+		font-size: var(--font-size-h4);
+		line-height: var(--line-height-h4);
+	}
+
+	// Heading level 5 elements
+	h5 {
+		font-size: var(--font-size-h5);
+		line-height: var(--line-height-h5);
+		font-weight: bold;
+	}
+
+	// Heading level 6 elements
+	h6 {
+		font-size: var(--font-size-h6);
+		line-height: var(--line-height-h6);
+		font-weight: bold;
+	}
+
+	// Heading groups
+	hgroup {
+		margin-top: var(--spacing-double-line);
+
+		h1, h2, h3, h4, h5, h6 {
+			margin-bottom: 0;
+			margin-top: 0;
+		}
+		h2, h3, h4, h5, h6 {
+			margin-top: 0;
+			color: var(--colorvalue-gray-light);
+		}
+	}
+
+
+	// LISTS
+	// =====
+
+	// Ordered and unordered lists
+	ol, ul {
+		padding-left: var(--spacing-onepointfive-line);
+
+		ol, ul {
+			margin-bottom: 0;
+		}
+	}
+
+	// Description list
 	dt {
 		font-weight: bold;
+		margin-top: var(--spacing-half-line);
 	}
 	dd {
 		padding-left: var(--spacing-line);
 		margin-left: 0;
-		margin-bottom: var(--spacing-half-line);
 	}
 
-	// Table elements
-	th {
-		text-align: left;
-		font-weight: bold;
-	}
-	caption {
-		font-weight: bold;
-		text-align: left;
-	}
 
-	// Link elements
-	a {
-		@extend %link;
-	}
+	// CONTENT BLOCKS
+	// ==============
 
-	// Image elements
-	img {
-		width: auto;
+	// Code blocks
+	pre {
+		background-color: var(--colorvalue-cream);
+		border-radius: var(--spacingvalue-xs);
+		font-family: var(--font-family-monospace);
 		max-width: 100%;
-	}
+		overflow: auto;
+		padding: var(--spacing-rule);
 
-	// Text-level semantic elements
-	abbr {
-		cursor: help;
-	}
-	cite {
-		font-style: italic;
-	}
-	figcaption, small, sub, sup {
-		font-size: var(--font-size-small);
-		line-height: var(--line-height-small);
-	}
-	mark {
-		background-color: var(--colorvalue-yellow);
-	}
-	q {
-		font-style: italic;
-
-		&::before {
-			content: "“";
-		}
-		&::after {
-			content: "”";
+		> code {
+			background-color: var(--colorvalue-gray-dark);
+			border-radius: 0;
+			color: var(--colorvalue-white-dark);
+			display: block;
+			max-width: 100%;
+			overflow: auto;
+			padding: var(--spacing-half-line);
 		}
 	}
 
-	// Rule elements
+	// Horizontal rules
 	hr {
 		border: none;
 		border-top: var(--spacing-rule) solid var(--colorvalue-cream);
@@ -154,29 +212,22 @@
 		margin-bottom: var(--spacing-double-line);
 	}
 
-	// Figure elements
-	figure {
-		margin-left: 0;
+	// Blockquotes
+	// TODO
+	blockquote {
+		// Using RGBA here fixes a known Safari bug with transparent gradients
+		// https://stackoverflow.com/q/38391457/186241
+		background-image: linear-gradient(90deg, var(--colorvalue-cream), rgba(255,255,255,0));
+		background-size: var(--spacing-half-line) 100%;
+		background-repeat: no-repeat;
+		border-left: calc(var(--spacing-rule) * 0.5) solid var(--colorvalue-cream-dark);
+		margin-left: var(--spacing-line);
 		margin-right: 0;
-	}
+		padding: 0;
+		padding-left: var(--spacing-line);
 
-	// Code elements
-	code {
-		padding: calc(var(--spacing-rule) / 2) var(--spacing-rule);
-		background-color: var(--colorvalue-cream);
-		border-radius: var(--spacing-rule);
-		font-family: var(--font-family-monospace);
-	}
-	pre {
-		overflow: hidden;
-	
-		> code {
-			display: block;
-			padding: var(--spacing-half-line);
-			background-color: var(--colorvalue-gray-dark);
-			border: solid var(--spacing-rule) var(--colorvalue-cream);
-			color: var(--colorvalue-white-dark);
-			overflow: auto;
+		p {
+			margin-bottom: var(--spacing-half-line);
 		}
 	}
 
@@ -209,4 +260,100 @@
 	details[open] summary::before {
 		content: "-";
 	}
+
+	// Tables
+	.table-wrapper {
+		overflow: auto;
+	}
+	table {
+		--table-border: 1px solid var(--colorvalue-cream-dark);
+		border-bottom: var(--table-border);
+		border-collapse: collapse;
+		border-right: var(--table-border);
+		overflow: auto;
+		min-width: 100%;
+	}
+	caption {
+		margin-bottom: var(--spacing-half-line);
+	}
+	caption, th {
+		font-weight: bold;
+		text-align: left;
+	}
+	tbody tr:nth-child(even) td {
+		background-color: var(--colorvalue-cream);
+	}
+	th {
+		background-color: var(--colorvalue-cream-dark);
+	}
+	td, th {
+		padding: var(--spacing-rule);
+		border-top: var(--table-border);
+		border-left: var(--table-border);
+	}
+	tfoot {
+		td, th {
+			border-top: 2px solid var(--colorvalue-cream-dark);
+		}
+	}
+
+
+	// MEDIA AND FIGURES
+	// =================
+
+	// Figures, images, and picture elements
+	figure, img, picture {
+		box-sizing: border-box;
+		background-color: var(--colorvalue-cream);
+		border-radius: var(--spacingvalue-xs);
+		border: solid var(--spacing-rule) var(--colorvalue-cream);
+		width: auto;
+		max-width: 100%;
+	}
+	figure {
+		margin-left: 0;
+		margin-right: 0;
+		width: fit-content;
+	}
+	figcaption {
+		font-size: var(--font-size-small);
+		line-height: var(--line-height-small);
+		text-align: center;
+
+		&:first-child {
+			padding-bottom: var(--spacing-rule);
+		}
+		&:last-child {
+			padding-top: var(--spacing-rule);
+		}
+	}
+	figure img,
+	figure picture {
+		border: none;
+		border-radius: 0;
+		display: block;
+		margin: 0 auto;
+	}
+
+	// Blockquotes in figures need some special treatment
+	figure blockquote {
+		background-color: var(--color-content-background);
+		background-image: none;
+		border-left: none;
+		margin: 0;
+		padding: var(--spacing-half-line);
+	}
+
+	// Iframe placeholder
+	.iframe-placeholder {
+		box-sizing: border-box;
+		background-color: var(--colorvalue-blue-light);
+		padding: var(--spacing-half-line);
+		margin-bottom: var(--spacing-line);
+		border: solid 1px var(--colorvalue-blue);
+	}
+	figure .iframe-placeholder {
+		margin: 0;
+	}
+
 }

@@ -22,15 +22,16 @@ A simple single-user feed reader.
 - [x] Style entry lists
 - [x] Style form-only pages
 - [x] Run srcset etc through the image absolute / proxy filter
-- [ ] Style feed lists
-- [ ] Style the content page
-- [ ] Add a stats box to the home page
-- [ ] Add icons to nav list links
+- [x] Style the content page
 - [ ] Add password-protection
+- [ ] Style feed lists
+- [ ] Add icons to nav list links
 
 ### Post-alpha
 
+- [ ] Add a stats box to the home page
 - [ ] Add support for grouping feeds
+- [ ] Mimic the Google Reader API for Reeder support (see https://freshrss.github.io/FreshRSS/en/users/06_Mobile_access.html for info)
 - [ ] Add the ability to batch mark as read
 - [ ] Add the ability to save or bookmark an entry so that it's never deleted
 - [ ] Add the ability to import OPML

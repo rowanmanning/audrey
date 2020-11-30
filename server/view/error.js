@@ -16,17 +16,31 @@ const layout = require('./layout/main');
  *     Returns an HTML element.
  */
 module.exports = function renderErrorView(context) {
+	const {error} = context;
 
-	// Set the title here, so it's passed into the layout
-	context.title = `Error: ${context.error.statusCode}`;
+	context.pageTitle = `Error: ${error.statusCode}`;
 
-	// Wrap the view in the default layout
-	return layout(context, html`
-		<h1>${context.title}</h1>
-		<p>${context.error.message}</p>
-		<${errorStack} stack=${context.error.stack}/>
-	`);
+	// Populate main content
+	const content = html`
+		<div class="content-body">
+			<p>${error.message}</p>
+			<${errorStack} stack=${error.stack}/>
+		</div>
+	`;
 
+	// Populate content sub-sections
+	context.subSections = {
+
+		// Content heading
+		heading: html`
+			<div class="content-head">
+				<h1 class="content-head__title">${context.pageTitle}</h1>
+			</div>
+		`
+	};
+
+	// Wrap the content in a layout and return to render
+	return layout(context, content);
 };
 
 /**
