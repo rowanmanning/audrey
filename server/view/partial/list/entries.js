@@ -32,13 +32,13 @@ module.exports = class EntryList extends ContentList {
 	 */
 	renderItem(entry) {
 		return super.renderItem(html`
-			<article class="entry-summary ${entry.isRead ? 'entry-summary--read' : ''}">
-				<header class="entry-summary__headline">
+			<article class="content-summary ${entry.isRead ? 'content-summary--read' : ''}">
+				<header class="content-summary__headline">
 					<h2>
 						<a href=${entry.url}>${entry.title}</a>
 					</h2>
 				</header>
-				<p class="entry-summary__meta">
+				<p class="content-summary__meta">
 					Posted <${DateElement} date=${entry.publishedAt} />
 					${entry.author ? ` by ${entry.author}` : ''}
 					${' '} on <a href=${entry.feed.url}>${entry.feed.displayTitle}</a>.

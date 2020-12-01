@@ -155,5 +155,23 @@ module.exports = function defineEntrySchema(app) {
 		app.log.info(`[scheduler:entries]: removed ${removedEntries} old entries`);
 	});
 
+	entrySchema.static('countGroupedByFeedId', async function() {
+		const counts = await this.aggregate([
+			{$group: {
+				_id: '$feed',
+				total: {$sum: 1},
+				unread: {$sum: {$cond: ['$isRead', 0, 1]}}
+			}}
+		]);
+		return counts.reduce((result, {_id, total, unread}) => {
+			result[_id] = {
+				total,
+				unread,
+				read: total - unread
+			};
+			return result;
+		}, {});
+	});
+
 	return entrySchema;
 };

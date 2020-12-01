@@ -6,7 +6,7 @@ const requireAuth = require('../middleware/require-auth');
 
 module.exports = function mountFeedsController(app) {
 	const {router} = app;
-	const {Feed} = app.models;
+	const {Entry, Feed} = app.models;
 
 	router.get('/feeds', [
 		requireAuth(),
@@ -22,11 +22,12 @@ module.exports = function mountFeedsController(app) {
 
 	async function listFeeds(request, response, next) {
 		try {
-			request.feeds = response.locals.feeds = await Feed
+			response.locals.feeds = await Feed
 				.fetchAll()
 				.skip(request.feedPagination.currentPageStartIndex)
 				.limit(request.feedPagination.perPage)
 				.populate('errors');
+			response.locals.feedEntryCounts = await Entry.countGroupedByFeedId();
 			next();
 		} catch (error) {
 			next(error);

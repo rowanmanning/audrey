@@ -7,7 +7,14 @@ const layout = require('../../layout/main');
 const Pagination = require('../../partial/pagination');
 
 module.exports = function renderFeedsListPage(context) {
-	const {feeds, feedPagination, isRefreshInProgress, request, settings} = context;
+	const {
+		feeds,
+		feedEntryCounts,
+		feedPagination,
+		isRefreshInProgress,
+		request,
+		settings
+	} = context;
 
 	context.pageTitle = 'Feeds';
 
@@ -15,7 +22,7 @@ module.exports = function renderFeedsListPage(context) {
 	const content = html`
 		${showUnsubscribeSuccess()}
 		${isRefreshInProgress ? displayRefreshInProgress() : ''}
-		<${FeedList} items=${feeds}>
+		<${FeedList} items=${feeds} feedEntryCounts=${feedEntryCounts}>
 			<div class="notification notification--help">
 				<p>
 					You haven't subscribed to any feeds yet, once you do they'll appear here. ${' '}

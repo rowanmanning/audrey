@@ -1,6 +1,6 @@
 
-// Entry summary block
-.entry-summary {
+// Content summary block
+.content-summary {
 	@extend %base-typography;
 	padding-left: var(--spacing-line);
 	position: relative;
@@ -17,8 +17,8 @@
 	}
 }
 
-// Entry summary "read" modifier
-.entry-summary--read {
+// Content summary "read" modifier
+.content-summary--read {
 	color: var(--colorvalue-gray-light);
 
 	&::before {
@@ -27,8 +27,8 @@
 	}
 }
 
-// Entry summary headline element
-.entry-summary__headline {
+// Content summary headline element
+.content-summary__headline {
 	> h2 {
 		font-family: var(--font-family-heading);
 		font-size: var(--font-size-h3);
@@ -47,8 +47,8 @@
 	}
 }
 
-// Entry summary meta element
-.entry-summary__meta {
+// Content summary meta element
+.content-summary__meta {
 	font-size: var(--font-size-small);
 	line-height: var(--line-height-small);
 	margin: 0;
@@ -56,4 +56,9 @@
 	a {
 		@extend %link;
 	}
+}
+
+// Content summary error element
+.content-summary__error {
+	color: var(--color-error);
 }
