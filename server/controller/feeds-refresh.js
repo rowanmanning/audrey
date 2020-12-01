@@ -1,12 +1,14 @@
 'use strict';
 
 const redirect = require('../middleware/redirect');
+const requireAuth = require('../middleware/require-auth');
 
 module.exports = function mountFeedsRefreshController(app) {
 	const {router} = app;
 	const {Feed} = app.models;
 
 	router.post('/feeds/refresh', [
+		requireAuth(),
 		handleRefreshForm,
 		redirect('/feeds')
 	]);

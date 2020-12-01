@@ -1,6 +1,7 @@
 'use strict';
 
 const render = require('../middleware/render');
+const requireAuth = require('../middleware/require-auth');
 const {ValidationError} = require('@rowanmanning/app');
 
 module.exports = function mountSettingsController(app) {
@@ -8,11 +9,13 @@ module.exports = function mountSettingsController(app) {
 	const {Settings} = app.models;
 
 	router.get('/settings', [
+		requireAuth(),
 		handleUpdateSettingsForm,
 		render('page/settings/list')
 	]);
 
 	router.post('/settings', [
+		requireAuth(),
 		handleUpdateSettingsForm,
 		render('page/settings/list')
 	]);

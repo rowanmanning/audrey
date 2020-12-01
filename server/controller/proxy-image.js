@@ -1,11 +1,15 @@
 'use strict';
 
 const got = require('got');
+const requireAuth = require('../middleware/require-auth');
 
 module.exports = function mountProxyImageController(app) {
 	const {router} = app;
 
-	router.get('/proxy-image/:image', proxyImage);
+	router.get('/proxy-image/:image', [
+		requireAuth(),
+		proxyImage
+	]);
 
 	function proxyImage(request, response, next) {
 		const imageRequest = got.stream(request.params.image);

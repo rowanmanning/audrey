@@ -11,6 +11,7 @@ module.exports = class AudreyApp extends App {
 		options.databaseUrl = options.databaseUrl || 'mongodb://localhost:27017/audrey';
 		options.sessionSecret = options.sessionSecret || uuid.v4();
 		options.updateSchedule = options.updateSchedule || '0 */2 * * *'; // Every 2 hours
+		options.passwordHash = options.passwordHash || null;
 		super(options);
 		this.addListener('database:connected', () => this.setupScheduledJobs());
 	}
@@ -58,6 +59,10 @@ module.exports = class AudreyApp extends App {
 		} catch (error) {
 			this.log.error(`[setup:sheduler]: setup failed, ${error.message}`);
 		}
+	}
+
+	get requiresAuth() {
+		return Boolean(this.options.passwordHash);
 	}
 
 };

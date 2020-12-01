@@ -1,6 +1,7 @@
 'use strict';
 
 const render = require('../middleware/render');
+const requireAuth = require('../middleware/require-auth');
 const {ValidationError} = require('@rowanmanning/app');
 
 module.exports = function mountEntriesByIdController(app) {
@@ -8,12 +9,14 @@ module.exports = function mountEntriesByIdController(app) {
 	const {Entry} = app.models;
 
 	router.get('/entries/:entryId', [
+		requireAuth(),
 		fetchEntryById,
 		autoMarkEntryAsRead,
 		render('page/entries/view')
 	]);
 
 	router.post('/entries/:entryId/mark', [
+		requireAuth(),
 		fetchEntryById,
 		handleMarkEntryForm,
 		render('page/feeds/view')

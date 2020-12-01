@@ -2,12 +2,14 @@
 
 const paginate = require('../middleware/paginate');
 const render = require('../middleware/render');
+const requireAuth = require('../middleware/require-auth');
 
 module.exports = function mountEntriesController(app) {
 	const {router} = app;
 	const {Entry} = app.models;
 
 	router.get('/entries', [
+		requireAuth(),
 		paginate({
 			perPage: 50,
 			property: 'entryPagination',

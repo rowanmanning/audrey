@@ -2,12 +2,14 @@
 
 const paginate = require('../middleware/paginate');
 const render = require('../middleware/render');
+const requireAuth = require('../middleware/require-auth');
 
 module.exports = function mountHomeController(app) {
 	const {router} = app;
 	const {Entry, Feed} = app.models;
 
 	router.get('/', [
+		requireAuth(),
 		fetchStats,
 		paginate({
 			perPage: 50,

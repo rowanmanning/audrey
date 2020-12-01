@@ -1,6 +1,7 @@
 'use strict';
 
 const render = require('../middleware/render');
+const requireAuth = require('../middleware/require-auth');
 const {ValidationError} = require('@rowanmanning/app');
 
 module.exports = function mountSubscribeController(app) {
@@ -8,11 +9,13 @@ module.exports = function mountSubscribeController(app) {
 	const {Feed} = app.models;
 
 	router.get('/subscribe', [
+		requireAuth(),
 		handleSubscribeForm,
 		render('page/subscribe')
 	]);
 
 	router.post('/subscribe', [
+		requireAuth(),
 		handleSubscribeForm,
 		render('page/subscribe')
 	]);

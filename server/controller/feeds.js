@@ -2,12 +2,14 @@
 
 const paginate = require('../middleware/paginate');
 const render = require('../middleware/render');
+const requireAuth = require('../middleware/require-auth');
 
 module.exports = function mountFeedsController(app) {
 	const {router} = app;
 	const {Feed} = app.models;
 
 	router.get('/feeds', [
+		requireAuth(),
 		paginate({
 			perPage: 50,
 			property: 'feedPagination',

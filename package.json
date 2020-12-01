@@ -25,6 +25,7 @@
   },
   "dependencies": {
     "@rowanmanning/app": "^1.0.0-alpha.23",
+    "bcrypt": "^5.0.0",
     "date-fns": "^2.16.1",
     "dompurify": "^2.2.2",
     "dotenv": "^8.2.0",

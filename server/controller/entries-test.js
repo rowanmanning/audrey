@@ -3,11 +3,13 @@
 const cleanContent = require('../lib/clean-content');
 const {readFile} = require('fs').promises;
 const render = require('../middleware/render');
+const requireAuth = require('../middleware/require-auth');
 
 module.exports = function mountEntriesTestController(app) {
 	const {router} = app;
 
 	router.get('/entries/test', [
+		requireAuth(),
 		fetchTestEntry,
 		render('page/entries/view')
 	]);

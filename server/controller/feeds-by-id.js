@@ -2,6 +2,7 @@
 
 const paginate = require('../middleware/paginate');
 const render = require('../middleware/render');
+const requireAuth = require('../middleware/require-auth');
 const {ValidationError} = require('@rowanmanning/app');
 
 module.exports = function mountFeedsByIdController(app) {
@@ -9,6 +10,7 @@ module.exports = function mountFeedsByIdController(app) {
 	const {Entry, Feed} = app.models;
 
 	router.get('/feeds/:feedId', [
+		requireAuth(),
 		fetchFeedById,
 		paginate({
 			perPage: 50,
@@ -20,30 +22,35 @@ module.exports = function mountFeedsByIdController(app) {
 	]);
 
 	router.post('/feeds/:feedId/refresh', [
+		requireAuth(),
 		fetchFeedById,
 		handleRefreshFeedForm,
 		render('page/feeds/view')
 	]);
 
 	router.get('/feeds/:feedId/settings', [
+		requireAuth(),
 		fetchFeedById,
 		handleFeedSettingsForm,
 		render('page/feeds/settings')
 	]);
 
 	router.post('/feeds/:feedId/settings', [
+		requireAuth(),
 		fetchFeedById,
 		handleFeedSettingsForm,
 		render('page/feeds/settings')
 	]);
 
 	router.get('/feeds/:feedId/unsubscribe', [
+		requireAuth(),
 		fetchFeedById,
 		handleUnsubscribeForm,
 		render('page/feeds/unsubscribe')
 	]);
 
 	router.post('/feeds/:feedId/unsubscribe', [
+		requireAuth(),
 		fetchFeedById,
 		handleUnsubscribeForm,
 		render('page/feeds/unsubscribe')

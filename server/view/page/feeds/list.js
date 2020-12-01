@@ -39,7 +39,7 @@ module.exports = function renderFeedsListPage(context) {
 
 		// Left-hand sidebar
 		lhs: html`
-			${isRefreshInProgress ? displayRefresInProgress() : ''}
+			${isRefreshInProgress ? displayRefreshInProgress() : ''}
 			<nav class="nav-list">
 				<ul>
 					<li>
@@ -55,7 +55,7 @@ module.exports = function renderFeedsListPage(context) {
 		`
 	};
 
-	function displayRefresInProgress() {
+	function displayRefreshInProgress() {
 		return html`
 			<div class="notification notification--warning">
 				<p>
