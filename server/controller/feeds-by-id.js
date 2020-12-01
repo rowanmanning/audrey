@@ -75,7 +75,8 @@ module.exports = function mountFeedsByIdController(app) {
 			response.locals.entries = await Entry
 				.fetchAllByFeedId(response.locals.feed._id)
 				.skip(request.entryPagination.currentPageStartIndex)
-				.limit(request.entryPagination.perPage);
+				.limit(request.entryPagination.perPage)
+				.populate('feed');
 			next();
 		} catch (error) {
 			next(error);

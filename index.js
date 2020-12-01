@@ -11,7 +11,6 @@ dotenv.config();
 const app = new AudreyApp({
 	basePath: __dirname,
 	databaseUrl: process.env.MONGODB_URI,
-	passwordHash: process.env.PASSWORD_HASH,
 	port: process.env.PORT,
 	sessionSecret: process.env.SESSION_SECRET,
 	updateSchedule: process.env.UPDATE_SCHEDULE

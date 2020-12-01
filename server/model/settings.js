@@ -2,6 +2,7 @@
 
 const {Schema} = require('@rowanmanning/app');
 const shortid = require('shortid');
+const {comparePasswordToHash, hashPassword} = require('../lib/crypto/password');
 
 const day = 1000 * 60 * 60 * 24;
 
@@ -40,10 +41,24 @@ module.exports = function defineSettingsSchema(app) {
 			type: Boolean,
 			required: [true, 'Show help text setting is required'],
 			default: true
+		},
+		passwordHash: {
+			type: String,
+			minlength: [8, 'Password must be 8 or more characters in length']
 		}
 	}, {
 		timestamps: true,
 		collation: {locale: 'en'}
+	});
+
+	settingsSchema.pre('save', async function() {
+		if (this.isModified('passwordHash')) {
+			this.passwordHash = await hashPassword(this.passwordHash);
+		}
+	});
+
+	settingsSchema.method('hasPassword', function() {
+		return Boolean(this.passwordHash);
 	});
 
 	settingsSchema.static('get', async function() {
@@ -57,6 +72,20 @@ module.exports = function defineSettingsSchema(app) {
 	settingsSchema.static('getEntryCutoffDate', async function() {
 		const {daysToRetainOldEntries} = await this.get();
 		return new Date(Date.now() - (day * daysToRetainOldEntries));
+	});
+
+	settingsSchema.static('setPassword', async function(plainTextPassword) {
+		const settings = await this.get();
+		settings.passwordHash = plainTextPassword;
+		return settings.save();
+	});
+
+	settingsSchema.static('checkPassword', async function(plainTextPassword) {
+		const settings = await this.get();
+		if (!settings.passwordHash) {
+			return false;
+		}
+		return comparePasswordToHash(plainTextPassword, settings.passwordHash);
 	});
 
 	return settingsSchema;

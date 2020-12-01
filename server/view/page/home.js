@@ -6,11 +6,10 @@ const layout = require('../layout/main');
 const Pagination = require('../partial/pagination');
 
 module.exports = function renderHomePage(context) {
-	const {app, entries, entryPagination, settings, totalFeedCount} = context;
+	const {entries, entryPagination, settings, totalFeedCount} = context;
 
 	// Populate main content
 	const content = html`
-		${app.requiresAuth ? '' : renderPasswordWarning()}
 		<${EntryList} items=${entries}>
 			${totalFeedCount ? renderNothingToRead() : renderWelcome()}
 		<//>
@@ -31,21 +30,6 @@ module.exports = function renderHomePage(context) {
 					You can also visit the <a href="/settings">settings page</a> ${' '}
 					to configure ${settings.siteTitle} just the way you like it. See the ${' '}
 					green cog icon in the header.
-				</p>
-			</div>
-		`;
-	}
-
-	// Render password warning
-	function renderPasswordWarning() {
-		return html`
-			<div class="notification notification--warning">
-				<p><strong>${settings.siteTitle} is not secure yet</strong>.</p>
-				<p>
-					You need to set a password to secure your feeds and make sure only
-					you can make changes to your subscriptions. ${' '}
-					<a href="/auth/password">Set a password here</a> and
-					follow the instructions.
 				</p>
 			</div>
 		`;

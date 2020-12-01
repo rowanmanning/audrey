@@ -23,7 +23,7 @@ A simple single-user feed reader.
 - [x] Style form-only pages
 - [x] Run srcset etc through the image absolute / proxy filter
 - [x] Style the content page
-- [ ] Add password-protection
+- [x] Add password-protection
 - [ ] Style feed lists
 - [ ] Add icons to nav list links
 

@@ -6,13 +6,14 @@ const {html} = require('@rowanmanning/app');
 const layout = require('../../layout/main');
 
 module.exports = function renderLoginPage(context) {
-	const {loginForm} = context;
+	const {loginForm, request, settings} = context;
 
 	context.pageTitle = 'Sign in';
 
 	// Populate main content
 	const content = html`
 		<div class="content-body">
+			${showPasswordSettingSuccess()}
 			<${Form} action=${loginForm.action}>
 				<${Form.Errors} errors=${loginForm.errors} />
 
@@ -40,6 +41,21 @@ module.exports = function renderLoginPage(context) {
 			</div>
 		`
 	};
+
+	function showPasswordSettingSuccess() {
+		const flashMessage = request.flash('password-set');
+		if (flashMessage && flashMessage.length) {
+			return html`
+				<div class="notification notification--success">
+					<p>
+						You've set your password, thanks! Now ${settings.siteTitle} is
+						more secure. You'll need to sign in to start subscribing to feeds.
+					</p>
+				</div>
+			`;
+		}
+		return '';
+	}
 
 	// Wrap the content in a layout and return to render
 	return layout(context, content);

@@ -9,9 +9,11 @@
  */
 module.exports = function requireAuth() {
 	return (request, response, next) => {
-		const {app} = request.app.locals;
-		if (app.requiresAuth && !request.session.isAuthenticated) {
-			return response.redirect(`/auth/login?redirect=${request.url}`);
+		if (!request.settings.hasPassword()) {
+			return response.redirect('/');
+		}
+		if (!request.session.isAuthenticated) {
+			return response.redirect(`/login?redirect=${request.url}`);
 		}
 		next();
 	};

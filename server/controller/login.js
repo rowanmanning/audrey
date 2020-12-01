@@ -1,17 +1,17 @@
 'use strict';
 
-const {comparePasswordToHash} = require('../../lib/crypto/password');
-const render = require('../../middleware/render');
+const render = require('../middleware/render');
 
-module.exports = function mountAuthLoginController(app) {
+module.exports = function mountLoginController(app) {
 	const {router} = app;
+	const {Settings} = app.models;
 
-	router.get('/auth/login', [
+	router.get('/login', [
 		handleLoginForm,
 		render('page/auth/login')
 	]);
 
-	router.post('/auth/login', [
+	router.post('/login', [
 		handleLoginForm,
 		render('page/auth/login')
 	]);
@@ -19,9 +19,9 @@ module.exports = function mountAuthLoginController(app) {
 	// Middleware to handle logging in
 	async function handleLoginForm(request, response, next) {
 
-		// If the app doesn't require authentication, just redirect them away
-		if (!app.requiresAuth) {
-			return response.redirect(request.query.redirect || '/');
+		// If the app doesn't require authentication, redirect home
+		if (!request.settings.hasPassword()) {
+			return response.redirect('/');
 		}
 
 		// Add login form details to the render context
@@ -36,11 +36,7 @@ module.exports = function mountAuthLoginController(app) {
 		try {
 			// On POST, attempt to log in
 			if (request.method === 'POST') {
-				const isAuthenticated = await comparePasswordToHash(
-					loginForm.data.password,
-					app.options.passwordHash
-				);
-				if (isAuthenticated) {
+				if (await Settings.checkPassword(loginForm.data.password)) {
 					request.session.isAuthenticated = true;
 					return response.redirect(request.query.redirect || '/');
 				}
