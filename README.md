@@ -1,43 +1,6 @@
 
 # Audrey
 
-A simple single-user feed reader.
+Audrey is a simple single-user feed reader, focused on a no-frills reading experience. Audrey allows you to subscribe to [RSS](https://en.wikipedia.org/wiki/RSS) and [Atom](https://en.wikipedia.org/wiki/Atom_(Web_standard)) feeds and read content in one place.
 
-
-## To-Do List
-
-### Pre-beta
-
-- [x] Add date formatting
-- [x] Check duplicate key error for adding a feed where feed XML is different to given URL
-- [x] Don't allow feed URL changes
-- [x] Add the ability to refresh all feeds
-- [x] Add breadcrumbs back in
-- [x] Style pagination
-- [x] Add GitHub links etc to the footer
-- [x] Sort out relative links in posts
-- [x] Auto-delete entries that have passed the retention date
-- [x] Add the ability to schedule refreshing feeds
-- [x] Add flash messages for creation/deletion
-- [x] Style entry lists
-- [x] Style form-only pages
-- [x] Run srcset etc through the image absolute / proxy filter
-- [x] Style the content page
-- [x] Add password-protection
-- [x] Style in-page actions with icons
-- [x] Style feed lists
-- [x] Test styles across the main browsers
-- [ ] Write a proper README
-
-### Post-beta
-
-- [ ] Add a stats box to the home page
-- [ ] Add support for grouping feeds
-- [ ] Mimic the Google Reader API for Reeder support (see https://freshrss.github.io/FreshRSS/en/users/06_Mobile_access.html for info)
-- [ ] Add the ability to batch mark as read
-- [ ] Add the ability to save or bookmark an entry so that it's never deleted
-- [ ] Add the ability to import OPML
-- [ ] Add the ability to export OPML
-- [ ] Add a favicon
-- [ ] Look info fingerprinting client-side assets
-- [ ] Add a link to report formatting issues with feeds (GitHub issue link)
+Audrey is self-hosted; you can set up an installation on your own server or cloud provider. There's no creepy harvesting of your data, and no algorithms to recommend new content.
