@@ -5,7 +5,7 @@ Audrey is a simple single-user feed reader, focused on a no-frills reading exper
 
 Audrey is self-hosted; you can set up an installation on your own server or cloud provider. There's no creepy harvesting of your data, and no algorithms to recommend new content.
 
-**Audrey is currently in beta**, I really appreciate any time you spend testing it out.
+**[Note: Audrey is currently in beta](#beta-notice)**
 
 <table>
   <tbody>
@@ -27,6 +27,7 @@ Audrey is self-hosted; you can set up an installation on your own server or clou
   * [Running locally](#running-locally)
   * [Running on a server](#running-on-a-server)
   * [Config options](#config-options)
+  * [Beta notice](#beta-notice)
   * [Contributing](#contributing)
   * [License](#license)
 
@@ -112,6 +113,13 @@ This application is configured using environment variables, or an [`.env` file](
     Default: `0 */2 * * *` (every 2 hours).
 
 You can also change more configurations through the settings page of a running copy of Audrey, these additional configurations are stored in the database.
+
+
+## Beta notice
+
+Audrey is currently in beta, and may not have all of the features you expect from a feed reader yet. I'm deliberately keeping a reduced set of features, but please check the [feature label](https://github.com/rowanmanning/audrey/issues?q=is%3Aissue+label%3Afeature) in the [issues](https://github.com/rowanmanning/audrey/issues) before requesting anything
+
+I really appreciate feedback on the stability of Audrey, if you're willing to give it a go as your primary feed reader then I'll be happy to address any bugs you come across during your day-to-day use.
 
 
 ## Contributing
