@@ -14,9 +14,7 @@ Running Audrey on [Heroku](https://www.heroku.com/) is relatively easy comparted
 
 ## Setting up MongoDB
 
-Before you can run the application, you'll need somewhere to host your MongoDB database. Until recently, it was possible to add a free MongoDB database to a Heroku app with mLab, but now there are a few more steps.
-
-Firstly you'll need to choose a provider:
+Before you can run the application, you'll need somewhere to host your MongoDB database. Until recently, it was possible to add a free MongoDB database to a Heroku app with mLab, but now there are a few more steps. Firstly you'll need to choose a provider:
 
 | Provider                                                           | Has a free tier | Has a Heroku Add-on | Documentation                                                    |
 |--------------------------------------------------------------------|-----------------|---------------------|------------------------------------------------------------------|
@@ -24,7 +22,9 @@ Firstly you'll need to choose a provider:
 | [ObjectRocket](https://www.objectrocket.com/)                      | No              | Yes                 | [Docs](https://elements.heroku.com/addons/ormongo)               |
 
 
-Once you've decided on a provider, you'll need to follow their documentation to get a database set up. To continue on deploying Audrey to Heroku, you'll need to get a [MongoDB connection string](https://docs.mongodb.com/manual/reference/connection-string/) which your provider should present to you. It will look something like this:
+Once you've decided on a provider, you'll need to follow their documentation to get a database set up. You will be creating your Heroku app in either the EU or US region, make sure that the region of your database and the region of your Heroku app align, or Audrey will not be very performant.
+
+To continue on deploying Audrey to Heroku, you'll need to get a [MongoDB connection string](https://docs.mongodb.com/manual/reference/connection-string/) which your provider should present to you. It will look something like this:
 
 ```
 mongodb://username:password@example.com:1234/database
@@ -35,7 +35,21 @@ Once you have this, continue with either the [manual](#manual-setup) or [one-cli
 
 ## Manual setup
 
-TODO
+To deploy Audrey to Heroku manually you'll need a Heroku account. Then follow the instructions below:
+
+  1. Visit <https://dashboard.heroku.com/> and click the button to create a new app
+
+  2. Fill out and submit the form with your application name, remembering to use the same region as your database is hosted in
+
+  5. Now we need to add some configurations. Click on the "Settings" tab and then under "Config Variables", click "Reveal Config Vars"
+
+  6. Configure your app using the [configurations outlined below](#configuration-notes)
+
+  7. Now we're ready to deploy for the first time. Click on the "Deploy" tab and choose a deployment method. We recommend either Heroku Git, or connecting to your own forked copy of Audrey on GitHub. Either way, the instructions in the Heroku interface should be helpful here
+
+  8. After a successful deploy, you should be able to access your new application in-browser, click the "Open app" button that appears at the top of your dashboard in Heroku. An Audrey page should load
+
+  9. You'll need to set up a password via the interface. You need to remember this password to regain access if your session expires. Now you're ready to start using Audrey!
 
 
 ## One-click setup
@@ -46,8 +60,14 @@ For most Heroku users, all you need to do is click the button and fill out a few
 
 [![Deploy to Heroku](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/rowanmanning/audrey/tree/main)
 
+Once your app is up-and-running, you'll need to set up a password via the interface. You need to remember this password to regain access if your session expires. Now you're ready to start using Audrey!
+
 
 ## Configuration notes
+
+When configuring a Heroku app to run Audrey, it's important that you:
+
+  - Create your database and Heroku application in the same region (probably the one closest to you)
 
 Some of the configurations should be adjusted slightly when running Audrey on Heroku:
 
