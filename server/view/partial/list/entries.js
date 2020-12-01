@@ -35,7 +35,7 @@ module.exports = class EntryList extends ContentList {
 			<article class="content-summary ${entry.isRead ? 'content-summary--read' : ''}">
 				<header class="content-summary__headline">
 					<h2>
-						<a href=${entry.url}>${entry.title}</a>
+						<a href=${entry.url}>${entry.displayTitle}</a>
 					</h2>
 				</header>
 				<p class="content-summary__meta">

@@ -8,7 +8,7 @@ const layout = require('../../layout/main');
 module.exports = function renderEntriesViewPage(context) {
 	const {entry} = context;
 
-	context.pageTitle = entry.title;
+	context.pageTitle = entry.displayTitle;
 
 	// Add breadcrumbs
 	context.breadcrumbs.push({

@@ -1,5 +1,6 @@
 'use strict';
 
+const cleanTitle = require('../lib/clean-title');
 const fetchFeed = require('../lib/feed/fetch');
 const fetchFeedInfo = require('../lib/feed/fetch-info');
 const {Schema, ValidationError} = require('@rowanmanning/app');
@@ -61,7 +62,7 @@ module.exports = function defineFeedSchema(app) {
 
 	// Virtual display title
 	feedSchema.virtual('displayTitle').get(function() {
-		return this.customTitle || this.title;
+		return cleanTitle(this.customTitle || this.title);
 	});
 
 	// Virtual internal feed URL

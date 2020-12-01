@@ -1,6 +1,7 @@
 'use strict';
 
 const cleanContent = require('../lib/clean-content');
+const cleanTitle = require('../lib/clean-title');
 const {Schema} = require('@rowanmanning/app');
 const shortid = require('shortid');
 const uniqueValidator = require('mongoose-unique-validator');
@@ -67,6 +68,11 @@ module.exports = function defineEntrySchema(app) {
 	// Add unique property validation
 	entrySchema.plugin(uniqueValidator, {
 		message: `An entry with that {PATH} already exists`
+	});
+
+	// Virtual display title
+	entrySchema.virtual('displayTitle').get(function() {
+		return cleanTitle(this.title);
 	});
 
 	// Virtual internal entry URL

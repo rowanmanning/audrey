@@ -6,7 +6,7 @@ A simple single-user feed reader.
 
 ## To-Do List
 
-### Pre-alpha
+### Pre-beta
 
 - [x] Add date formatting
 - [x] Check duplicate key error for adding a feed where feed XML is different to given URL
@@ -25,9 +25,11 @@ A simple single-user feed reader.
 - [x] Style the content page
 - [x] Add password-protection
 - [x] Style in-page actions with icons
-- [ ] Style feed lists
+- [x] Style feed lists
+- [x] Test styles across the main browsers
+- [ ] Write a proper README
 
-### Post-alpha
+### Post-beta
 
 - [ ] Add a stats box to the home page
 - [ ] Add support for grouping feeds
@@ -36,4 +38,6 @@ A simple single-user feed reader.
 - [ ] Add the ability to save or bookmark an entry so that it's never deleted
 - [ ] Add the ability to import OPML
 - [ ] Add the ability to export OPML
+- [ ] Add a favicon
+- [ ] Look info fingerprinting client-side assets
 - [ ] Add a link to report formatting issues with feeds (GitHub issue link)
