@@ -16,6 +16,14 @@
 		}
 	],
 	"env": {
+		"MONGODB_URI": {
+			"description": "A MongoDB connection string, please refer to the Audrey Heroku docs if you don't have this yet.",
+			"required": true
+		},
+		"UPDATE_SCHEDULE": {
+			"description": "A cron expression indicating when feeds should be automatically refreshed.",
+			"value": "0,15,30,45 * * * *"
+		},
 		"SESSION_SECRET": {
 			"description": "A secret key for hashing sessions.",
 			"generator": "secret"
