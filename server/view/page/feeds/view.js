@@ -44,26 +44,28 @@ module.exports = function renderFeedsViewPage(context) {
 			<${Breadcrumb} items=${context.breadcrumbs} />
 			<div class="content-head">
 				<h1 class="content-head__title">${context.pageTitle}</h1>
+				<nav class="content-head__navigation">
+					<ul>
+						<li>
+							<a
+								href=${feed.settingsUrl}
+								class="content-head__link content-head__link--settings"
+								title="Feed settings"
+							>Feed settings</a>
+						</li>
+						<li>
+							<form method="post" action=${feed.refreshUrl}>
+								<input
+									type="submit"
+									value="Refresh feed"
+									class="content-head__link content-head__link--refresh"
+									title="Refresh feed"
+								/>
+							</form>
+						</li>
+					</ul>
+				</nav>
 			</div>
-		`,
-
-		// Left-hand sidebar
-		lhs: html`
-			<nav class="nav-list">
-				<ul>
-					<li>
-						<a href=${feed.url} class="nav-list__link">Entries</a>
-					</li>
-					<li>
-						<a href=${feed.settingsUrl} class="nav-list__link">Feed settings</a>
-					</li>
-					<li>
-						<form method="post" action=${feed.refreshUrl}>
-							<input type="submit" class="nav-list__link" value="Refresh feed" />${' '}
-						</form>
-					</li>
-				</ul>
-			</nav>
 		`,
 
 		// Right-hand sidebar

@@ -24,8 +24,8 @@ A simple single-user feed reader.
 - [x] Run srcset etc through the image absolute / proxy filter
 - [x] Style the content page
 - [x] Add password-protection
+- [x] Style in-page actions with icons
 - [ ] Style feed lists
-- [ ] Add icons to nav list links
 
 ### Post-alpha
 

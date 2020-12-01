@@ -14,6 +14,7 @@ module.exports = function renderFeedsListPage(context) {
 	// Populate main content
 	const content = html`
 		${showUnsubscribeSuccess()}
+		${isRefreshInProgress ? displayRefreshInProgress() : ''}
 		<${FeedList} items=${feeds}>
 			<div class="notification notification--help">
 				<p>
@@ -34,24 +35,29 @@ module.exports = function renderFeedsListPage(context) {
 			<${Breadcrumb} items=${context.breadcrumbs} />
 			<div class="content-head">
 				<h1 class="content-head__title">${context.pageTitle}</h1>
+				<nav class="content-head__navigation">
+					<ul>
+						<li>
+							<a
+								href="/subscribe"
+								class="content-head__link content-head__link--subscribe"
+								title="Subscribe to a feed"
+							>Subscribe</a>
+						</li>
+						<li>
+							<form method="post" action="/feeds/refresh">
+								<input
+									type="submit"
+									value="Refresh"
+									disabled=${isRefreshInProgress}
+									class="content-head__link content-head__link--refresh"
+									title="Refresh all feeds"
+								/>
+							</form>
+						</li>
+					</ul>
+				</nav>
 			</div>
-		`,
-
-		// Left-hand sidebar
-		lhs: html`
-			${isRefreshInProgress ? displayRefreshInProgress() : ''}
-			<nav class="nav-list">
-				<ul>
-					<li>
-						<a href="/subscribe" class="nav-list__link">Subscribe to a feed</a>
-					</li>
-					<li>
-						<form method="post" action="/feeds/refresh">
-							<input type="submit" class="nav-list__link" value="Refresh all feeds" disabled=${isRefreshInProgress} />${' '}
-						</form>
-					</li>
-				</ul>
-			</nav>
 		`
 	};
 

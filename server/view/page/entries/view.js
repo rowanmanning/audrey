@@ -33,21 +33,26 @@ module.exports = function renderEntriesViewPage(context) {
 			<${Breadcrumb} items=${context.breadcrumbs} />
 			<div class="content-head">
 				<h1 class="content-head__title">${context.pageTitle}</h1>
+				<nav class="content-head__navigation">
+					<ul>
+						<li>
+							<form method="post" action=${entry.markUrl}>
+								<input
+									type="hidden"
+									name="setReadStatus"
+									value=${entry.isRead ? 'unread' : 'read'}
+								/>
+								<input
+									type="submit"
+									value="Mark as ${entry.isRead ? 'unread' : 'read'}"
+									class="content-head__link content-head__link--${entry.isRead ? 'unread' : 'read'}"
+									title="Mark this entry as ${entry.isRead ? 'unread' : 'read'}"
+								/>
+							</form>
+						</li>
+					</ul>
+				</nav>
 			</div>
-		`,
-
-		// Left-hand sidebar
-		lhs: html`
-			<nav class="nav-list">
-				<ul>
-					<li>
-						<form method="post" action=${entry.markUrl}>
-							<input type="hidden" name="setReadStatus" value=${entry.isRead ? 'unread' : 'read'} />
-							<input type="submit" class="nav-list__link" value="Mark as ${entry.isRead ? 'unread' : 'read'}" />
-						</form>
-					</li>
-				</ul>
-			</nav>
 		`,
 
 		// Right-hand sidebar

@@ -267,7 +267,7 @@ module.exports = function defineFeedSchema(app) {
 			modifiedAt: feedEntry.date
 		};
 	});
-	
+
 	// Handle errors from the feed parser
 	feedSchema.static('_feedErrorToValidationError', error => {
 		if (error instanceof ValidationError) {
