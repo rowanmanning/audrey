@@ -77,12 +77,20 @@ You can run Audrey locally if you intend on making your own changes, or just wan
 
   6. Visit [localhost:8080](http://localhost:8080/) in your browser (the port may be different if you made changes to the default `.env` file)
 
-  7. Set up a password on the locally running site. You'll need to remember this password to regain access if your session expires.
+  7. Set up a password on the locally running site. You'll need to remember this password to regain access if your session expires
 
 
 ## Running on a server
 
-TODO
+The instructions for running on a server are the same as [running locally](#running-locally) apart from the following differences:
+
+  * It may not be possible to create an `.env` file, dependent on your setup. You'll need a different way to provide configurations via environment variables
+
+  * The URL to access the application will be whatever your public server address is, rather than `localhost`
+
+Audrey has guides for the following common cloud providers:
+
+  * [Deploy Audrey on Heroku](docs/guide/heroku.md)
 
 
 ## Config options
