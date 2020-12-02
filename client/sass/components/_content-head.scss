@@ -37,6 +37,14 @@
 		> li {
 			margin-right: var(--spacingvalue-xs);
 		}
+
+		@media (max-width: $breakpoint-small-mobile) {
+			display: block;
+
+			> li {
+				margin-right: 0;
+			}
+		}
 	}
 }
 
@@ -98,4 +106,17 @@
 }
 .content-head__link--unread {
 	background-image: url("/icons/status-unread.svg");
+}
+
+// Content head icon element, "bookmarked" and "unbookmarked" modifiers
+.content-head__link--bookmarked,
+.content-head__link--unbookmarked {
+	background-size: var(--spacing-half-line);
+	background-position-x: calc(var(--spacing-half-line) / 2);
+}
+.content-head__link--bookmarked {
+	background-image: url("/icons/status-bookmarked.svg");
+}
+.content-head__link--unbookmarked {
+	background-image: url("/icons/status-unbookmarked.svg");
 }

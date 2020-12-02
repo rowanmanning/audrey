@@ -6,21 +6,20 @@ const {html} = require('@rowanmanning/app');
 const layout = require('../../layout/main');
 const Pagination = require('../../partial/pagination');
 
-module.exports = function renderEntryiesListPage(context) {
+module.exports = function renderBookmarksListPage(context) {
 	const {entries, entryPagination, settings} = context;
 
-	context.pageTitle = 'All Entries';
+	context.pageTitle = 'Bookmarked Entries';
 
 	// Populate main content
 	const content = html`
 		<${EntryList} items=${entries}>
 			<div class="notification notification--help">
 				<p>
-					There are no entries here. This might be because you haven't ${' '}
-					<a href="/subscribe">subscribed</a> to any feeds yet. You may also have ${' '}
-					${settings.siteTitle} configured to not retain entries for very long; ${' '}
-					you can change the retention period on the ${' '}
-					<a href="/settings">settings page</a>.
+					You haven't bookmarked any entries yet. Bookmarking an entry
+					means it will never be deleted from ${settings.siteTitle}, so
+					you can come back at any time and read it. You can find a
+					bookmark button at the top of each entry you read.
 				</p>
 			</div>
 		<//>
@@ -44,9 +43,8 @@ module.exports = function renderEntryiesListPage(context) {
 		context.subSections.rhs = html`
 			<div class="notification notification--help">
 				<p>
-					This page displays all entries from all feeds, including those ${' '}
-					you have already read. ${' '}
-					<a href="/">You can view only <em>unread</em> entries here</a>.
+					This page displays all entries that you have bookmarked. Bookmarking
+					an entry means that it will never be deleted from ${settings.siteTitle}.
 				</p>
 			</div>
 		`;

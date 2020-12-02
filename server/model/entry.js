@@ -45,6 +45,11 @@ module.exports = function defineEntrySchema(app) {
 			required: [true, 'Entry read status is required'],
 			default: false
 		},
+		isBookmarked: {
+			type: Boolean,
+			required: [true, 'Entry bookmark status is required'],
+			default: false
+		},
 		syncedAt: {
 			type: Date,
 			required: [true, 'Entry sync date is required']
@@ -54,6 +59,10 @@ module.exports = function defineEntrySchema(app) {
 			required: [true, 'Entry publish date is required']
 		},
 		readAt: {
+			type: Date,
+			default: null
+		},
+		bookmarkedAt: {
 			type: Date,
 			default: null
 		},
@@ -109,6 +118,22 @@ module.exports = function defineEntrySchema(app) {
 		}
 	});
 
+	entrySchema.method('markAsBookmarked', function() {
+		if (!this.isBookmarked) {
+			this.isBookmarked = true;
+			this.bookmarkedAt = new Date();
+			return this.save();
+		}
+	});
+
+	entrySchema.method('markAsUnbookmarked', function() {
+		if (this.isBookmarked) {
+			this.isBookmarked = false;
+			this.bookmarkedAt = null;
+			return this.save();
+		}
+	});
+
 	entrySchema.static('createOrUpdate', function(entry) {
 		const query = {
 			guid: entry.guid
@@ -140,6 +165,14 @@ module.exports = function defineEntrySchema(app) {
 		return this.countDocuments({isRead: false});
 	});
 
+	entrySchema.static('fetchBookmarked', function() {
+		return this.fetchAll({isBookmarked: true});
+	});
+
+	entrySchema.static('countBookmarked', function() {
+		return this.countDocuments({isBookmarked: true});
+	});
+
 	entrySchema.static('countAllByFeedId', function(feedId) {
 		return this.countDocuments({feed: feedId});
 	});
@@ -151,6 +184,7 @@ module.exports = function defineEntrySchema(app) {
 	entrySchema.static('removeOldEntries', async function() {
 		const cutOffDate = await app.models.Settings.getEntryCutoffDate();
 		const {deletedCount} = await this.deleteMany({
+			isBookmarked: false, // Never remove bookmarked entries
 			publishedAt: {$lt: cutOffDate}
 		});
 		return deletedCount;

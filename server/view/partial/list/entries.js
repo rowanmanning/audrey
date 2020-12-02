@@ -32,7 +32,13 @@ module.exports = class EntryList extends ContentList {
 	 */
 	renderItem(entry) {
 		return super.renderItem(html`
-			<article class="content-summary ${entry.isRead ? 'content-summary--read' : ''}">
+			<article
+				class="
+					content-summary
+					${entry.isRead ? 'content-summary--read' : ''}
+					${entry.isBookmarked ? 'content-summary--bookmarked' : ''}
+				"
+			>
 				<header class="content-summary__headline">
 					<h2>
 						<a href=${entry.url}>${entry.displayTitle}</a>
@@ -42,7 +48,8 @@ module.exports = class EntryList extends ContentList {
 					Posted <${DateElement} date=${entry.publishedAt} />
 					${entry.author ? ` by ${entry.author}` : ''}
 					${' '} on <a href=${entry.feed.url}>${entry.feed.displayTitle}</a>.
-					${entry.isRead ? html` Read <${DateElement} date=${entry.readAt} />` : ''}
+					${entry.isRead ? html` Read <${DateElement} date=${entry.readAt} />.` : ''}
+					${entry.isBookmarked ? html` Bookmarked <${DateElement} date=${entry.bookmarkedAt} />.` : ''}
 				</p>
 			</article>
 		`);

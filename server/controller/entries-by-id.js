@@ -47,7 +47,7 @@ module.exports = function mountEntriesByIdController(app) {
 		}
 	}
 
-	// Middleware to handle feed refreshing
+	// Middleware to handle marking entries as read/unread/bookmarked
 	async function handleMarkEntryForm(request, response, next) {
 
 		// Add mark entry form details to the render context
@@ -55,18 +55,25 @@ module.exports = function mountEntriesByIdController(app) {
 			action: request.entry.markUrl,
 			errors: [],
 			data: {
-				setReadStatus: request.body.setReadStatus
+				setStatus: request.body.setStatus
 			}
 		};
 
 		try {
-			// On POST, attempt to mark the entry as read/unread
+			// On POST, attempt to mark the entry as read/unread/bookmarked
 			if (request.method === 'POST') {
-				if (markEntryForm.data.setReadStatus === 'read') {
+				if (markEntryForm.data.setStatus === 'read') {
 					await request.entry.markAsRead();
-					return response.redirect(request.entry.url);
 				}
-				await request.entry.markAsUnread();
+				if (markEntryForm.data.setStatus === 'unread') {
+					await request.entry.markAsUnread();
+				}
+				if (markEntryForm.data.setStatus === 'bookmark') {
+					await request.entry.markAsBookmarked();
+				}
+				if (markEntryForm.data.setStatus === 'unbookmark') {
+					await request.entry.markAsUnbookmarked();
+				}
 				return response.redirect(`${request.entry.url}?nomark`);
 			}
 			next();

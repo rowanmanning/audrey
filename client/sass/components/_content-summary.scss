@@ -27,6 +27,14 @@
 	}
 }
 
+// Content summary "bookmarked" modifier
+.content-summary--bookmarked {
+	&::before {
+		content: "Bookmarked";
+		background-image: url("/icons/status-bookmarked.svg");
+	}
+}
+
 // Content summary headline element
 .content-summary__headline {
 	> h2 {

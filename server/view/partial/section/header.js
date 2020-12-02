@@ -27,8 +27,12 @@ module.exports = class Header extends Partial {
 				url: '/'
 			},
 			{
-				label: 'Entries',
+				label: 'All',
 				url: '/entries'
+			},
+			{
+				label: 'Bookmarks',
+				url: '/bookmarks'
 			},
 			{
 				label: 'Feeds',
