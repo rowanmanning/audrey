@@ -38,10 +38,14 @@ module.exports = function renderHomePage(context) {
 	// Render a "nothing to read" message
 	function renderNothingToRead() {
 		return html`
-			<p>
-				There's nothing to read!<br/>
-				<a href="/subscribe">You can subscribe to feeds here</a>.
-			</p>
+			<div class="content-body">
+				<h2>You read everything</h2>
+				<p>
+					There's nothing new to read at the moment, you read it all! If you're
+					looking for more content, try ${' '}
+					<a href="/subscribe">subscribing to more feeds</a>.
+				</p>
+			</div>
 		`;
 	}
 
