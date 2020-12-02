@@ -152,7 +152,7 @@ module.exports = function mountFeedsByIdController(app) {
 					const title = request.feed.displayTitle;
 					await request.feed.unsubscribe();
 					request.flash('unsubscribed', title);
-					response.redirect('/feeds');
+					return response.redirect('/feeds');
 				} else {
 					const error = new ValidationError();
 					error.errors.confirm = new Error('Please confirm that you want to unsubscribe from this feed');

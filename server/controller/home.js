@@ -77,7 +77,7 @@ module.exports = function mountHomeController(app) {
 			if (request.method === 'POST') {
 				await Settings.setPassword(setPasswordForm.data.password);
 				request.flash('password-set', true);
-				response.redirect('/');
+				return response.redirect('/');
 			}
 			response.render('page/auth/password');
 		} catch (error) {
