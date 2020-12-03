@@ -166,7 +166,9 @@ module.exports = function defineEntrySchema(app) {
 	});
 
 	entrySchema.static('fetchBookmarked', function() {
-		return this.fetchAll({isBookmarked: true});
+		return this
+			.find({isBookmarked: true})
+			.sort({bookmarkedAt: -1});
 	});
 
 	entrySchema.static('countBookmarked', function() {

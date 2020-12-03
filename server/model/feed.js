@@ -186,7 +186,10 @@ module.exports = function defineFeedSchema(app) {
 	feedSchema.static('fetchAll', function(query) {
 		return this
 			.find(query)
-			.sort('title');
+			.sort({
+				customTitle: 1,
+				title: 1
+			});
 	});
 
 	feedSchema.static('countAll', function() {
