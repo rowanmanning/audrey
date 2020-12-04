@@ -18,7 +18,7 @@ module.exports = class FeedErrorList extends Partial {
 	 */
 	constructor(context) {
 		super(context);
-		this.errors = this.context.errors ?? [];
+		this.errors = this.context.errors || [];
 	}
 
 	/**

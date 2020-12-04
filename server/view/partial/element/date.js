@@ -21,7 +21,7 @@ module.exports = class DateElement extends Partial {
 	 */
 	constructor(context) {
 		super(context);
-		this.date = this.context.date ?? new Date();
+		this.date = this.context.date || new Date();
 	}
 
 	/**
