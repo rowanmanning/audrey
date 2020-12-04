@@ -153,11 +153,10 @@ module.exports = function mountFeedsByIdController(app) {
 					await request.feed.unsubscribe();
 					request.flash('unsubscribed', title);
 					return response.redirect('/feeds');
-				} else {
-					const error = new ValidationError();
-					error.errors.confirm = new Error('Please confirm that you want to unsubscribe from this feed');
-					throw error;
 				}
+				const error = new ValidationError();
+				error.errors.confirm = new Error('Please confirm that you want to unsubscribe from this feed');
+				throw error;
 			}
 			next();
 		} catch (error) {
