@@ -21,9 +21,19 @@ module.exports = function renderEntriesViewPage(context) {
 	});
 
 	// Populate main content
-	const content = html`
-		<div class="content-body" dangerouslySetInnerHTML=${{__html: entry.cleanContent}}></div>
+	let content = html`
+		<div class="content-body">
+			<p>
+				This entry does not have any text content. ${' '}
+				<a href=${entry.htmlUrl}>Try viewing it on the original website</a>.
+			</p>
+		</div>
 	`;
+	if (entry.content) {
+		content = html`
+			<div class="content-body" dangerouslySetInnerHTML=${{__html: entry.cleanContent}}></div>
+		`;
+	}
 
 	// Populate content sub-sections
 	context.subSections = {
