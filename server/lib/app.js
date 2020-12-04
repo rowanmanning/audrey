@@ -60,4 +60,12 @@ module.exports = class AudreyApp extends App {
 		}
 	}
 
+	teardown() {
+		if (this.scheduledJob) {
+			this.scheduledJob.cancel();
+			this.log.info(`[teardown:sheduler]: scheduled jobs cancelled`);
+		}
+		super.teardown();
+	}
+
 };
