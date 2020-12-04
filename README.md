@@ -124,13 +124,7 @@ I really appreciate feedback on the stability of Audrey, if you're willing to gi
 
 ## Contributing
 
-To contribute to this application, clone this repo locally and commit your code on a separate branch. Open a pull-request to get your changes merged.
-
-A full contributing guide is coming soon. For now, run the following to check that everything looks alright, and test changes manually in-browser.
-
-```
-make verify
-```
+[The contributing guide is available here](docs/contributing.md).
 
 
 ## License
