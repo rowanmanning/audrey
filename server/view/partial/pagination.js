@@ -33,7 +33,7 @@ module.exports = class Breadcrumb extends Partial {
 			return '';
 		}
 		return html`
-			<nav class="pagination">
+			<nav class="pagination" data-test="pagination">
 				${this.renderPreviousLink()}${' '}
 				${this.renderPageNumbers()}${' '}
 				${this.renderNextLink()}
@@ -54,7 +54,7 @@ module.exports = class Breadcrumb extends Partial {
 		}
 		return html`
 			<span class="pagination__previous">
-				<a href=${this.pagination.previousPagePath} rel="prev">
+				<a href=${this.pagination.previousPagePath} rel="prev" data-test="pagination-prev">
 					Previous page
 				</a>
 			</span>
@@ -74,7 +74,7 @@ module.exports = class Breadcrumb extends Partial {
 		}
 		return html`
 			<span class="pagination__next">
-				<a href=${this.pagination.nextPagePath} rel="next">
+				<a href=${this.pagination.nextPagePath} rel="next" data-test="pagination-next">
 					Next page
 				</a>
 			</span>
@@ -90,7 +90,7 @@ module.exports = class Breadcrumb extends Partial {
 	 */
 	renderPageNumbers() {
 		return html`
-			<span class="pagination__numbers">
+			<span class="pagination__numbers" data-test="pagination-numbers">
 				Page ${this.pagination.currentPage} of ${this.pagination.totalPages}
 			</span>
 		`;

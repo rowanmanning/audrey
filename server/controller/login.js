@@ -19,9 +19,14 @@ module.exports = function mountLoginController(app) {
 	// Middleware to handle logging in
 	async function handleLoginForm(request, response, next) {
 
-		// If the app doesn't require authentication, redirect home
+		// If the app doesn't have a password yet, redirect home
 		if (!request.settings.hasPassword()) {
 			return response.redirect('/');
+		}
+
+		// If a user is already logged in, redirect
+		if (request.session.isAuthenticated) {
+			return response.redirect(request.query.redirect || '/');
 		}
 
 		// Add login form details to the render context

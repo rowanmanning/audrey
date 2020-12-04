@@ -55,7 +55,10 @@ module.exports = function renderEntriesViewPage(context) {
 								<input
 									type="submit"
 									value="Mark as ${entry.isRead ? 'unread' : 'read'}"
-									class="content-head__link content-head__link--${entry.isRead ? 'unread' : 'read'}"
+									class="
+										content-head__link
+										content-head__link--${entry.isRead ? 'unread' : 'read'}
+									"
 									title="Mark this entry as ${entry.isRead ? 'unread' : 'read'}"
 								/>
 							</form>
@@ -70,7 +73,10 @@ module.exports = function renderEntriesViewPage(context) {
 								<input
 									type="submit"
 									value="${entry.isBookmarked ? 'Remove bookmark' : 'Bookmark'}"
-									class="content-head__link content-head__link--${entry.isBookmarked ? 'unbookmarked' : 'bookmarked'}"
+									class="
+										content-head__link
+										content-head__link--${entry.isBookmarked ? 'unbookmarked' : 'bookmarked'}
+									"
 									title="${entry.isBookmarked ? 'Remove bookmark' : 'Bookmark'}"
 								/>
 							</form>
@@ -89,8 +95,12 @@ module.exports = function renderEntriesViewPage(context) {
 					<${DateElement} date=${entry.publishedAt} />.
 				</p>
 				${entry.author ? html`<p>Authored by ${entry.author}.</p>` : ''}
-				${entry.isRead ? html`<p>You read this <${DateElement} date=${entry.readAt} />.</p>` : ''}
-				${entry.isBookmarked ? html`<p>You bookmarked this <${DateElement} date=${entry.bookmarkedAt} />.</p>` : ''}
+				${entry.isRead ? html`
+					<p>You read this <${DateElement} date=${entry.readAt} />.</p>
+				` : ''}
+				${entry.isBookmarked ? html`
+					<p>You bookmarked this <${DateElement} date=${entry.bookmarkedAt} />.</p>
+				` : ''}
 			</div>
 			<nav class="nav-list">
 				<ul>

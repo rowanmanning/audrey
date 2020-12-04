@@ -19,7 +19,7 @@ module.exports = function renderHomePage(context) {
 	// Render a welcome message
 	function renderWelcome() {
 		return html`
-			<div class="notification notification--help">
+			<div class="notification notification--help" data-test="welcome-message">
 				<p><strong>Welcome to ${settings.siteTitle}!</strong></p>
 				<p>
 					To get started, the first thing you'll need to do is ${' '}
@@ -38,7 +38,7 @@ module.exports = function renderHomePage(context) {
 	// Render a "nothing to read" message
 	function renderNothingToRead() {
 		return html`
-			<div class="content-body">
+			<div class="content-body" data-test="no-entries-message">
 				<h2>You read everything</h2>
 				<p>
 					There's nothing new to read at the moment, you read it all! If you're

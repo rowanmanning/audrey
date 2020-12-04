@@ -155,7 +155,9 @@ module.exports = function mountFeedsByIdController(app) {
 					return response.redirect('/feeds');
 				}
 				const error = new ValidationError();
-				error.errors.confirm = new Error('Please confirm that you want to unsubscribe from this feed');
+				error.errors.confirm = new Error(
+					'Please confirm that you want to unsubscribe from this feed'
+				);
 				throw error;
 			}
 			next();

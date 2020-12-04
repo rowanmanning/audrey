@@ -20,7 +20,7 @@ module.exports = class FormErrors extends Partial {
 
 	renderError(error) {
 		return html`
-			<li>${error.message}</li>
+			<li data-test="form-error">${error.message}</li>
 		`;
 	}
 

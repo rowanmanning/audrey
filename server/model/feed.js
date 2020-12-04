@@ -111,12 +111,12 @@ module.exports = function defineFeedSchema(app) {
 
 		async function throwFeedError(error) {
 			const validationError = app.models.Feed._feedErrorToValidationError(error);
-			let message = validationError.message;
+			let errorMessage = validationError.message;
 			const validationMessages = Object.values(validationError.errors);
 			if (validationMessages.length) {
-				message = validationMessages.map(error => error.message).join(', ');
+				errorMessage = validationMessages.map(({message}) => message).join(', ');
 			}
-			await app.models.FeedError.throw(feedId, message);
+			await app.models.FeedError.throw(feedId, errorMessage);
 		}
 
 		// Fetch the feed

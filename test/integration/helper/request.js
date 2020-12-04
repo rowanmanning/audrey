@@ -26,8 +26,10 @@ module.exports = async function request(method, path, options = {}) {
 
 	// Allow getting the response body as a DOM
 	response.dom = () => {
-		const {window} = new JSDOM(response.body);
-		return window;
+		if (!response._dom) {
+			response._dom = new JSDOM(response.body).window;
+		}
+		return response._dom;
 	};
 
 	return response;

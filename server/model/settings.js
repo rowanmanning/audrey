@@ -28,7 +28,10 @@ module.exports = function defineSettingsSchema(app) {
 		daysToRetainOldEntries: {
 			type: Number,
 			required: [true, 'Days to retain old entries setting is required'],
-			validate: [Number.isInteger, 'Days to retain old entries setting must be a whole number'],
+			validate: [
+				Number.isInteger,
+				'Days to retain old entries setting must be a whole number'
+			],
 			min: [1, 'Days to retain old entries setting must be 1 or greater'],
 			default: 60
 		},

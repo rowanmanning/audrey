@@ -14,7 +14,7 @@ module.exports = function renderEntryiesListPage(context) {
 	// Populate main content
 	const content = html`
 		<${EntryList} items=${entries}>
-			<div class="notification notification--help">
+			<div class="notification notification--help" data-test="no-entries-message">
 				<p>
 					There are no entries here. This might be because you haven't ${' '}
 					<a href="/subscribe">subscribed</a> to any feeds yet. You may also have ${' '}
