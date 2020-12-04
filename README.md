@@ -124,7 +124,7 @@ I really appreciate feedback on the stability of Audrey, if you're willing to gi
 
 ## Contributing
 
-[The contributing guide is available here](docs/contributing.md).
+[The contributing guide is available here](docs/contributing.md). All contributors must follow [Audrey's code of conduct](docs/code_of_conduct.md).
 
 
 ## License
