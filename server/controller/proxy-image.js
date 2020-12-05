@@ -2,6 +2,7 @@
 
 const got = require('got');
 const requireAuth = require('../middleware/require-auth');
+const userAgent = require('../lib/user-agent');
 
 module.exports = function mountProxyImageController(app) {
 	const {router} = app;
@@ -12,7 +13,11 @@ module.exports = function mountProxyImageController(app) {
 	]);
 
 	function proxyImage(request, response, next) {
-		const imageRequest = got.stream(request.params.image);
+		const imageRequest = got.stream(request.params.image, {
+			headers: {
+				'User-Agent': userAgent()
+			}
+		});
 
 		// Proxy if the response is an image
 		imageRequest.on('response', httpResponse => {

@@ -4,6 +4,7 @@ const FeedParser = require('feedparser');
 const got = require('got');
 const EventEmitter = require('events');
 const cleanUrl = require('../clean-url');
+const userAgent = require('../user-agent');
 
 module.exports = function fetchFeed(url) {
 
@@ -32,7 +33,11 @@ module.exports = function fetchFeed(url) {
 	});
 
 	// Request the XML and stream the response into the feed parser
-	const xmlStream = got.stream(url);
+	const xmlStream = got.stream(url, {
+		headers: {
+			'User-Agent': userAgent()
+		}
+	});
 	xmlStream.on('error', error => emitter.emit('error', error));
 	xmlStream.pipe(feedParser);
 
