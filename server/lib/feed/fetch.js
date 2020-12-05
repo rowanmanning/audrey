@@ -2,47 +2,75 @@
 
 const FeedParser = require('feedparser');
 const got = require('got');
-const EventEmitter = require('events');
-const cleanUrl = require('../clean-url');
-const userAgent = require('../user-agent');
 
-module.exports = function fetchFeed(url) {
+module.exports = function fetchFeed({url, requestOptions, onInfo, onEntry} = {}) {
+	return new Promise((resolve, reject) => {
 
-	// Create an event emitter to pass data through
-	const emitter = new EventEmitter();
+		// A place to store promises created by the
+		// info and entry handlers
+		const feedProcessingPromises = [];
 
-	// Create a feed parser
-	const feedParser = new FeedParser();
-	feedParser.on('error', error => emitter.emit('error', error));
-	feedParser.on('meta', meta => {
+		// The object to eventually resolve with, used to
+		// keep a tally of entries and store some basic
+		// feed info
+		const result = {
+			url,
+			title: null,
+			entryCount: 0
+		};
 
-		// Clean up core feed URLs
-		meta.origlink = meta.origlink ? cleanUrl(meta.origlink) : meta.origlink;
-		meta.link = meta.link ? cleanUrl(meta.link) : meta.link;
-		meta.xmlUrl = meta.xmlurl = meta.xmlUrl ? cleanUrl(meta.xmlUrl) : meta.xmlUrl;
+		// Create a feed parser
+		const feedParser = new FeedParser();
+		feedParser.on('error', reject);
 
-		emitter.emit('info', meta);
-	});
-	feedParser.on('readable', () => {
-		let entry;
-		while (entry = feedParser.read()) {
-			// Clean up entry URLs
-			entry.link = entry.link ? cleanUrl(entry.link) : entry.link;
-			emitter.emit('entry', entry);
+		// Handle feed meta info
+		if (onInfo) {
+			feedParser.on('meta', meta => {
+				feedProcessingPromises.push(onInfo(meta));
+				result.url = meta.xmlUrl;
+				result.title = meta.title;
+			});
 		}
-	});
 
-	// Request the XML and stream the response into the feed parser
-	const xmlStream = got.stream(url, {
-		headers: {
-			'User-Agent': userAgent()
-		}
-	});
-	xmlStream.on('error', error => emitter.emit('error', error));
-	xmlStream.pipe(feedParser);
+		// Handle feed entries
+		feedParser.on('readable', () => {
+			let entry;
+			while (entry = feedParser.read()) {
+				if (onEntry) {
+					feedProcessingPromises.push(onEntry(entry));
+				}
+				result.entryCount += 1;
+			}
+		});
 
-	// Return the emitter
-	emitter.xmlStream = xmlStream;
-	emitter.feedParser = feedParser;
-	return emitter;
+		// Handle the feed stream ending
+		feedParser.on('end', async () => {
+			try {
+
+				// Await all of the promises, this catches any errors immediately
+				// but later promises continue to be resolved
+				await Promise.all(feedProcessingPromises);
+
+				// Everything resolved
+				resolve(result);
+
+			} catch (error) {
+
+				// We still only want to reject after all of the promises have been resolved.
+				// Now that we've caught the error we can wait for all promises to be settled
+				// before we reject
+				await Promise.allSettled(feedProcessingPromises);
+
+				// Reject with the original error
+				reject(error);
+
+			}
+		});
+
+		// Request the XML and stream the response into the feed parser
+		const xmlStream = got.stream(url, requestOptions);
+		xmlStream.on('error', reject);
+		xmlStream.pipe(feedParser);
+
+	});
 };

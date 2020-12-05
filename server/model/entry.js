@@ -2,6 +2,7 @@
 
 const cleanContent = require('../lib/clean-content');
 const cleanTitle = require('../lib/clean-title');
+const cleanUrl = require('../lib/clean-url');
 const {Schema} = require('@rowanmanning/app');
 const shortid = require('shortid');
 const uniqueValidator = require('mongoose-unique-validator');
@@ -29,7 +30,8 @@ module.exports = function defineEntrySchema(app) {
 			unique: true
 		},
 		htmlUrl: {
-			type: String
+			type: String,
+			set: cleanUrl
 		},
 		content: {
 			type: String

@@ -1,11 +1,12 @@
 'use strict';
 
 const cleanTitle = require('../lib/clean-title');
+const cleanUrl = require('../lib/clean-url');
 const fetchFeed = require('../lib/feed/fetch');
-const fetchFeedInfo = require('../lib/feed/fetch-info');
 const {Schema, ValidationError} = require('@rowanmanning/app');
 const shortid = require('shortid');
 const uniqueValidator = require('mongoose-unique-validator');
+const userAgent = require('../lib/user-agent');
 
 module.exports = function defineFeedSchema(app) {
 	const feedRefreshFlags = {
@@ -27,10 +28,12 @@ module.exports = function defineFeedSchema(app) {
 			type: String,
 			required: [true, 'Feed URL is required'],
 			unique: true,
-			index: true
+			index: true,
+			set: cleanUrl
 		},
 		htmlUrl: {
-			type: String
+			type: String,
+			set: cleanUrl
 		},
 		author: {
 			type: String
@@ -120,20 +123,19 @@ module.exports = function defineFeedSchema(app) {
 		}
 
 		// Fetch the feed
-		return new Promise(resolve => {
-			app.log.info(`[feeds:${feedId}]: refreshing`);
-			fetchFeed(this.xmlUrl)
+		try {
+			app.log.info(`[feeds:${feedId}]: starting refresh`);
+			await fetchFeed({
 
-				// Handle errors in the feed fetching and parsing
-				.on('error', async error => {
-					app.log.error(`[feeds:${feedId}]: failed to load: ${error.message}`);
-					await throwFeedError(error);
-					resolve();
-				})
+				// Pass in the feed URL and request options
+				url: this.xmlUrl,
+				requestOptions: {
+					headers: {
+						'User-Agent': userAgent()
+					}
+				},
 
-				// Update feed information, the refresh is considered complete
-				// when the feed is saved
-				.on('info', async info => {
+				onInfo: async info => {
 					try {
 						const infoArray = Object.entries(app.models.Feed._transformFeedInfo(info));
 						for (const [property, value] of infoArray) {
@@ -146,12 +148,9 @@ module.exports = function defineFeedSchema(app) {
 						app.log.error(`[feeds:${feedId}]: failed to save: ${error.message}`);
 						await throwFeedError(error);
 					}
-					resolve();
-				})
+				},
 
-				// Handle feed entries, these are added in the background, errors adding entries
-				// only appear in
-				.on('entry', async entry => {
+				onEntry: async entry => {
 					try {
 						if (entry.date > cutOffDate) {
 							await app.models.Entry.createOrUpdate({
@@ -167,8 +166,14 @@ module.exports = function defineFeedSchema(app) {
 						app.log.error(`[feeds:${feedId}]: failed to save entry ${entry.guid}: ${error.message}`);
 						await throwFeedError(error);
 					}
-				});
-		});
+				}
+
+			});
+			app.log.info(`[feeds:${feedId}]: refresh complete`);
+		} catch (error) {
+			app.log.error(`[feeds:${feedId}]: failed to load: ${error.message}`);
+			await throwFeedError(error);
+		}
 	});
 
 	// Feed unsubscribe method, used for deleting a feed
@@ -233,7 +238,19 @@ module.exports = function defineFeedSchema(app) {
 	// Subscribe to a feed, first validating that it hasn't been added already
 	feedSchema.static('subscribe', async function(xmlUrl) {
 		try {
-			const feedInfo = await fetchFeedInfo(xmlUrl);
+			// TODO remove the need for the double fetch on subscribe
+			let feedInfo;
+			await fetchFeed({
+				url: xmlUrl,
+				requestOptions: {
+					headers: {
+						'User-Agent': userAgent()
+					}
+				},
+				onInfo(info) {
+					feedInfo = info;
+				}
+			});
 			const feed = await this.create({
 				xmlUrl: feedInfo.xmlUrl,
 				...this._transformFeedInfo(feedInfo)
