@@ -1,6 +1,7 @@
 'use strict';
 
 const {html} = require('@rowanmanning/app');
+const manifest = require('../../../package.json');
 
 /**
  * Render a default layout.
@@ -16,7 +17,14 @@ const {html} = require('@rowanmanning/app');
  */
 module.exports = function renderDefaultLayout(context, content) {
 	const {pageDescription, pageTitle, settings} = context;
+
+	// Set the title to include the site title
 	const title = pageTitle ? `${pageTitle} | ${settings.siteTitle}` : settings.siteTitle;
+
+	// Set up client-side asset cache-busting
+	const assetCacheBustValue = manifest.version;
+
+	// Return the rendered HTML
 	return html`
 		<html lang="en">
 			<head>
@@ -26,7 +34,7 @@ module.exports = function renderDefaultLayout(context, content) {
 				<meta name="robots" content="noindex" />
 				<meta name="viewport" content="width=device-width" />
 				<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap" />
-				<link rel="stylesheet" href="/main.css" />
+				<link rel="stylesheet" href="/main.css?${assetCacheBustValue}" />
 			</head>
 			<body class="page">
 				${content}
