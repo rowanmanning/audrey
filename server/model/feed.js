@@ -2,7 +2,7 @@
 
 const cleanTitle = require('../lib/clean-title');
 const cleanUrl = require('../lib/clean-url');
-const fetchFeed = require('../lib/feed/fetch');
+const fetchFeed = require('@rowanmanning/fetch-feed');
 const {Schema, ValidationError} = require('@rowanmanning/app');
 const shortid = require('shortid');
 const uniqueValidator = require('mongoose-unique-validator');

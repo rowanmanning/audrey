@@ -25,11 +25,11 @@
   },
   "dependencies": {
     "@rowanmanning/app": "^1.0.0-alpha.23",
+    "@rowanmanning/fetch-feed": "^1.0.0",
     "bcrypt": "^5.0.0",
     "date-fns": "^2.16.1",
     "dompurify": "^2.2.2",
     "dotenv": "^8.2.0",
-    "feedparser": "^2.2.10",
     "got": "^11.8.0",
     "jsdom": "^16.4.0",
     "mongoose-unique-validator": "^2.0.3",
