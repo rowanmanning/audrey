@@ -3,11 +3,11 @@
 const assert = require('proclaim');
 const request = require('../helper/request');
 
-describe('GET http://mock.feeds/001/feed.xml', () => {
+describe('GET http://mock-feeds.com/valid/001/feed.xml', () => {
 	let response;
 
 	before(async () => {
-		response = await request('GET', 'http://mock.feeds/001/feed.xml');
+		response = await request('GET', 'http://mock-feeds.com/valid/001/feed.xml');
 	});
 
 	it('responds with a mock feed XML', () => {

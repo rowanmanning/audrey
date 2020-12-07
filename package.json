@@ -41,6 +41,7 @@
   "devDependencies": {
     "@rowanmanning/eslint-config": "^2.2.0",
     "@rowanmanning/make": "^2.1.0",
+    "@rowanmanning/require-all": "^1.0.0",
     "eslint": "^7.13.0",
     "mocha": "^8.2.1",
     "nock": "^13.0.5",

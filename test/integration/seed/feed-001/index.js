@@ -15,9 +15,8 @@ module.exports = async function seedDatabase(models) {
 		Feed.create({
 			_id: 'feed001',
 			title: 'Mock Feed 001',
-			guid: 'http://mock.feeds/001/',
-			htmlUrl: 'http://mock.feeds/001/',
-			xmlUrl: 'http://mock.feeds/001/feed.xml',
+			htmlUrl: 'http://mock-feeds.com/valid/001/',
+			xmlUrl: 'http://mock-feeds.com/valid/001/feed.xml',
 			publishedAt: new Date(Date.now() - oneDay),
 			modifiedAt: new Date(Date.now() - oneDay)
 		})
@@ -29,8 +28,8 @@ module.exports = async function seedDatabase(models) {
 			_id: `feed001-entry${number}`,
 			feed: 'feed001',
 			title: `Mock Feed 001 - Entry ${number}`,
-			guid: `http://mock.feeds/001/entry-${number}`,
-			htmlUrl: `http://mock.feeds/001/entry-${number}`,
+			guid: `http://mock-feeds.com/valid/001/entry-id-${number}`,
+			htmlUrl: `http://mock-feeds.com/valid/001/entry-${number}`,
 			content: `<p>Entry ${number} Content</p>`,
 			author: `Mock Feed ${number} Author`,
 			isRead: false,

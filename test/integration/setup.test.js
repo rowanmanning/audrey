@@ -2,9 +2,10 @@
 
 const AudreyApp = require('../../server/lib/app');
 const clearDatabase = require('./helper/clear-database');
+const requireAll = require('@rowanmanning/require-all');
 
-// Set up mock URLs
-require('./mock-urls');
+// Set up mock websites
+requireAll(`${__dirname}/mock-websites`);
 
 // Before all tests (setup)
 before(done => {
