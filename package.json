@@ -28,7 +28,7 @@
     "@rowanmanning/fetch-feed": "^1.0.0",
     "bcrypt": "^5.0.0",
     "date-fns": "^2.16.1",
-    "dompurify": "^2.2.2",
+    "dompurify": "^2.2.3",
     "dotenv": "^8.2.0",
     "got": "^11.8.0",
     "jsdom": "^16.4.0",
