@@ -105,6 +105,9 @@ module.exports = function renderEntriesViewPage(context) {
 			<nav class="nav-list">
 				<ul>
 					<li>
+						<a href=${entry.issueUrl} class="nav-list__link">Report a formatting issue</a>
+					</li>
+					<li>
 						<a href=${entry.htmlUrl} class="nav-list__link">View on website</a>
 					</li>
 					<li>

@@ -3,6 +3,7 @@
 const cleanContent = require('../lib/clean-content');
 const cleanTitle = require('../lib/clean-title');
 const cleanUrl = require('../lib/clean-url');
+const manifest = require('../../package.json');
 const {Schema} = require('@rowanmanning/app');
 const shortid = require('shortid');
 const uniqueValidator = require('mongoose-unique-validator');
@@ -95,6 +96,21 @@ module.exports = function defineEntrySchema(app) {
 	// Virtual internal entry mark URL
 	entrySchema.virtual('markUrl').get(function() {
 		return `${this.get('url')}/mark`;
+	});
+
+	// Virtual entry external report issue URL
+	entrySchema.virtual('issueUrl').get(function() {
+		const issueBody = `
+			There's a formatting issue for the entry [${this.title}](${this.htmlUrl}):
+
+			PLEASE DESCRIBE THE FORMATTING ISSUE HERE
+
+
+			## Debugging information
+			**Audrey version:** \`${manifest.version}\`
+			${this.populated('feed') ? `**Feed URL:** <${this.feed.xmlUrl}>` : ''}
+		`.replace(/\t+/g, '').trim();
+		return `${manifest.bugs}/new?title=Issue&labels=bug&body=${encodeURIComponent(issueBody)}`;
 	});
 
 	// Virtual clean entry content
