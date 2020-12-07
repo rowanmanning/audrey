@@ -252,7 +252,7 @@ module.exports = function defineFeedSchema(app) {
 				}
 			});
 			const feed = await this.create({
-				xmlUrl: feedInfo.xmlUrl,
+				xmlUrl: feedInfo.xmlUrl || xmlUrl,
 				...this._transformFeedInfo(feedInfo)
 			});
 			app.log.info(`[feeds:${feed._id}]: subscribed`);

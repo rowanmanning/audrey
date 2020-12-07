@@ -11,6 +11,7 @@ We welcome contributions to Audrey. This guide outlines what's expected of you w
     * [Linting](#linting)
     * [Unit tests](#unit-tests)
     * [Integration tests](#integration-tests)
+      * [Feed tests](#feed-tests)
     * [Manual testing](#integration-tests)
 
 
@@ -69,6 +70,16 @@ Failing integration tests will fail the build on any PRs. You can run integratio
 
 ```
 make test-integration
+```
+
+#### Feed tests
+
+Audrey also tests against a real list of RSS and Atom feeds. It does this Monday–Friday at 08:00 UTC, testing against all of the feeds in [`test/feeds/feeds.json`](../test/feeds/feeds.json). Running this test suite is slow and a bit brittle as it tests against live URLs, so you're not expected to run it on your PRs.
+
+If you've made extensive changes to feed subscription, you may want to run these tests locally for peace of mind. You can do so with:
+
+```
+make test-feeds
 ```
 
 ### Manual testing
