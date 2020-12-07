@@ -9,7 +9,7 @@ const layout = require('../../layout/main');
 const Pagination = require('../../partial/pagination');
 
 module.exports = function renderFeedsViewPage(context) {
-	const {entries, entryPagination, feed, request, settings} = context;
+	const {entries, entryPagination, feed, feedIsRead, request, settings} = context;
 
 	context.pageTitle = feed.displayTitle;
 
@@ -63,6 +63,26 @@ module.exports = function renderFeedsViewPage(context) {
 								/>
 							</form>
 						</li>
+						${entryPagination.totalItems ? html`
+							<li>
+								<form method="post" action=${feed.markUrl}>
+									<input
+										type="hidden"
+										name="setStatus"
+										value=${feedIsRead ? 'unread' : 'read'}
+									/>
+									<input
+										type="submit"
+										value="Mark all as ${feedIsRead ? 'unread' : 'read'}"
+										class="
+											content-head__link
+											content-head__link--${feedIsRead ? 'unread' : 'read'}
+										"
+										title="Mark all entries in this feed as ${feedIsRead ? 'unread' : 'read'}"
+									/>
+								</form>
+							</li>
+						` : ''}
 					</ul>
 				</nav>
 			</div>

@@ -44,6 +44,7 @@ module.exports = function defineEntrySchema(app) {
 		}],
 		isRead: {
 			type: Boolean,
+			index: true,
 			required: [true, 'Entry read status is required'],
 			default: false
 		},
@@ -93,7 +94,7 @@ module.exports = function defineEntrySchema(app) {
 
 	// Virtual internal entry mark URL
 	entrySchema.virtual('markUrl').get(function() {
-		return `/entries/${this.get('id')}/mark`;
+		return `${this.get('url')}/mark`;
 	});
 
 	// Virtual clean entry content
@@ -181,8 +182,39 @@ module.exports = function defineEntrySchema(app) {
 		return this.countDocuments({feed: feedId});
 	});
 
+	entrySchema.static('countUnreadByFeedId', function(feedId) {
+		return this.countDocuments({
+			feed: feedId,
+			isRead: false
+		});
+	});
+
 	entrySchema.static('fetchAllByFeedId', function(feedId) {
 		return this.fetchAll({feed: feedId});
+	});
+
+	entrySchema.static('markAsReadByFeedId', function(feedId) {
+		return this.updateMany({
+			feed: feedId,
+			isRead: false
+		}, {
+			$set: {
+				isRead: true,
+				readAt: new Date()
+			}
+		});
+	});
+
+	entrySchema.static('markAsUnreadByFeedId', function(feedId) {
+		return this.updateMany({
+			feed: feedId,
+			isRead: true
+		}, {
+			$set: {
+				isRead: false,
+				readAt: null
+			}
+		});
 	});
 
 	entrySchema.static('removeOldEntries', async function() {

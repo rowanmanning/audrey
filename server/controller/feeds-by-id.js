@@ -56,12 +56,20 @@ module.exports = function mountFeedsByIdController(app) {
 		render('page/feeds/unsubscribe')
 	]);
 
+	router.post('/feeds/:feedId/mark', [
+		requireAuth(),
+		fetchFeedById,
+		handleMarkFeedForm,
+		render('page/feeds/view')
+	]);
+
 	async function fetchFeedById(request, response, next) {
 		try {
 			request.feed = response.locals.feed = await Feed
 				.findById(request.params.feedId)
 				.populate('errors');
 			if (response.locals.feed) {
+				response.locals.feedIsRead = await response.locals.feed.isRead();
 				return next();
 			}
 			next('route');
@@ -164,6 +172,40 @@ module.exports = function mountFeedsByIdController(app) {
 		} catch (error) {
 			if (error instanceof ValidationError) {
 				unsubscribeForm.errors = Object.values(error.errors);
+				response.status(400);
+				return next();
+			}
+			next(error);
+		}
+	}
+
+	// Middleware to handle marking feeds as read/unread
+	async function handleMarkFeedForm(request, response, next) {
+
+		// Add mark feed form details to the render context
+		const markFeedForm = response.locals.markFeedForm = {
+			action: request.feed.markUrl,
+			errors: [],
+			data: {
+				setStatus: request.body.setStatus
+			}
+		};
+
+		try {
+			// On POST, attempt to mark the feed as read/unread
+			if (request.method === 'POST') {
+				if (markFeedForm.data.setStatus === 'read') {
+					await app.models.Entry.markAsReadByFeedId(request.feed._id);
+				}
+				if (markFeedForm.data.setStatus === 'unread') {
+					await app.models.Entry.markAsUnreadByFeedId(request.feed._id);
+				}
+				return response.redirect(`${request.feed.url}`);
+			}
+			next();
+		} catch (error) {
+			if (error instanceof ValidationError) {
+				markFeedForm.errors = Object.values(error.errors);
 				response.status(400);
 				return next();
 			}

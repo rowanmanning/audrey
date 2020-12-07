@@ -50,10 +50,10 @@ module.exports = class EntryList extends ContentList {
 					${entry.author ? ` by ${entry.author}` : ''}
 					${' '} on <a href=${entry.feed.url}>${entry.feed.displayTitle}</a>.
 					${entry.isRead ? html`
-						 Read <${DateElement} date=${entry.readAt} />.
+						${' '} Read <${DateElement} date=${entry.readAt} />.
 					` : ''}
 					${entry.isBookmarked ? html`
-						 Bookmarked <${DateElement} date=${entry.bookmarkedAt} />.
+						${' '} Bookmarked <${DateElement} date=${entry.bookmarkedAt} />.
 					` : ''}
 				</p>
 			</article>

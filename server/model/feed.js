@@ -88,6 +88,11 @@ module.exports = function defineFeedSchema(app) {
 		return `${this.get('url')}/settings`;
 	});
 
+	// Virtual internal feed mark URL
+	feedSchema.virtual('markUrl').get(function() {
+		return `${this.get('url')}/mark`;
+	});
+
 	// Virtual to populate feed errors
 	feedSchema.virtual('errors', {
 		ref: 'FeedError',
@@ -185,6 +190,10 @@ module.exports = function defineFeedSchema(app) {
 		await app.models.Feed.deleteOne({
 			_id: this._id
 		});
+	});
+
+	feedSchema.method('isRead', async function() {
+		return (await app.models.Entry.countUnreadByFeedId(this._id)) === 0;
 	});
 
 	// Fetch all feeds
