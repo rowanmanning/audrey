@@ -26,6 +26,9 @@ Audrey is self-hosted; you can set up an installation on your own server or clou
   * [Requirements](#requirements)
   * [Running locally](#running-locally)
   * [Running on a server](#running-on-a-server)
+  * [Cloud provider guides](#cloud-provider-guides)
+    * [Glitch `↪`](docs/guide/glitch.md)
+    * [Heroku `↪`](docs/guide/heroku.md)
   * [Config options](#config-options)
   * [Beta notice](#beta-notice)
   * [Contributing](#contributing)
@@ -89,9 +92,13 @@ The instructions for running on a server are the same as [running locally](#runn
 
   * The URL to access the application will be whatever your public server address is, rather than `localhost`
 
+
+## Cloud provider guides
+
 Audrey has guides for the following common cloud providers:
 
-  * [Deploy Audrey on Heroku](docs/guide/heroku.md)
+  * [Deploy Audrey on Glitch](docs/guide/glitch.md) (free and paid options)
+  * [Deploy Audrey on Heroku](docs/guide/heroku.md) (free and paid options)
 
 
 ## Config options
