@@ -60,3 +60,15 @@
 	--notification-border-color: var(--colorvalue-green);
 	--notification-background-color: var(--colorvalue-green-light);
 }
+
+// Notification block, "demo" modifier
+.notification--demo {
+	--notification-border-color: var(--colorvalue-yellow-dark);
+	--notification-background-color: var(--colorvalue-yellow);
+	border-bottom: calc(var(--spacing-rule) * 0.25) solid var(--notification-border-color);
+	border-left: none;
+	font-size: var(--font-size-small);
+	line-height: var(--font-size-body);
+	margin-bottom: var(--spacing-half-line) !important;
+	padding: var(--spacing-rule);
+}

@@ -48,6 +48,10 @@ module.exports = function defineSettingsSchema(app) {
 		passwordHash: {
 			type: String,
 			minlength: [8, 'Password must be 8 or more characters in length']
+		},
+		demoMode: {
+			type: Boolean,
+			default: false
 		}
 	}, {
 		timestamps: true,
