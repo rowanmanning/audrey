@@ -43,7 +43,7 @@ module.exports = async function seedDatabase(models) {
 	// Create test entries
 	await Promise.all([
 		createEntry(1, -(oneDay * 3)),
-		createEntry(2, -(oneDay * 2)),
+		createEntry(2, -(oneDay * 2), {isBookmarked: true}),
 		createEntry(3, -(oneDay), {isRead: true})
 	]);
 

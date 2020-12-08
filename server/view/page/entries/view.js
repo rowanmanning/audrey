@@ -31,7 +31,11 @@ module.exports = function renderEntriesViewPage(context) {
 	`;
 	if (entry.content) {
 		content = html`
-			<div class="content-body" dangerouslySetInnerHTML=${{__html: entry.cleanContent}}></div>
+			<div
+				class="content-body"
+				data-test="entry-content"
+				dangerouslySetInnerHTML=${{__html: entry.cleanContent}}
+			></div>
 		`;
 	}
 
@@ -42,7 +46,7 @@ module.exports = function renderEntriesViewPage(context) {
 		heading: html`
 			<${Breadcrumb} items=${context.breadcrumbs} />
 			<div class="content-head">
-				<h1 class="content-head__title">${context.pageTitle}</h1>
+				<h1 class="content-head__title" data-test="entry-heading">${context.pageTitle}</h1>
 				<nav class="content-head__navigation">
 					<ul>
 						<li>
