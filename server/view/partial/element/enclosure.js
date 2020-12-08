@@ -2,7 +2,6 @@
 
 const {html, Partial} = require('@rowanmanning/app');
 const mediaType = require('../../../lib/media-type');
-const proxyImageUrl = require('../../../lib/proxy-image-url');
 
 /**
  * Represents a media enclosure.
@@ -93,7 +92,7 @@ module.exports = class Enclosure extends Partial {
 		return this.renderWrapper(html`
 			<p>
 				<a href=${this.enclosure.url}>
-					<img src=${proxyImageUrl(this.enclosure.url)} alt=${this.entry.title} />
+					<img src=${this.enclosure.url} alt=${this.entry.title} />
 				</a>
 			</p>
 		`);

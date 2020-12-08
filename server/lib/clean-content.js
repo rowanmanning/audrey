@@ -2,7 +2,6 @@
 
 const createDOMPurify = require('dompurify');
 const {JSDOM} = require('jsdom');
-const proxyImageUrl = require('./proxy-image-url');
 const srcset = require('srcset');
 
 module.exports = function cleanContent({content, baseUrl}) {
@@ -58,16 +57,6 @@ function htmlStringToDOM(content) {
 
 function cleanAttributes(baseUrl, node) {
 
-	// Check if this is an image
-	const isImage = (
-		node.tagName === 'IMG' ||
-		(
-			node.tagName === 'SOURCE' &&
-			node.parentElement &&
-			node.parentElement.tagName === 'PICTURE'
-		)
-	);
-
 	// Handle href attributes
 	if (node.hasAttribute('href')) {
 
@@ -82,11 +71,6 @@ function cleanAttributes(baseUrl, node) {
 		// Make src attributes absolute using base URL
 		node.setAttribute('src', absoluteUrl(node.getAttribute('src'), baseUrl));
 
-		// Proxy image requests to avoid cross-origin issues
-		if (isImage) {
-			node.setAttribute('src', proxyImageUrl(node.getAttribute('src')));
-		}
-
 	}
 
 	// Handle srcset attributes
@@ -97,11 +81,6 @@ function cleanAttributes(baseUrl, node) {
 
 				// Make src attributes absolute using base URL
 				source.url = absoluteUrl(source.url, baseUrl);
-
-				// Proxy image requests to avoid cross-origin issues
-				if (isImage) {
-					source.url = proxyImageUrl(source.url);
-				}
 
 			}
 			node.setAttribute('srcset', srcset.stringify(sources));
