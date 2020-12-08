@@ -9,6 +9,26 @@ module.exports = class AudreyApp extends App {
 	constructor(options = {}) {
 		options.name = 'Audrey';
 		options.databaseUrl = options.databaseUrl || 'mongodb://localhost:27017/audrey';
+		options.securityConfig = {
+			contentSecurityPolicy: {
+				directives: {
+					'default-src': [`'self'`],
+					'block-all-mixed-content': [],
+					'font-src': [`'self'`, 'https:', 'data:'],
+					'frame-ancestors': [`'self'`],
+					'img-src': ['*'],
+					'media-src': ['*'],
+					'frame-src': [
+						'https://*.youtube.com/',
+						'https://*.spotify.com/'
+					],
+					'object-src': [`'none'`],
+					'script-src-attr': [`'none'`],
+					'style-src': [`'self'`, 'https://fonts.googleapis.com/'],
+					'upgrade-insecure-requests': []
+				}
+			}
+		};
 		options.sessionSecret = options.sessionSecret || uuid.v4();
 		options.updateSchedule = options.updateSchedule || '0 */2 * * *'; // Every 2 hours
 		super(options);

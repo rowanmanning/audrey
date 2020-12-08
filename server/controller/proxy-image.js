@@ -1,6 +1,7 @@
 'use strict';
 
 const got = require('got');
+const mediaType = require('../lib/media-type');
 const requireAuth = require('../middleware/require-auth');
 const userAgent = require('../lib/user-agent');
 
@@ -45,17 +46,7 @@ module.exports = function mountProxyImageController(app) {
 	}
 
 	function isImageResponse(httpResponse) {
-		switch (httpResponse.headers['content-type']) {
-			case 'image/apng':
-			case 'image/avif':
-			case 'image/gif':
-			case 'image/jpeg':
-			case 'image/png':
-			case 'image/webp':
-				return true;
-			default:
-				return false;
-		}
+		return mediaType(httpResponse.headers['content-type']) === mediaType.IMAGE;
 	}
 
 };

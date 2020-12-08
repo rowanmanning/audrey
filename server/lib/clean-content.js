@@ -2,6 +2,7 @@
 
 const createDOMPurify = require('dompurify');
 const {JSDOM} = require('jsdom');
+const proxyImageUrl = require('./proxy-image-url');
 const srcset = require('srcset');
 
 module.exports = function cleanContent({content, baseUrl}) {
@@ -116,7 +117,7 @@ function wrapTableElement(table) {
 function replaceIframeElement(iframe) {
 	const source = iframe.getAttribute('src');
 	iframe.outerHTML = `
-		<div class="iframe-placeholder">
+		<div class="unrenderable">
 			The original article has a frame with interactive content in this position,
 			which cannot be loaded. <a href="${source}">View the content of the iframe here</a>,
 			or visit the original article to see the frame in place.
@@ -129,8 +130,4 @@ function absoluteUrl(url, baseUrl) {
 		return url;
 	}
 	return new URL(url, baseUrl).toString();
-}
-
-function proxyImageUrl(url) {
-	return `/proxy-image/${encodeURIComponent(url)}`;
 }

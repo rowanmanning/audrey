@@ -7,6 +7,7 @@
 	background-color: var(--color-content-background);
 	border-radius: var(--spacingvalue-xs);
 	padding: var(--spacingvalue-xxl) var(--gutter-width);
+	margin-bottom: var(--spacing-line);
 
 	@media (min-width: $breakpoint-mobile) {
 		--gutter-width: var(--spacingvalue-xl);
@@ -301,14 +302,18 @@
 	// MEDIA AND FIGURES
 	// =================
 
-	// Figures, images, and picture elements
-	figure, img, picture {
+	// Figures, images, picture, audio, and video elements
+	figure, img, picture, audio, video {
 		box-sizing: border-box;
 		background-color: var(--colorvalue-cream);
 		border-radius: var(--spacingvalue-xs);
 		border: solid var(--spacing-rule) var(--colorvalue-cream);
 		width: auto;
 		max-width: 100%;
+	}
+	audio, video {
+		width: 100%;
+		margin-bottom: var(--spacing-line);
 	}
 	figure {
 		margin-left: 0;
@@ -344,15 +349,15 @@
 		padding: var(--spacing-half-line);
 	}
 
-	// Iframe placeholder
-	.iframe-placeholder {
+	// Unrenderable content
+	.unrenderable {
 		box-sizing: border-box;
 		background-color: var(--colorvalue-blue-light);
 		padding: var(--spacing-half-line);
 		margin-bottom: var(--spacing-line);
 		border: solid 1px var(--colorvalue-blue);
 	}
-	figure .iframe-placeholder {
+	figure .unrenderable {
 		margin: 0;
 	}
 

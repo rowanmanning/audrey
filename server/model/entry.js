@@ -4,11 +4,33 @@ const cleanContent = require('../lib/clean-content');
 const cleanTitle = require('../lib/clean-title');
 const cleanUrl = require('../lib/clean-url');
 const manifest = require('../../package.json');
+const mediaType = require('../lib/media-type');
 const {Schema} = require('@rowanmanning/app');
 const shortid = require('shortid');
 const uniqueValidator = require('mongoose-unique-validator');
 
 module.exports = function defineEntrySchema(app) {
+
+	const enclosureSchema = new Schema({
+		_id: {
+			type: String,
+			default: shortid.generate
+		},
+		url: {
+			type: String
+		},
+		mimeType: {
+			type: String
+		}
+	}, {
+		timestamps: false,
+		collation: {locale: 'en'}
+	});
+
+	// Virtual enclosure type
+	enclosureSchema.virtual('type').get(function() {
+		return mediaType(this.mimeType).toString();
+	});
 
 	const entrySchema = new Schema({
 		_id: {
@@ -37,6 +59,7 @@ module.exports = function defineEntrySchema(app) {
 		content: {
 			type: String
 		},
+		enclosures: [enclosureSchema],
 		author: {
 			type: String
 		},

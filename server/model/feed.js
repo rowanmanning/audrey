@@ -291,6 +291,10 @@ module.exports = function defineFeedSchema(app) {
 			guid: feedEntry.guid,
 			htmlUrl: feedEntry.origlink || feedEntry.link,
 			content: feedEntry.description,
+			enclosures: feedEntry.enclosures.map(enclosure => ({
+				url: enclosure.url,
+				mimeType: enclosure.type
+			})),
 			author: feedEntry.author,
 			categories: feedEntry.categories,
 			publishedAt: feedEntry.pubDate,

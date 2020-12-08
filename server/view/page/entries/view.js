@@ -2,6 +2,7 @@
 
 const Breadcrumb = require('../../partial/breadcrumb');
 const DateElement = require('../../partial/element/date');
+const Enclosure = require('../../partial/element/enclosure');
 const {html} = require('@rowanmanning/app');
 const layout = require('../../layout/main');
 
@@ -21,22 +22,38 @@ module.exports = function renderEntriesViewPage(context) {
 	});
 
 	// Populate main content
-	let content = html`
-		<div class="content-body">
-			<p>
-				This entry does not have any text content. ${' '}
-				<a href=${entry.htmlUrl}>Try viewing it on the original website</a>.
-			</p>
-		</div>
-	`;
+	const content = [];
+
+	// Enclosures
+	if (entry.enclosures && entry.enclosures.length) {
+		for (const enclosure of entry.enclosures) {
+			content.push(html`
+				<${Enclosure} enclosure=${enclosure} entry=${entry} />
+			`);
+		}
+	}
+
+	// Main text content
 	if (entry.content) {
-		content = html`
+		content.push(html`
 			<div
 				class="content-body"
 				data-test="entry-content"
 				dangerouslySetInnerHTML=${{__html: entry.cleanContent}}
 			></div>
-		`;
+		`);
+	}
+
+	// No content
+	if (!content.length) {
+		content.push(html`
+			<div class="content-body">
+				<p>
+					This entry does not have any content. ${' '}
+					<a href=${entry.htmlUrl}>Try viewing it on the original website</a>.
+				</p>
+			</div>
+		`);
 	}
 
 	// Populate content sub-sections
