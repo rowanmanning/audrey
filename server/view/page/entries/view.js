@@ -109,7 +109,7 @@ module.exports = function renderEntriesViewPage(context) {
 
 		// Right-hand sidebar
 		rhs: html`
-			<div class="notification notification--info notification--small">
+			<div class="notification notification--info">
 				<p>
 					This entry was posted on ${' '}
 					<a href=${entry.feed.url}>${entry.feed.displayTitle}</a> ${' '}

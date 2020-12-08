@@ -91,7 +91,7 @@ module.exports = function renderFeedsViewPage(context) {
 		// Right-hand sidebar
 		rhs: html`
 			${showHelpText()}
-			<div class="notification notification--info notification--small">
+			<div class="notification notification--info">
 				<p>
 					This feed was last refreshed ${' '}
 					<${DateElement} date=${feed.syncedAt} />.
