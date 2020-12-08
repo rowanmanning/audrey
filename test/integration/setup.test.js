@@ -1,6 +1,7 @@
 'use strict';
 
 const AudreyApp = require('../../server/lib/app');
+const clearDatabase = require('./helper/clear-database');
 const requireAll = require('@rowanmanning/require-all');
 
 // Set up mock websites
@@ -30,16 +31,10 @@ before(done => {
 		done(error);
 	});
 
-	// Once the app starts and the database is connected, we're ready to test
-	let isReady = false;
-	function handleReadyEvent() {
-		if (isReady) {
-			return done();
-		}
-		isReady = true;
-	}
-	global.app.once('server:started', handleReadyEvent);
-	global.app.once('database:connected', handleReadyEvent);
+	// Once the app starts, we're ready to test
+	global.app.once('server:started', () => {
+		done();
+	});
 
 	// Start the application
 	global.app.setup();
@@ -47,6 +42,7 @@ before(done => {
 });
 
 // After all tests (teardown)
-after(() => {
+after(async () => {
+	await clearDatabase();
 	global.app.teardown();
 });

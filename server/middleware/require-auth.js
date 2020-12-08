@@ -9,9 +9,6 @@
  */
 module.exports = function requireAuth() {
 	return (request, response, next) => {
-		if (request.settings.demoMode) {
-			return next();
-		}
 		if (!request.settings.hasPassword()) {
 			return response.redirect('/');
 		}

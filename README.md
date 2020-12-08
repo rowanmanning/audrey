@@ -121,26 +121,6 @@ This application is configured using environment variables, or an [`.env` file](
 
 You can also change more configurations through the settings page of a running copy of Audrey, these additional configurations are stored in the database.
 
-### Demo mode
-
-**Do not use demo mode on your main feed reader – it will result in loss of data**. Audrey can be placed into "demo mode" by using setting a hidden config option in the database. It's important to note that placing an installation in demo mode will do the following things:
-
-  - You will no longer need to log in with a password, all data (including settings) will be viewable by anyone who visits the site
-
-  - You will no longer be able to change site settings or feed settings
-
-  - You will no longer be able to subscribe to new feeds
-
-  - Every 15 minutes, all entries in the database will be removed and all feeds will be refreshed
-
-These changes are designed to allow Audrey to be publicly viewable without the risk of unwanted data being added to your database.
-
-The only way to enable demo mode is to manually change the settings in your database. You can do so using the following while connected to MongoDB:
-
-```js
-db.settings.updateMany({}, {$set: {demoMode: true}})
-```
-
 
 ## Beta notice
 

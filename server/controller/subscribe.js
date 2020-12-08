@@ -1,6 +1,5 @@
 'use strict';
 
-const demoError = require('../lib/demo-error');
 const render = require('../middleware/render');
 const requireAuth = require('../middleware/require-auth');
 const {ValidationError} = require('@rowanmanning/app');
@@ -36,9 +35,6 @@ module.exports = function mountSubscribeController(app) {
 		try {
 			// On POST, attempt to create a feed
 			if (request.method === 'POST') {
-				if (request.settings.demoMode) {
-					throw demoError();
-				}
 				const feed = await Feed.subscribe(subscribeForm.data.xmlUrl);
 				await feed.refresh();
 				request.flash('subscribed', true);

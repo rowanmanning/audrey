@@ -1,6 +1,5 @@
 'use strict';
 
-const demoError = require('../lib/demo-error');
 const render = require('../middleware/render');
 const requireAuth = require('../middleware/require-auth');
 const {ValidationError} = require('@rowanmanning/app');
@@ -56,9 +55,6 @@ module.exports = function mountSettingsController(app) {
 		try {
 			// On POST, attempt to save the settings
 			if (request.method === 'POST') {
-				if (request.settings.demoMode) {
-					throw demoError();
-				}
 
 				// We use a fresh settings object so that we don't interfere
 				// with displayed properties outside of the form
