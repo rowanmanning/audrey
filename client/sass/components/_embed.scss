@@ -1,0 +1,70 @@
+
+// Embed block
+.embed {
+	@extend %base-typography;
+	--color-embed-background: var(--colorvalue-cream);
+
+	display: block;
+	margin-bottom: var(--spacing-line);
+	width: 100%;
+
+	> iframe {
+		display: block;
+		background-color: var(--color-embed-background);
+		border: solid var(--spacing-rule) var(--color-embed-background);
+		border-radius: var(--spacing-rule);
+		width: calc(100% - (var(--spacing-rule) * 2));
+	}
+
+	figure & {
+		margin: 0;
+
+		> iframe {
+			border: none;
+			border-radius: 0;
+			display: block;
+			margin: 0 auto;
+			width: 100%;
+		}
+	}
+}
+
+// Embed parent block
+figure.embed-parent-full-width {
+	width: auto;
+}
+
+// Embed block, "spotify-track" modifier
+.embed--spotify-track > iframe {
+	max-width: 300px;
+	height: 80px;
+}
+
+// Embed block, "spotify-album", "spotify-artist", and "spotify-playlist" modifiers
+.embed--spotify-album > iframe,
+.embed--spotify-artist > iframe,
+.embed--spotify-playlist > iframe {
+	max-width: 300px;
+	height: 250px;
+}
+
+// Embed block, "youtube-video" modifier
+.embed--youtube-video > iframe {
+	min-height: 400px;
+
+	@media all and (max-width: $breakpoint-mobile) {
+		min-height: 260px;
+	}
+	@media all and (max-width: $breakpoint-small-mobile) {
+		min-height: 200px;
+	}
+}
+
+// Embed block, "unrenderable" modifier
+.embed--unrenderable {
+	box-sizing: border-box;
+	background-color: var(--colorvalue-blue-light);
+	padding: var(--spacing-half-line);
+	margin-bottom: var(--spacing-line);
+	border: solid 1px var(--colorvalue-blue);
+}

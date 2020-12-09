@@ -3,6 +3,7 @@
 const createDOMPurify = require('dompurify');
 const {JSDOM} = require('jsdom');
 const srcset = require('srcset');
+const {URL} = require('url');
 
 module.exports = function cleanContent({content, baseUrl}) {
 	const {window, document} = htmlStringToDOM(content);
@@ -23,6 +24,9 @@ module.exports = function cleanContent({content, baseUrl}) {
 		// Allow iframes so that we can replace them with placeholders
 		ADD_TAGS: ['iframe'],
 
+		// Allow some iframe attributes
+		ADD_ATTR: ['allow', 'allowfullscreen'],
+
 		// Strip the class, height, and width attributes, these can interfere
 		// with the interface styles
 		FORBID_ATTR: ['class', 'height', 'width'],
@@ -40,7 +44,7 @@ module.exports = function cleanContent({content, baseUrl}) {
 
 	// Replace iframe elements with links
 	for (const iframe of cleanDOM.querySelectorAll('iframe')) {
-		replaceIframeElement(iframe);
+		replaceIframeElement(document, iframe, baseUrl);
 	}
 
 	// Return the purified DOM
@@ -93,15 +97,50 @@ function wrapTableElement(table) {
 	table.outerHTML = `<div class="table-wrapper">${table.outerHTML}</div>`;
 }
 
-function replaceIframeElement(iframe) {
-	const source = iframe.getAttribute('src');
-	iframe.outerHTML = `
-		<div class="unrenderable">
-			The original article has a frame with interactive content in this position,
-			which cannot be loaded. <a href="${source}">View the content of the iframe here</a>,
+function replaceIframeElement(document, iframe, baseUrl) {
+	const source = new URL(iframe.getAttribute('src'), baseUrl);
+
+	// Create an embed to wrap the iframe
+	const embed = document.createElement('div');
+	embed.classList.add('embed');
+	iframe.parentElement.replaceChild(embed, iframe);
+
+	const youtubeHostRegExp = /^([a-z0-9-]+\.)?youtube\.com$/;
+	const spotifyHostRegExp = /^([a-z0-9-]+\.)?spotify\.com$/;
+
+	// Allow YouTube video embeds
+	if (youtubeHostRegExp.test(source.hostname) && source.pathname.startsWith('/embed/')) {
+		embed.classList.add('embed--youtube-video');
+		embed.appendChild(iframe);
+
+		// If the iframe is in a figure, we need to make sure the
+		// figure expands as much as possible for video content
+		const closestFigure = iframe.closest('figure');
+		if (closestFigure) {
+			closestFigure.classList.add('embed-parent-full-width');
+		}
+
+	// Allow Spotify music embeds
+	} else if (spotifyHostRegExp.test(source.hostname) && source.pathname.startsWith('/embed/')) {
+		const [, , embedType] = source.pathname.split('/');
+		embed.classList.add('embed--spotify', `embed--spotify-${embedType}`);
+		embed.appendChild(iframe);
+
+	// Allow Spotify podcast embeds
+	} else if (spotifyHostRegExp.test(source.hostname) && source.pathname.startsWith('/embed-podcast/')) {
+		embed.classList.add('embed--spotify', `embed--spotify-podcast`);
+		embed.appendChild(iframe);
+
+	// Replace all other iframes with a placeholder
+	} else {
+		embed.classList.add('embed--unrenderable');
+		embed.innerHTML = `
+			The original article has a frame with interactive content
+			in this position, which cannot be loaded.
+			<a href="${source.toString()}">View the content of the iframe here</a>,
 			or visit the original article to see the frame in place.
-		</div>
-	`;
+		`;
+	}
 }
 
 function absoluteUrl(url, baseUrl) {

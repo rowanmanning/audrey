@@ -349,18 +349,6 @@
 		padding: var(--spacing-half-line);
 	}
 
-	// Unrenderable content
-	.unrenderable {
-		box-sizing: border-box;
-		background-color: var(--colorvalue-blue-light);
-		padding: var(--spacing-half-line);
-		margin-bottom: var(--spacing-line);
-		border: solid 1px var(--colorvalue-blue);
-	}
-	figure .unrenderable {
-		margin: 0;
-	}
-
 }
 
 // Content body block, "audio", "image", and "video" modifiers
