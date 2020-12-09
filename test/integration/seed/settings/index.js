@@ -11,7 +11,8 @@ module.exports = async function seedDatabase(models) {
 		daysToRetainOldEntries: 60,
 		autoMarkAsRead: true,
 		showHelpText: true,
-		passwordHash: 'password'
+		passwordHash: 'password',
+		demoMode: false
 	});
 
 };
