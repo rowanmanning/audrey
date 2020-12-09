@@ -74,6 +74,7 @@ module.exports = function defineEntrySchema(app) {
 		},
 		isBookmarked: {
 			type: Boolean,
+			index: true,
 			required: [true, 'Entry bookmark status is required'],
 			default: false
 		},
@@ -83,6 +84,7 @@ module.exports = function defineEntrySchema(app) {
 		},
 		publishedAt: {
 			type: Date,
+			index: true,
 			required: [true, 'Entry publish date is required']
 		},
 		readAt: {

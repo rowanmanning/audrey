@@ -19,10 +19,12 @@ module.exports = function defineFeedSchema(app) {
 			default: shortid.generate
 		},
 		title: {
-			type: String
+			type: String,
+			index: true
 		},
 		customTitle: {
-			type: String
+			type: String,
+			index: true
 		},
 		xmlUrl: {
 			type: String,
