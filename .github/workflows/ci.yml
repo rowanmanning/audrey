@@ -31,36 +31,10 @@ jobs:
       - run: npm install
       - run: make verify
 
-  # Run unit tests
-  test-unit:
-    name: Run unit tests
-    needs: verify
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version:
-          - 14.x
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node-version }}
-      - uses: actions/cache@v1
-        env:
-          cache-version: v1
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-${{ env.cache-version }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-${{ env.cache-version }}-
-            ${{ runner.os }}-
-      - run: npm install
-      - run: make test-unit-coverage
-
   # Run integration tests
   test-integration:
     name: Run integration tests
-    needs: test-unit
+    needs: verify
     runs-on: ubuntu-latest
     strategy:
       matrix:
