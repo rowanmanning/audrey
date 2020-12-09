@@ -26,6 +26,11 @@ module.exports = function defineFeedErrorSchema(app) {
 		collation: {locale: 'en'}
 	});
 
+	// Always populate the feed
+	feedErrorSchema.pre('find', function() {
+		this.populate('feed');
+	});
+
 	feedErrorSchema.static('deleteAllByFeedId', async function(feedId) {
 		try {
 			await this.deleteMany({
@@ -68,8 +73,7 @@ module.exports = function defineFeedErrorSchema(app) {
 	feedErrorSchema.static('fetchAll', function(query) {
 		return this
 			.find(query)
-			.sort({createdAt: -1})
-			.populate('feed');
+			.sort({createdAt: -1});
 	});
 
 	feedErrorSchema.static('fetchAllByFeedId', function(feedId) {

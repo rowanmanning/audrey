@@ -24,9 +24,7 @@ module.exports = function mountEntriesByIdController(app) {
 
 	async function fetchEntryById(request, response, next) {
 		try {
-			request.entry = response.locals.entry = await Entry
-				.findById(request.params.entryId)
-				.populate('feed');
+			request.entry = response.locals.entry = await Entry.findById(request.params.entryId);
 			if (response.locals.entry) {
 				return next();
 			}

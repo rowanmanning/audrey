@@ -6,9 +6,9 @@ const formatDistance = require('date-fns/formatDistance');
 const {html, Partial} = require('@rowanmanning/app');
 
 /**
- * Represents a date element.
+ * Represents a relative date element.
  */
-module.exports = class DateElement extends Partial {
+module.exports = class RelativeDateElement extends Partial {
 
 	/**
 	 * Class constructor.

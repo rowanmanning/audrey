@@ -4,17 +4,9 @@ const Breadcrumb = require('../../partial/breadcrumb');
 const FeedList = require('../../partial/list/feeds');
 const {html} = require('@rowanmanning/app');
 const layout = require('../../layout/main');
-const Pagination = require('../../partial/pagination');
 
 module.exports = function renderFeedsListPage(context) {
-	const {
-		feeds,
-		feedEntryCounts,
-		feedPagination,
-		isRefreshInProgress,
-		request,
-		settings
-	} = context;
+	const {feeds, feedEntryCounts, isRefreshInProgress, request, settings} = context;
 
 	context.pageTitle = 'Feeds';
 
@@ -31,7 +23,6 @@ module.exports = function renderFeedsListPage(context) {
 				</p>
 			</div>
 		<//>
-		<${Pagination} data=${feedPagination} />
 	`;
 
 	// Populate content sub-sections

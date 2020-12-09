@@ -6,14 +6,17 @@ const layout = require('../layout/main');
 const Pagination = require('../partial/pagination');
 
 module.exports = function renderHomePage(context) {
-	const {entries, entryPagination, settings, totalFeedCount} = context;
+	const {entries, entryPagination, nextPage, settings, totalFeedCount} = context;
 
 	// Populate main content
 	const content = html`
+		<${Pagination.Description} date=${entryPagination.before} resetUrl="/" />
 		<${EntryList} items=${entries}>
 			${totalFeedCount ? renderNothingToRead() : renderWelcome()}
 		<//>
-		<${Pagination} data=${entryPagination} />
+		<${Pagination.Next} url=${nextPage}>
+			View earlier entries
+		<//>
 	`;
 
 	// Render a welcome message

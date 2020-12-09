@@ -7,12 +7,13 @@ const layout = require('../../layout/main');
 const Pagination = require('../../partial/pagination');
 
 module.exports = function renderBookmarksListPage(context) {
-	const {entries, entryPagination, settings} = context;
+	const {entries, entryPagination, nextPage, settings} = context;
 
 	context.pageTitle = 'Bookmarked Entries';
 
 	// Populate main content
 	const content = html`
+		<${Pagination.Description} date=${entryPagination.before} resetUrl="/bookmarks" />
 		<${EntryList} items=${entries}>
 			<div class="notification notification--help">
 				<p>
@@ -23,7 +24,9 @@ module.exports = function renderBookmarksListPage(context) {
 				</p>
 			</div>
 		<//>
-		<${Pagination} data=${entryPagination} />
+		<${Pagination.Next} url=${nextPage}>
+			View earlier bookmarks
+		<//>
 	`;
 
 	// Populate content sub-sections

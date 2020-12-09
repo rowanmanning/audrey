@@ -3,13 +3,13 @@
 const Breadcrumb = require('../../partial/breadcrumb');
 const EntryList = require('../../partial/list/entries');
 const FeedErrorList = require('../../partial/feed-error-list');
-const DateElement = require('../../partial/element/date');
+const RelativeDate = require('../../partial/element/relative-date');
 const {html} = require('@rowanmanning/app');
 const layout = require('../../layout/main');
 const Pagination = require('../../partial/pagination');
 
 module.exports = function renderFeedsViewPage(context) {
-	const {entries, entryPagination, feed, feedIsRead, request, settings} = context;
+	const {entries, entryPagination, feed, feedIsRead, nextPage, request, settings} = context;
 
 	context.pageTitle = feed.displayTitle;
 
@@ -24,6 +24,7 @@ module.exports = function renderFeedsViewPage(context) {
 		${showRefreshSuccess()}
 		${showSubscriptionSuccess()}
 		<${FeedErrorList} errors=${feed.errors} />
+		<${Pagination.Description} date=${entryPagination.before} resetUrl=${feed.url} />
 		<${EntryList} items=${entries}>
 			<div class="notification notification--help">
 				<p>
@@ -33,7 +34,9 @@ module.exports = function renderFeedsViewPage(context) {
 				</p>
 			</div>
 		<//>
-		<${Pagination} data=${entryPagination} />
+		<${Pagination.Next} url=${nextPage}>
+			View earlier entries
+		<//>
 	`;
 
 	// Populate content sub-sections
@@ -94,7 +97,7 @@ module.exports = function renderFeedsViewPage(context) {
 			<div class="notification notification--info">
 				<p>
 					This feed was last refreshed ${' '}
-					<${DateElement} date=${feed.syncedAt} />.
+					<${RelativeDate} date=${feed.syncedAt} />.
 				</p>
 				${feed.author ? html`<p>Authored by ${feed.author}.</p>` : ''}
 			</div>

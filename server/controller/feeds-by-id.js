@@ -1,8 +1,8 @@
 'use strict';
 
-const paginate = require('../middleware/paginate');
 const render = require('../middleware/render');
 const requireAuth = require('../middleware/require-auth');
+const setQueryParam = require('../lib/set-query-param');
 const {ValidationError} = require('@rowanmanning/app');
 
 module.exports = function mountFeedsByIdController(app) {
@@ -12,11 +12,6 @@ module.exports = function mountFeedsByIdController(app) {
 	router.get('/feeds/:feedId', [
 		requireAuth(),
 		fetchFeedById,
-		paginate({
-			perPage: 50,
-			property: 'entryPagination',
-			total: ({feed}) => Entry.countAllByFeedId(feed)
-		}),
 		fetchFeedEntries,
 		render('page/feeds/view')
 	]);
@@ -80,11 +75,16 @@ module.exports = function mountFeedsByIdController(app) {
 
 	async function fetchFeedEntries(request, response, next) {
 		try {
-			response.locals.entries = await Entry
-				.fetchAllByFeedId(response.locals.feed._id)
-				.skip(request.entryPagination.currentPageStartIndex)
-				.limit(request.entryPagination.perPage)
-				.populate('feed');
+			const entryPagination = await Entry.fetchPaginated(request.query.before, 50, {
+				feed: response.locals.feed._id
+			});
+			response.locals.entryPagination = entryPagination;
+			response.locals.entries = entryPagination.items;
+			response.locals.nextPage = (
+				entryPagination.next ?
+					setQueryParam(request.url, 'before', entryPagination.next) :
+					null
+			);
 			next();
 		} catch (error) {
 			next(error);

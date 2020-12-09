@@ -1,8 +1,8 @@
 'use strict';
 
-const paginate = require('../middleware/paginate');
 const render = require('../middleware/render');
 const requireAuth = require('../middleware/require-auth');
+const setQueryParam = require('../lib/set-query-param');
 const {ValidationError} = require('@rowanmanning/app');
 
 module.exports = function mountHomeController(app) {
@@ -13,11 +13,6 @@ module.exports = function mountHomeController(app) {
 		setPassword,
 		requireAuth(),
 		fetchStats,
-		paginate({
-			perPage: 50,
-			property: 'entryPagination',
-			total: () => Entry.countUnread()
-		}),
 		fetchUnreadEntries,
 		render('page/home')
 	]);
@@ -42,11 +37,16 @@ module.exports = function mountHomeController(app) {
 
 	async function fetchUnreadEntries(request, response, next) {
 		try {
-			response.locals.entries = await Entry
-				.fetchUnread()
-				.skip(request.entryPagination.currentPageStartIndex)
-				.limit(request.entryPagination.perPage)
-				.populate('feed');
+			const entryPagination = await Entry.fetchPaginated(request.query.before, 50, {
+				isRead: false
+			});
+			response.locals.entryPagination = entryPagination;
+			response.locals.entries = entryPagination.items;
+			response.locals.nextPage = (
+				entryPagination.next ?
+					setQueryParam(request.url, 'before', entryPagination.next) :
+					null
+			);
 			next();
 		} catch (error) {
 			next(error);

@@ -1,7 +1,7 @@
 'use strict';
 
 const ContentList = require('./content');
-const DateElement = require('../element/date');
+const RelativeDate = require('../element/relative-date');
 const {html} = require('@rowanmanning/app');
 
 /**
@@ -46,14 +46,14 @@ module.exports = class EntryList extends ContentList {
 					</h2>
 				</header>
 				<p class="content-summary__meta">
-					Posted <${DateElement} date=${entry.publishedAt} />
+					Posted <${RelativeDate} date=${entry.publishedAt} />
 					${entry.author ? ` by ${entry.author}` : ''}
 					${' '} on <a href=${entry.feed.url}>${entry.feed.displayTitle}</a>.
 					${entry.isRead ? html`
-						${' '} Read <${DateElement} date=${entry.readAt} />.
+						${' '} Read <${RelativeDate} date=${entry.readAt} />.
 					` : ''}
 					${entry.isBookmarked ? html`
-						${' '} Bookmarked <${DateElement} date=${entry.bookmarkedAt} />.
+						${' '} Bookmarked <${RelativeDate} date=${entry.bookmarkedAt} />.
 					` : ''}
 				</p>
 			</article>

@@ -1,8 +1,8 @@
 'use strict';
 
-const paginate = require('../middleware/paginate');
 const render = require('../middleware/render');
 const requireAuth = require('../middleware/require-auth');
+const setQueryParam = require('../lib/set-query-param');
 
 module.exports = function mountEntriesController(app) {
 	const {router} = app;
@@ -10,22 +10,20 @@ module.exports = function mountEntriesController(app) {
 
 	router.get('/entries', [
 		requireAuth(),
-		paginate({
-			perPage: 50,
-			property: 'entryPagination',
-			total: () => Entry.estimatedDocumentCount()
-		}),
-		listEntries,
+		listPaginatedEntries,
 		render('page/entries/list')
 	]);
 
-	async function listEntries(request, response, next) {
+	async function listPaginatedEntries(request, response, next) {
 		try {
-			request.entries = response.locals.entries = await Entry
-				.fetchAll()
-				.skip(request.entryPagination.currentPageStartIndex)
-				.limit(request.entryPagination.perPage)
-				.populate('feed');
+			const entryPagination = await Entry.fetchPaginated(request.query.before, 50);
+			response.locals.entryPagination = entryPagination;
+			response.locals.entries = entryPagination.items;
+			response.locals.nextPage = (
+				entryPagination.next ?
+					setQueryParam(request.url, 'before', entryPagination.next) :
+					null
+			);
 			next();
 		} catch (error) {
 			next(error);

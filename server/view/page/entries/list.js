@@ -7,12 +7,13 @@ const layout = require('../../layout/main');
 const Pagination = require('../../partial/pagination');
 
 module.exports = function renderEntryiesListPage(context) {
-	const {entries, entryPagination, settings} = context;
+	const {entries, entryPagination, nextPage, settings} = context;
 
 	context.pageTitle = 'All Entries';
 
 	// Populate main content
 	const content = html`
+		<${Pagination.Description} date=${entryPagination.before} resetUrl="/entries" />
 		<${EntryList} items=${entries}>
 			<div class="notification notification--help" data-test="no-entries-message">
 				<p>
@@ -24,7 +25,9 @@ module.exports = function renderEntryiesListPage(context) {
 				</p>
 			</div>
 		<//>
-		<${Pagination} data=${entryPagination} />
+		<${Pagination.Next} url=${nextPage}>
+			View earlier entries
+		<//>
 	`;
 
 	// Populate content sub-sections

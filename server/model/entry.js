@@ -108,6 +108,11 @@ module.exports = function defineEntrySchema(app) {
 		message: `An entry with that {PATH} already exists`
 	});
 
+	// Always populate the feed
+	entrySchema.pre('find', function() {
+		this.populate('feed');
+	});
+
 	// Virtual display title
 	entrySchema.virtual('displayTitle').get(function() {
 		return cleanTitle(this.title);
@@ -195,6 +200,32 @@ module.exports = function defineEntrySchema(app) {
 		return this
 			.find(query)
 			.sort({publishedAt: -1});
+	});
+
+	entrySchema.static('fetchPaginated', async function(before, count, query = {}) {
+		const beforeDate = (before ? new Date(before) : null);
+		const pagination = {
+			before: beforeDate || null,
+			items: [],
+			next: null,
+			perPage: count,
+			totalPages: 0
+		};
+
+		// Create an item query
+		if (pagination.before) {
+			query.publishedAt = {$lt: pagination.before};
+		}
+		const items = pagination.items = await this.fetchAll(query).limit(count);
+
+		// Add a next before value to the pagination
+		pagination.next = (
+			items.length === pagination.perPage ?
+				items[items.length - 1].publishedAt.toISOString() :
+				null
+		);
+
+		return pagination;
 	});
 
 	entrySchema.static('countAll', function() {

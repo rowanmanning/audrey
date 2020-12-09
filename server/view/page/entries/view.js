@@ -1,7 +1,7 @@
 'use strict';
 
 const Breadcrumb = require('../../partial/breadcrumb');
-const DateElement = require('../../partial/element/date');
+const RelativeDate = require('../../partial/element/relative-date');
 const Enclosure = require('../../partial/element/enclosure');
 const {html} = require('@rowanmanning/app');
 const layout = require('../../layout/main');
@@ -113,14 +113,14 @@ module.exports = function renderEntriesViewPage(context) {
 				<p>
 					This entry was posted on ${' '}
 					<a href=${entry.feed.url}>${entry.feed.displayTitle}</a> ${' '}
-					<${DateElement} date=${entry.publishedAt} />.
+					<${RelativeDate} date=${entry.publishedAt} />.
 				</p>
 				${entry.author ? html`<p>Authored by ${entry.author}.</p>` : ''}
 				${entry.isRead ? html`
-					<p>You read this <${DateElement} date=${entry.readAt} />.</p>
+					<p>You read this <${RelativeDate} date=${entry.readAt} />.</p>
 				` : ''}
 				${entry.isBookmarked ? html`
-					<p>You bookmarked this <${DateElement} date=${entry.bookmarkedAt} />.</p>
+					<p>You bookmarked this <${RelativeDate} date=${entry.bookmarkedAt} />.</p>
 				` : ''}
 			</div>
 			<nav class="nav-list">

@@ -51,3 +51,14 @@
 		text-decoration: underline;
 	}
 }
+
+// Nav list link element, "inline" modifier
+.nav-list__link--inline {
+	display: inline-block;
+	width: auto;
+}
+
+// Nav list block, "centered" modifier
+.nav-list--centered {
+	text-align: center;
+}
