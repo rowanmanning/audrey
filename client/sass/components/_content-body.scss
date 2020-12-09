@@ -362,3 +362,11 @@
 	}
 
 }
+
+// Content body block, "audio", "image", and "video" modifiers
+.content-body--audio audio,
+.content-body--image img,
+.content-body--video video {
+	padding: 0;
+	border: none;
+}
