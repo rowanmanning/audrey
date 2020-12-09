@@ -31,21 +31,10 @@ before(done => {
 		done(error);
 	});
 
-	// Once the app starts and the database is connected, we're ready to test
-	let isReady = false;
-	async function handleReadyEvent() {
-		if (isReady) {
-
-			// This makes sure that settings are created before
-			// any requests are made
-			await global.app.models.Settings.get();
-
-			return done();
-		}
-		isReady = true;
-	}
-	global.app.once('server:started', handleReadyEvent);
-	global.app.once('database:connected', handleReadyEvent);
+	// Once the app starts, we're ready to test
+	global.app.once('server:started', () => {
+		done();
+	});
 
 	// Start the application
 	global.app.setup();

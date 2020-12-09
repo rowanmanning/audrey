@@ -63,49 +63,21 @@ module.exports = class AudreyApp extends App {
 		super.setupControllers();
 	}
 
-	async setupScheduledJobs() {
+	setupScheduledJobs() {
 		try {
-			const settings = await this.models.Settings.get();
-
-			// If the app is in demo mode, wipe the entries every 15 minutes
-			// and refresh all of the feeds so that entries are freshly loaded
-			if (settings.demoMode) {
-				this.setupScheduledDemoJobs();
-
-			// Otherwise refresh feeds on a schedule
-			} else {
-				this.setupScheduledStandardJobs();
-			}
-
+			this.scheduledJob = schedule.scheduleJob(this.options.updateSchedule, async () => {
+				try {
+					await this.models.Entry.performScheduledJobs();
+					await this.models.Feed.performScheduledJobs();
+					this.log.info(`[sheduler]: scheduled jobs complete`);
+				} catch (error) {
+					this.log.error(`[sheduler]: scheduled jobs failed: ${error.message}`);
+				}
+			});
+			this.log.info(`[setup:sheduler]: started with cron "${this.options.updateSchedule}"`);
 		} catch (error) {
 			this.log.error(`[setup:sheduler]: setup failed, ${error.message}`);
 		}
-	}
-
-	setupScheduledStandardJobs() {
-		this.scheduledJob = schedule.scheduleJob(this.options.updateSchedule, async () => {
-			try {
-				await this.models.Entry.performScheduledJobs();
-				await this.models.Feed.performScheduledJobs();
-				this.log.info(`[sheduler]: scheduled jobs complete`);
-			} catch (error) {
-				this.log.error(`[sheduler]: scheduled jobs failed: ${error.message}`);
-			}
-		});
-		this.log.info(`[setup:sheduler]: started with cron "${this.options.updateSchedule}"`);
-	}
-
-	setupScheduledDemoJobs() {
-		this.scheduledJob = schedule.scheduleJob('0,15,30,45 * * * *', async () => {
-			try {
-				await this.models.Entry.deleteMany({});
-				await this.models.Feed.refreshAll();
-				this.log.info(`[sheduler]: scheduled jobs complete`);
-			} catch (error) {
-				this.log.error(`[sheduler]: scheduled jobs failed: ${error.message}`);
-			}
-		});
-		this.log.info(`[setup:sheduler]: started in demo mode, resetting entries every 15 minutes`);
 	}
 
 	teardown() {

@@ -1,6 +1,5 @@
 'use strict';
 
-const demoError = require('../lib/demo-error');
 const paginate = require('../middleware/paginate');
 const render = require('../middleware/render');
 const requireAuth = require('../middleware/require-auth');
@@ -122,9 +121,6 @@ module.exports = function mountFeedsByIdController(app) {
 		try {
 			// On POST, attempt to save the feed
 			if (request.method === 'POST') {
-				if (request.settings.demoMode) {
-					throw demoError();
-				}
 
 				// We use a fresh feed object so that we don't interfere
 				// with displayed properties outside of the form
@@ -160,9 +156,6 @@ module.exports = function mountFeedsByIdController(app) {
 		try {
 			// On POST, attempt to unsubscribe from the feed
 			if (request.method === 'POST') {
-				if (request.settings.demoMode) {
-					throw demoError();
-				}
 				if (unsubscribeForm.data.confirm) {
 					const title = request.feed.displayTitle;
 					await request.feed.unsubscribe();
