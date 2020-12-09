@@ -66,7 +66,7 @@ module.exports = function renderFeedsViewPage(context) {
 								/>
 							</form>
 						</li>
-						${entryPagination.totalItems ? html`
+						${entries.length ? html`
 							<li>
 								<form method="post" action=${feed.markUrl}>
 									<input
