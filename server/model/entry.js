@@ -109,7 +109,7 @@ module.exports = function defineEntrySchema(app) {
 	});
 
 	// Always populate the feed
-	entrySchema.pre('find', function() {
+	entrySchema.pre(['find', 'findOne'], function() {
 		this.populate('feed');
 	});
 
