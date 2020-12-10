@@ -33,6 +33,18 @@ describe('GET /entries', () => {
 					document.querySelector('title').textContent,
 					'All Entries | Test Audrey'
 				);
+				assert.strictEqual(
+					document.querySelector('h1').textContent,
+					'All Entries'
+				);
+			});
+
+			it('includes breadcrumbs for parent pages', () => {
+				const {document} = response.dom();
+				const breadcrumbs = document.querySelectorAll('[data-test=breadcrumb]');
+				assert.lengthEquals(breadcrumbs, 1);
+				assert.strictEqual(breadcrumbs[0].getAttribute('href'), '/');
+				assert.strictEqual(breadcrumbs[0].textContent, 'Test Audrey');
 			});
 
 			it('lists all entries', () => {

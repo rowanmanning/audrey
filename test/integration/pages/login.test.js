@@ -25,6 +25,18 @@ describe('GET /login', () => {
 				document.querySelector('title').textContent,
 				'Sign in | Test Audrey'
 			);
+			assert.strictEqual(
+				document.querySelector('h1').textContent,
+				'Sign in'
+			);
+		});
+
+		it('includes breadcrumbs for parent pages', () => {
+			const {document} = response.dom();
+			const breadcrumbs = document.querySelectorAll('[data-test=breadcrumb]');
+			assert.lengthEquals(breadcrumbs, 1);
+			assert.strictEqual(breadcrumbs[0].getAttribute('href'), '/');
+			assert.strictEqual(breadcrumbs[0].textContent, 'Test Audrey');
 		});
 
 		it('includes a form to log in', () => {

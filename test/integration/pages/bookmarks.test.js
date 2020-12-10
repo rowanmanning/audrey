@@ -33,6 +33,18 @@ describe('GET /bookmarks', () => {
 					document.querySelector('title').textContent,
 					'Bookmarked Entries | Test Audrey'
 				);
+				assert.strictEqual(
+					document.querySelector('h1').textContent,
+					'Bookmarked Entries'
+				);
+			});
+
+			it('includes breadcrumbs for parent pages', () => {
+				const {document} = response.dom();
+				const breadcrumbs = document.querySelectorAll('[data-test=breadcrumb]');
+				assert.lengthEquals(breadcrumbs, 1);
+				assert.strictEqual(breadcrumbs[0].getAttribute('href'), '/');
+				assert.strictEqual(breadcrumbs[0].textContent, 'Test Audrey');
 			});
 
 			it('lists all bookmarked entries', () => {

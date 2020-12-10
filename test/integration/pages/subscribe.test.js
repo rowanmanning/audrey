@@ -28,6 +28,18 @@ describe('GET /subscribe', () => {
 				document.querySelector('title').textContent,
 				'Subscribe to a feed | Test Audrey'
 			);
+			assert.strictEqual(
+				document.querySelector('h1').textContent,
+				'Subscribe to a feed'
+			);
+		});
+
+		it('includes breadcrumbs for parent pages', () => {
+			const {document} = response.dom();
+			const breadcrumbs = document.querySelectorAll('[data-test=breadcrumb]');
+			assert.lengthEquals(breadcrumbs, 1);
+			assert.strictEqual(breadcrumbs[0].getAttribute('href'), '/');
+			assert.strictEqual(breadcrumbs[0].textContent, 'Test Audrey');
 		});
 
 		it('includes a form to subscribe to a feed', () => {

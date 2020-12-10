@@ -39,6 +39,10 @@ describe('GET /entries/:id', () => {
 					document.querySelector('title').textContent,
 					'Mock Feed 001 - Entry 1 | Test Audrey'
 				);
+				assert.strictEqual(
+					document.querySelector('h1').textContent,
+					'Mock Feed 001 - Entry 1'
+				);
 
 				const entryHeading = document.querySelector('[data-test=entry-heading]');
 				assert.isNotNull(entryHeading);
@@ -50,6 +54,18 @@ describe('GET /entries/:id', () => {
 
 				const entryLink = document.querySelector('a[href="http://mock-feeds.com/valid/001/entry-1"]');
 				assert.isNotNull(entryLink);
+			});
+
+			it('includes breadcrumbs for parent pages', () => {
+				const {document} = response.dom();
+				const breadcrumbs = document.querySelectorAll('[data-test=breadcrumb]');
+				assert.lengthEquals(breadcrumbs, 3);
+				assert.strictEqual(breadcrumbs[0].getAttribute('href'), '/');
+				assert.strictEqual(breadcrumbs[0].textContent, 'Test Audrey');
+				assert.strictEqual(breadcrumbs[1].getAttribute('href'), '/feeds');
+				assert.strictEqual(breadcrumbs[1].textContent, 'Feeds');
+				assert.strictEqual(breadcrumbs[2].getAttribute('href'), '/feeds/feed001');
+				assert.strictEqual(breadcrumbs[2].textContent, 'Mock Feed 001');
 			});
 
 			it('displays an entry "mark as unread" form', () => {

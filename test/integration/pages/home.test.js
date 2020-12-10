@@ -34,6 +34,16 @@ describe('GET /', () => {
 					document.querySelector('title').textContent,
 					'Test Audrey'
 				);
+				assert.strictEqual(
+					document.querySelector('h1').textContent,
+					'Test Audrey'
+				);
+			});
+
+			it('does not include breadcrumbs', () => {
+				const {document} = response.dom();
+				const breadcrumbs = document.querySelectorAll('[data-test=breadcrumb]');
+				assert.lengthEquals(breadcrumbs, 0);
 			});
 
 			it('lists all unread entries', () => {

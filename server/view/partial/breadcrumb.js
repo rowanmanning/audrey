@@ -58,7 +58,7 @@ module.exports = class Breadcrumb extends Partial {
 	renderBreadcrumbItem(item, position) {
 		return html`
 			<li class="breadcrumb__item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-				<a itemprop="item" href=${item.url}>
+				<a itemprop="item" href=${item.url} data-test="breadcrumb">
 					<span itemprop="name">${item.label}</span>
 				</a>
 				<meta itemprop="position" content="${position}" />
