@@ -1,5 +1,7 @@
 'use strict';
 
+const differenceInDays = require('date-fns/differenceInDays');
+
 module.exports = async function seedDatabase(models) {
 	const {Settings} = models;
 
@@ -8,7 +10,10 @@ module.exports = async function seedDatabase(models) {
 		_id: 'settings-id',
 		siteTitle: 'Test Audrey',
 		removeOldEntries: true,
-		daysToRetainOldEntries: 60,
+
+		// Retain entries posted on 1st Jan 2020 onwards
+		daysToRetainOldEntries: differenceInDays(new Date(), new Date('2020-01-01T00:00:00Z')) + 1,
+
 		autoMarkAsRead: true,
 		showHelpText: true,
 		passwordHash: 'password'

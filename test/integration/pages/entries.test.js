@@ -106,12 +106,13 @@ describe('GET /entries', () => {
 				);
 			});
 
-			it.skip('includes pagination', () => {
+			it('includes pagination', () => {
 				const {document} = response.dom();
 				const next = document.querySelectorAll('[data-test=pagination-next]');
 				assert.lengthEquals(next, 1);
-				assert.strictEqual(next[0].getAttribute('href'), '/entries?before=???');
-				// TODO requires us to have fixed dates in our fixtures
+
+				// 51 days from January first
+				assert.strictEqual(next[0].getAttribute('href'), '/entries?before=2020-02-21T00%3A00%3A00.000Z');
 			});
 
 		});
@@ -188,7 +189,8 @@ describe('GET /entries', () => {
 
 });
 
-describe.skip('GET /entries?before=???', () => {
+// 51 days from January first
+describe('GET /entries?before=2020-02-21T00%3A00%3A00.000Z', () => {
 	let response;
 
 	describe('when the app is configured and logged in', () => {
@@ -200,7 +202,7 @@ describe.skip('GET /entries?before=???', () => {
 					'settings',
 					'feed-002'
 				]);
-				response = await request('GET', '/entries?before=???', {
+				response = await request('GET', '/entries?before=2020-02-21T00%3A00%3A00.000Z', {
 					headers: {
 						cookie: await getLoginCookie('password')
 					}

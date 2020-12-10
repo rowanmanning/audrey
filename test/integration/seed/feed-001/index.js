@@ -3,8 +3,6 @@
 // Feed 01 is intended to test a variety of different entries,
 // with as few actual entries in the database as possible
 
-const oneDay = 1000 * 60 * 60 * 24;
-
 module.exports = async function seedDatabase(models) {
 	const {Entry, Feed} = models;
 
@@ -17,13 +15,13 @@ module.exports = async function seedDatabase(models) {
 			title: 'Mock Feed 001',
 			htmlUrl: 'http://mock-feeds.com/valid/001/',
 			xmlUrl: 'http://mock-feeds.com/valid/001/feed.xml',
-			publishedAt: new Date(Date.now() - oneDay),
-			modifiedAt: new Date(Date.now() - oneDay)
+			publishedAt: new Date('2020-01-03T00:00:00Z'),
+			modifiedAt: new Date('2020-01-03T00:00:00Z')
 		})
 
 	]);
 
-	function createEntry(number = 0, dateMod = 0, entry = {}) {
+	function createEntry(number, date, entry = {}) {
 		return Entry.create(Object.assign({
 			_id: `feed001-entry${number}`,
 			feed: 'feed001',
@@ -34,17 +32,17 @@ module.exports = async function seedDatabase(models) {
 			author: `Mock Feed ${number} Author`,
 			isRead: false,
 			isBookmarked: false,
-			publishedAt: new Date(Date.now() + dateMod),
-			modifiedAt: new Date(Date.now() + dateMod),
-			syncedAt: new Date()
+			publishedAt: date,
+			modifiedAt: date,
+			syncedAt: new Date('2020-01-04T00:00:00Z')
 		}, entry));
 	}
 
 	// Create test entries
 	await Promise.all([
-		createEntry(1, -(oneDay * 3)),
-		createEntry(2, -(oneDay * 2), {isBookmarked: true}),
-		createEntry(3, -(oneDay), {isRead: true})
+		createEntry(1, new Date('2020-01-01T00:00:00Z')),
+		createEntry(2, new Date('2020-01-02T00:00:00Z'), {isBookmarked: true}),
+		createEntry(3, new Date('2020-01-03T00:00:00Z'), {isRead: true})
 	]);
 
 };

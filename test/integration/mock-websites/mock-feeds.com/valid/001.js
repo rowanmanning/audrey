@@ -3,15 +3,13 @@
 const formatISO = require('date-fns/formatISO');
 const nock = require('nock');
 
-const oneDay = 1000 * 60 * 60 * 24;
-
-function createEntryMarkup(number, dateMod) {
+function createEntryMarkup(number, date) {
 	return `
 		<entry>
 			<title>Mock Feed 001 - Entry ${number}</title>
 			<link rel="alternate" type="text/html" href="http://mock-feeds.com/valid/001/entry-${number}"/>
 			<id>http://mock-feeds.com/valid/001/entry-id-${number}</id>
-			<updated>${formatISO(new Date(Date.now() + dateMod))}</updated>
+			<updated>${formatISO(date)}</updated>
 			<content type="html"><![CDATA[<p>Entry ${number} Content</p>]]></content>
 			<author>
 				<name>Mock Feed 001 Author</name>
@@ -21,9 +19,9 @@ function createEntryMarkup(number, dateMod) {
 }
 
 const entries = [
-	createEntryMarkup(1, -(oneDay * 3)),
-	createEntryMarkup(2, -(oneDay * 2)),
-	createEntryMarkup(3, -(oneDay))
+	createEntryMarkup(1, new Date('2020-01-01T00:00:00Z')),
+	createEntryMarkup(2, new Date('2020-01-02T00:00:00Z')),
+	createEntryMarkup(3, new Date('2020-01-03T00:00:00Z'))
 ];
 
 nock('http://mock-feeds.com/')
@@ -37,7 +35,7 @@ nock('http://mock-feeds.com/')
 			<link href="http://mock-feeds.com/valid/001/feed.xml" rel="self" />
 			<link href="http://mock-feeds.com/valid/001/" />
 			<id>http://mock-feeds.com/valid/001/</id>
-			<updated>${formatISO(new Date(Date.now() - oneDay))}</updated>
+			<updated>${formatISO(new Date('2020-01-03T00:00:00Z'))}</updated>
 
 			${entries.join('\n')}
 
