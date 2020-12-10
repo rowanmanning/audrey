@@ -5,61 +5,47 @@ const getLoginCookie = require('../helper/get-login-cookie');
 const seedDatabase = require('../helper/seed-database');
 const request = require('../helper/request');
 
-describe('GET /entries', () => {
+describe('GET /bookmarks', () => {
 	let response;
 
 	describe('when the app is configured and logged in', () => {
 
-		describe('feeds are present and entries are available', () => {
+		describe('feeds are present and bookmarked entries are available', () => {
 
 			before(async () => {
 				await seedDatabase([
 					'settings',
 					'feed-001'
 				]);
-				response = await request('GET', '/entries', {
+				response = await request('GET', '/bookmarks', {
 					headers: {
 						cookie: await getLoginCookie('password')
 					}
 				});
 			});
 
-			it('displays the all entries page', () => {
+			it('displays the bookmarks page', () => {
 				assert.strictEqual(response.statusCode, 200);
 				assert.strictEqual(response.headers['content-type'], 'text/html; charset=utf-8');
 
 				const {document} = response.dom();
 				assert.strictEqual(
 					document.querySelector('title').textContent,
-					'All Entries | Test Audrey'
+					'Bookmarked Entries | Test Audrey'
 				);
 			});
 
-			it('lists all entries', () => {
+			it('lists all bookmarked entries', () => {
 				const {document} = response.dom();
 				const entries = document.querySelectorAll('[data-test=entry-summary]');
-				assert.lengthEquals(entries, 3);
+				assert.lengthEquals(entries, 1);
 
 				assert.strictEqual(
 					entries[0].querySelector('[data-test=entry-heading]').textContent,
-					'Mock Feed 001 - Entry 3'
-				);
-				assert.isNotNull(entries[0].querySelector('a[href="/entries/feed001-entry3"]'));
-				assert.isNotNull(entries[0].querySelector('a[href="/feeds/feed001"]'));
-
-				assert.strictEqual(
-					entries[1].querySelector('[data-test=entry-heading]').textContent,
 					'Mock Feed 001 - Entry 2'
 				);
-				assert.isNotNull(entries[1].querySelector('a[href="/entries/feed001-entry2"]'));
-				assert.isNotNull(entries[1].querySelector('a[href="/feeds/feed001"]'));
-
-				assert.strictEqual(
-					entries[2].querySelector('[data-test=entry-heading]').textContent,
-					'Mock Feed 001 - Entry 1'
-				);
-				assert.isNotNull(entries[2].querySelector('a[href="/entries/feed001-entry1"]'));
-				assert.isNotNull(entries[2].querySelector('a[href="/feeds/feed001"]'));
+				assert.isNotNull(entries[0].querySelector('a[href="/entries/feed001-entry2"]'));
+				assert.isNotNull(entries[0].querySelector('a[href="/feeds/feed001"]'));
 			});
 
 			it('does not include pagination', () => {
@@ -68,22 +54,23 @@ describe('GET /entries', () => {
 				assert.isNull(pagination);
 			});
 
-			it('does not include a notice that there are no entries', () => {
+			it('does not include a notice that there are no bookmarked entries', () => {
 				const {document} = response.dom();
-				const message = document.querySelector('[data-test=no-entries-message]');
+				const message = document.querySelector('[data-test=no-bookmarks-message]');
 				assert.isNull(message);
 			});
 
 		});
 
-		describe('feeds are present and more than 50 entries are available', () => {
+		describe('feeds are present and more than 50 bookmarked entries are available', () => {
 
 			before(async () => {
 				await seedDatabase([
 					'settings',
-					'feed-002'
+					'feed-002',
+					'bookmark-all-entries'
 				]);
-				response = await request('GET', '/entries', {
+				response = await request('GET', '/bookmarks', {
 					headers: {
 						cookie: await getLoginCookie('password')
 					}
@@ -115,44 +102,43 @@ describe('GET /entries', () => {
 				assert.lengthEquals(next, 1);
 
 				// 51 days from January first
-				assert.strictEqual(next[0].getAttribute('href'), '/entries?before=2020-02-21T00%3A00%3A00.000Z');
+				assert.strictEqual(next[0].getAttribute('href'), '/bookmarks?before=2020-02-21T00%3A00%3A00.000Z');
 			});
 
 		});
 
-		describe('feeds are present but no entries are available', () => {
+		describe('feeds are present but no bookmarked entries are available', () => {
 
 			before(async () => {
 				await seedDatabase([
 					'settings',
-					'feed-001',
-					'delete-all-entries'
+					'feed-002'
 				]);
-				response = await request('GET', '/entries', {
+				response = await request('GET', '/bookmarks', {
 					headers: {
 						cookie: await getLoginCookie('password')
 					}
 				});
 			});
 
-			it('displays the all entries page', () => {
+			it('displays the bookmarks page', () => {
 				assert.strictEqual(response.statusCode, 200);
 				assert.strictEqual(response.headers['content-type'], 'text/html; charset=utf-8');
 
 				const {document} = response.dom();
 				assert.strictEqual(
 					document.querySelector('title').textContent,
-					'All Entries | Test Audrey'
+					'Bookmarked Entries | Test Audrey'
 				);
 			});
 
-			it('includes a notice that there are no entries', () => {
+			it('includes a notice that there are no bookmarked entries', () => {
 				const {document} = response.dom();
-				const messages = document.querySelectorAll('[data-test=no-entries-message]');
+				const messages = document.querySelectorAll('[data-test=no-bookmarks-message]');
 				assert.lengthEquals(messages, 1);
 			});
 
-			it('lists no entries', () => {
+			it('lists no bookmarked entries', () => {
 				const {document} = response.dom();
 				const entries = document.querySelectorAll('[data-test=entry-summary]');
 				assert.lengthEquals(entries, 0);
@@ -166,12 +152,12 @@ describe('GET /entries', () => {
 
 		before(async () => {
 			await seedDatabase(['settings']);
-			response = await request('GET', '/entries');
+			response = await request('GET', '/bookmarks');
 		});
 
 		it('redirects to the login page', () => {
 			assert.strictEqual(response.statusCode, 302);
-			assert.strictEqual(response.headers.location, '/login?redirect=/entries');
+			assert.strictEqual(response.headers.location, '/login?redirect=/bookmarks');
 		});
 
 	});
@@ -180,7 +166,7 @@ describe('GET /entries', () => {
 
 		before(async () => {
 			await seedDatabase([]);
-			response = await request('GET', '/entries');
+			response = await request('GET', '/bookmarks');
 		});
 
 		it('redirects to the home page', () => {
@@ -193,26 +179,27 @@ describe('GET /entries', () => {
 });
 
 // 51 days from January first
-describe('GET /entries?before=2020-02-21T00%3A00%3A00.000Z', () => {
+describe('GET /bookmarks?before=2020-02-21T00%3A00%3A00.000Z', () => {
 	let response;
 
 	describe('when the app is configured and logged in', () => {
 
-		describe('feeds are present and more than 50 entries are available', () => {
+		describe('feeds are present and more than 50 bookmarked entries are available', () => {
 
 			before(async () => {
 				await seedDatabase([
 					'settings',
-					'feed-002'
+					'feed-002',
+					'bookmark-all-entries'
 				]);
-				response = await request('GET', '/entries?before=2020-02-21T00%3A00%3A00.000Z', {
+				response = await request('GET', '/bookmarks?before=2020-02-21T00%3A00%3A00.000Z', {
 					headers: {
 						cookie: await getLoginCookie('password')
 					}
 				});
 			});
 
-			it('lists the second page of entries', () => {
+			it('lists the second page of bookmarked entries', () => {
 				const {document} = response.dom();
 				const entries = document.querySelectorAll('[data-test=entry-summary]');
 				assert.lengthEquals(entries, 50);

@@ -46,12 +46,14 @@ describe('GET /', () => {
 					'Mock Feed 001 - Entry 2'
 				);
 				assert.isNotNull(entries[0].querySelector('a[href="/entries/feed001-entry2"]'));
+				assert.isNotNull(entries[0].querySelector('a[href="/feeds/feed001"]'));
 
 				assert.strictEqual(
 					entries[1].querySelector('[data-test=entry-heading]').textContent,
 					'Mock Feed 001 - Entry 1'
 				);
 				assert.isNotNull(entries[1].querySelector('a[href="/entries/feed001-entry1"]'));
+				assert.isNotNull(entries[1].querySelector('a[href="/feeds/feed001"]'));
 			});
 
 			it('does not include pagination', () => {

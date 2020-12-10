@@ -15,7 +15,7 @@ module.exports = function renderBookmarksListPage(context) {
 	const content = html`
 		<${Pagination.Description} date=${entryPagination.before} resetUrl="/bookmarks" />
 		<${EntryList} items=${entries}>
-			<div class="notification notification--help">
+			<div class="notification notification--help" data-test="no-bookmarks-message">
 				<p>
 					You haven't bookmarked any entries yet. Bookmarking an entry
 					means it will never be deleted from ${settings.siteTitle}, so
