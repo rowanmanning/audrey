@@ -68,6 +68,16 @@ describe('GET /entries/:id', () => {
 				assert.strictEqual(breadcrumbs[2].textContent, 'Mock Feed 001');
 			});
 
+			it('includes a link to the original article', () => {
+				const {document} = response.dom();
+				assert.isNotNull(document.querySelector('a[href="http://mock-feeds.com/valid/001/entry-1"]'));
+			});
+
+			it('includes a link to the feed XML', () => {
+				const {document} = response.dom();
+				assert.isNotNull(document.querySelector('a[href="http://mock-feeds.com/valid/001/feed.xml"]'));
+			});
+
 			it('displays an entry "mark as unread" form', () => {
 				assertHasMarkAsUnreadForm('feed001-entry1', response);
 			});
