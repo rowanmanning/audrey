@@ -15,7 +15,7 @@ module.exports = function renderFeedsListPage(context) {
 		${showUnsubscribeSuccess()}
 		${isRefreshInProgress ? displayRefreshInProgress() : ''}
 		<${FeedList} items=${feeds} feedEntryCounts=${feedEntryCounts}>
-			<div class="notification notification--help">
+			<div class="notification notification--help" data-test="no-feeds-message">
 				<p>
 					You haven't subscribed to any feeds yet, once you do they'll appear here. ${' '}
 					You can <a href="/subscribe">subscribe to a feed here</a>, or there's a ${' '}

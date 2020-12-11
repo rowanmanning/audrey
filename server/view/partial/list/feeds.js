@@ -47,9 +47,12 @@ module.exports = class FeedList extends ContentList {
 		const isRead = (counts.read === counts.total);
 
 		return super.renderItem(html`
-			<article class="content-summary ${isRead ? 'content-summary--read' : ''}">
+			<article
+				data-test="feed-summary"
+				class="content-summary ${isRead ? 'content-summary--read' : ''}"
+			>
 				<header class="content-summary__headline">
-					<h2>
+					<h2 data-test="feed-heading">
 						<a href=${feed.url}>${feed.displayTitle}</a>
 					</h2>
 				</header>

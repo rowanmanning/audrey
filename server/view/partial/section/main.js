@@ -43,7 +43,7 @@ module.exports = class Main extends Partial {
 	 */
 	render() {
 		return html`
-			<main role="main" class="main">
+			<main role="main" class="main" data-test="main">
 				${this.renderHeading()}
 				<div class="page-layout">
 					${this.renderLeftHandSidebar()}
