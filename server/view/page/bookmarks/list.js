@@ -7,7 +7,7 @@ const layout = require('../../layout/main');
 const Pagination = require('../../partial/pagination');
 
 module.exports = function renderBookmarksListPage(context) {
-	const {entries, entryPagination, nextPage, settings} = context;
+	const {bookmarkCount, entries, entryPagination, nextPage, settings} = context;
 
 	context.pageTitle = 'Bookmarked Entries';
 
@@ -38,19 +38,39 @@ module.exports = function renderBookmarksListPage(context) {
 			<div class="content-head">
 				<h1 class="content-head__title">${context.pageTitle}</h1>
 			</div>
-		`
+		`,
+
+		// Right-hand sidebar
+		rhs: (entries.length ? html`
+			${showHelpText()}
+			<div class="notification notification--info">
+				<p>
+					You have bookmarked ${bookmarkCount} entries.
+				</p>
+			</div>
+			<nav class="nav-list">
+				<ul>
+					<li>
+						<a class="nav-list__link" href="/bookmarks/export/html">Export as HTML</a>
+					</li>
+				</ul>
+			</nav>
+		` : '')
 	};
 
 	// Right-hand sidebar
-	if (entries.length && settings.showHelpText) {
-		context.subSections.rhs = html`
-			<div class="notification notification--help">
-				<p>
-					This page displays all entries that you have bookmarked. Bookmarking
-					an entry means that it will never be deleted from ${settings.siteTitle}.
-				</p>
-			</div>
-		`;
+	function showHelpText() {
+		if (settings.showHelpText) {
+			return html`
+				<div class="notification notification--help">
+					<p>
+						This page displays all entries that you have bookmarked. Bookmarking
+						an entry means that it will never be deleted from ${settings.siteTitle}.
+					</p>
+				</div>
+			`;
+		}
+		return '';
 	}
 
 	// Wrap the content in a layout and return to render

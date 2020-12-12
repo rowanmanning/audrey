@@ -60,6 +60,11 @@ describe('GET /bookmarks', () => {
 				assert.isNotNull(entries[0].querySelector('a[href="/feeds/feed001"]'));
 			});
 
+			it('includes a link to export bookmarks as HTML', () => {
+				const {document} = response.dom();
+				assert.isNotNull(document.querySelector('a[href="/bookmarks/export/html"]'));
+			});
+
 			it('does not include pagination', () => {
 				const {document} = response.dom();
 				const pagination = document.querySelector('[data-test=pagination]');
