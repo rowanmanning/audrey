@@ -76,11 +76,6 @@ module.exports = function mountEntriesByIdController(app) {
 			}
 			next();
 		} catch (error) {
-			if (error instanceof ValidationError) {
-				markEntryForm.errors = Object.values(error.errors);
-				response.status(400);
-				return next();
-			}
 			next(error);
 		}
 	}
