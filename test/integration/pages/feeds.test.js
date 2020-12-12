@@ -4,6 +4,7 @@ const assert = require('proclaim');
 const getLoginCookie = require('../helper/get-login-cookie');
 const seedDatabase = require('../helper/seed-database');
 const request = require('../helper/request');
+const sinon = require('sinon');
 
 describe('GET /feeds', () => {
 	let response;
@@ -86,6 +87,56 @@ describe('GET /feeds', () => {
 				const {document} = response.dom();
 				const message = document.querySelector('[data-test=no-feeds-message]');
 				assert.isNull(message);
+			});
+
+			it('does not include a message that feeds are refreshing', () => {
+				const {document} = response.dom();
+				const message = document.querySelector('[data-test=feeds-refreshing-message]');
+				assert.isNull(message);
+			});
+
+		});
+
+		describe('feeds are present and a refresh is in progress', () => {
+
+			before(async () => {
+				await seedDatabase([
+					'settings',
+					'feed-001',
+					'feed-002',
+					'feed-003'
+				]);
+				sinon.stub(global.app.models.Feed, 'isRefreshInProgress').returns(true);
+				response = await request('GET', '/feeds', {
+					headers: {
+						cookie: await getLoginCookie('password')
+					}
+				});
+			});
+
+			after(() => {
+				global.app.models.Feed.isRefreshInProgress.restore();
+			});
+
+			it('displays the all feeds page', () => {
+				assert.strictEqual(response.statusCode, 200);
+				assert.strictEqual(response.headers['content-type'], 'text/html; charset=utf-8');
+
+				const {document} = response.dom();
+				assert.strictEqual(
+					document.querySelector('title').textContent,
+					'Feeds | Test Audrey'
+				);
+				assert.strictEqual(
+					document.querySelector('h1').textContent,
+					'Feeds'
+				);
+			});
+
+			it('includes a message that feeds are refreshing', () => {
+				const {document} = response.dom();
+				const messages = document.querySelectorAll('[data-test=feeds-refreshing-message]');
+				assert.lengthEquals(messages, 1);
 			});
 
 		});

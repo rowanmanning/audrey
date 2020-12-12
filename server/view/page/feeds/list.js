@@ -61,7 +61,7 @@ module.exports = function renderFeedsListPage(context) {
 
 	function displayRefreshInProgress() {
 		return html`
-			<div class="notification notification--warning">
+			<div class="notification notification--warning" data-test="feeds-refreshing-message">
 				<p>
 					Feeds are currently being refreshed. Reload this page in a minute or two
 				</p>
