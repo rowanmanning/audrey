@@ -30,7 +30,7 @@
     "date-fns": "^2.16.1",
     "dompurify": "^2.2.3",
     "dotenv": "^8.2.0",
-    "got": "^11.8.0",
+    "got": "^11.8.1",
     "jsdom": "^16.4.0",
     "mongoose-unique-validator": "^2.0.3",
     "node-schedule": "^1.3.2",
