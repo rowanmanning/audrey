@@ -5,7 +5,7 @@ const getLoginCookie = require('../helper/get-login-cookie');
 const seedDatabase = require('../helper/seed-database');
 const request = require('../helper/request');
 
-describe('GET /feeds.opml', () => {
+describe('GET /feeds/export/opml', () => {
 	let response;
 
 	describe('when the app is configured and logged in', () => {
@@ -17,7 +17,7 @@ describe('GET /feeds.opml', () => {
 				'feed-002',
 				'feed-003'
 			]);
-			response = await request('GET', '/feeds.opml', {
+			response = await request('GET', '/feeds/export/opml', {
 				headers: {
 					cookie: await getLoginCookie('password')
 				}
@@ -69,12 +69,12 @@ describe('GET /feeds.opml', () => {
 
 		before(async () => {
 			await seedDatabase(['settings']);
-			response = await request('GET', '/feeds.opml');
+			response = await request('GET', '/feeds/export/opml');
 		});
 
 		it('redirects to the login page', () => {
 			assert.strictEqual(response.statusCode, 302);
-			assert.strictEqual(response.headers.location, '/login?redirect=/feeds.opml');
+			assert.strictEqual(response.headers.location, '/login?redirect=/feeds/export/opml');
 		});
 
 	});
@@ -83,7 +83,7 @@ describe('GET /feeds.opml', () => {
 
 		before(async () => {
 			await seedDatabase([]);
-			response = await request('GET', '/feeds.opml');
+			response = await request('GET', '/feeds/export/opml');
 		});
 
 		it('redirects to the home page', () => {

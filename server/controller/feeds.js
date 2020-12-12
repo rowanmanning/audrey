@@ -14,7 +14,7 @@ module.exports = function mountFeedsController(app) {
 		render('page/feeds/list')
 	]);
 
-	router.get('/feeds.opml', [
+	router.get('/feeds/export/opml', [
 		requireAuth(),
 		listFeeds,
 		renderOpml

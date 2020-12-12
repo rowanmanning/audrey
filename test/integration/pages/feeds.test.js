@@ -85,7 +85,7 @@ describe('GET /feeds', () => {
 
 			it('includes a link to export feeds as OPML', () => {
 				const {document} = response.dom();
-				assert.isNotNull(document.querySelector('a[href="/feeds.opml"]'));
+				assert.isNotNull(document.querySelector('a[href="/feeds/export/opml"]'));
 			});
 
 			it('does not include a notice that there are no feeds', () => {

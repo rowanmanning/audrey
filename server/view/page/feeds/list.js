@@ -78,7 +78,7 @@ module.exports = function renderFeedsListPage(context) {
 			<nav class="nav-list">
 				<ul>
 					<li>
-						<a class="nav-list__link" href="/feeds.opml">Export feeds as OPML</a>
+						<a class="nav-list__link" href="/feeds/export/opml">Export feeds as OPML</a>
 					</li>
 				</ul>
 			</nav>
