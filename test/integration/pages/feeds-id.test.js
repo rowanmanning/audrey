@@ -116,6 +116,18 @@ describe('GET /feeds/:id', () => {
 				assert.isNull(message);
 			});
 
+			it('does not include a notice that the feed has been refreshed', () => {
+				const {document} = response.dom();
+				const message = document.querySelector('[data-test=refresh-success]');
+				assert.isNull(message);
+			});
+
+			it('does not include a notice that the feed has been subscribed to', () => {
+				const {document} = response.dom();
+				const message = document.querySelector('[data-test=subscribe-success]');
+				assert.isNull(message);
+			});
+
 		});
 
 		describe(':id is a valid feed ID with no unread entries', () => {

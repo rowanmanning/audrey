@@ -30,8 +30,11 @@ describe('POST /feeds/:id/mark', () => {
 				});
 
 				it('marks all entries in the feed as read', async () => {
-					const allEntries = await global.app.models.Entry.find();
-					const readEntries = await global.app.models.Entry.find({isRead: true});
+					const allEntries = await global.app.models.Entry.find({feed: 'feed001'});
+					const readEntries = await global.app.models.Entry.find({
+						feed: 'feed001',
+						isRead: true
+					});
 					assert.strictEqual(readEntries.length, allEntries.length);
 				});
 
@@ -60,8 +63,11 @@ describe('POST /feeds/:id/mark', () => {
 				});
 
 				it('marks all entries in the feed as unread', async () => {
-					const allEntries = await global.app.models.Entry.find();
-					const unreadEntries = await global.app.models.Entry.find({isRead: false});
+					const allEntries = await global.app.models.Entry.find({feed: 'feed001'});
+					const unreadEntries = await global.app.models.Entry.find({
+						feed: 'feed001',
+						isRead: false
+					});
 					assert.strictEqual(unreadEntries.length, allEntries.length);
 				});
 

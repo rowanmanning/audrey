@@ -82,15 +82,17 @@ describe('POST /subscribe', () => {
 	let response;
 
 	describe('when app is configured and logged in', () => {
-		let feed;
 
 		describe('when a valid `xmlUrl` property is sent', () => {
+			let feed;
+			let loginCookie;
 
 			before(async () => {
 				await seedDatabase(['settings']);
+				loginCookie = await getLoginCookie('password');
 				response = await request('POST', '/subscribe', {
 					headers: {
-						cookie: await getLoginCookie('password')
+						cookie: loginCookie
 					},
 					form: {
 						xmlUrl: 'http://mock-feeds.com/valid/001/feed.xml'
@@ -105,7 +107,7 @@ describe('POST /subscribe', () => {
 				assert.strictEqual(feed.htmlUrl, 'http://mock-feeds.com/valid/001/');
 
 				const entries = await global.app.models.Entry.find({feed: feed._id});
-				assert.lengthEquals(entries, 3);
+				assert.lengthEquals(entries, 4);
 
 				const entry1 = entries.find(entry => entry.title === 'Mock Feed 001 - Entry 1');
 				assert.strictEqual(entry1.htmlUrl, 'http://mock-feeds.com/valid/001/entry-1');
@@ -122,11 +124,35 @@ describe('POST /subscribe', () => {
 				assert.strictEqual(entry3.htmlUrl, 'http://mock-feeds.com/valid/001/entry-3');
 				assert.strictEqual(entry3.guid, 'http://mock-feeds.com/valid/001/entry-id-3');
 				assert.strictEqual(entry3.content, '<p>Entry 3 Content</p>');
+
+				const entry4 = entries.find(entry => entry.title === 'Mock Feed 001 - Entry 4');
+				assert.strictEqual(entry4.title, 'Mock Feed 001 - Entry 4');
+				assert.strictEqual(entry4.htmlUrl, 'http://mock-feeds.com/valid/001/entry-4');
+				assert.strictEqual(entry4.guid, 'http://mock-feeds.com/valid/001/entry-id-4');
+				assert.strictEqual(entry4.content, '<p>Entry 4 Content</p>');
 			});
 
 			it('redirects to the created feed page', () => {
 				assert.strictEqual(response.statusCode, 302);
 				assert.strictEqual(response.headers.location, `/feeds/${feed._id}`);
+			});
+
+			describe('GET /feeds/:id', () => {
+
+				before(async () => {
+					response = await request('GET', `/feeds/${feed._id}`, {
+						headers: {
+							cookie: loginCookie
+						}
+					});
+				});
+
+				it('includes a notice that the feed has been subscribed to', () => {
+					const {document} = response.dom();
+					const messages = document.querySelectorAll('[data-test=subscribe-success]');
+					assert.lengthEquals(messages, 1);
+				});
+
 			});
 
 		});

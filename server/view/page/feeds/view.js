@@ -134,7 +134,7 @@ module.exports = function renderFeedsViewPage(context) {
 		const flashMessage = request.flash('subscribed');
 		if (flashMessage && flashMessage.length) {
 			return html`
-				<div class="notification notification--success">
+				<div class="notification notification--success" data-test="subscribe-success">
 					<p>
 						You subscribed to "${feed.displayTitle}"! ${' '}
 						You can view entries for this feed on this page. ${' '}
@@ -151,7 +151,7 @@ module.exports = function renderFeedsViewPage(context) {
 		const flashMessage = request.flash('refreshed');
 		if (flashMessage && flashMessage.length) {
 			return html`
-				<div class="notification notification--success">
+				<div class="notification notification--success" data-test="refresh-success">
 					<p>
 						This feed has been refreshed.
 					</p>

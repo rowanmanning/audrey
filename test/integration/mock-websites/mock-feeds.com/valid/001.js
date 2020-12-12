@@ -21,7 +21,8 @@ function createEntryMarkup(number, date) {
 const entries = [
 	createEntryMarkup(1, new Date('2020-01-01T00:00:00Z')),
 	createEntryMarkup(2, new Date('2020-01-02T00:00:00Z')),
-	createEntryMarkup(3, new Date('2020-01-03T00:00:00Z'))
+	createEntryMarkup(3, new Date('2020-01-03T00:00:00Z')),
+	createEntryMarkup(4, new Date('2020-01-04T00:00:00Z'))
 ];
 
 nock('http://mock-feeds.com/')
