@@ -204,11 +204,6 @@ module.exports = function mountFeedsByIdController(app) {
 			}
 			next();
 		} catch (error) {
-			if (error instanceof ValidationError) {
-				markFeedForm.errors = Object.values(error.errors);
-				response.status(400);
-				return next();
-			}
 			next(error);
 		}
 	}

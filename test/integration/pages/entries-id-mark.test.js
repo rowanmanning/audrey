@@ -173,7 +173,7 @@ describe('POST /entries/:id/mark', () => {
 					'settings',
 					'feed-001'
 				]);
-				response = await request('POST', '/entries/notanentry', {
+				response = await request('POST', '/entries/notanentry/mark', {
 					headers: {
 						cookie: await getLoginCookie('password')
 					}

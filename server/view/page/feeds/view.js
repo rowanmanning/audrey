@@ -26,7 +26,7 @@ module.exports = function renderFeedsViewPage(context) {
 		<${FeedErrorList} errors=${feed.errors} />
 		<${Pagination.Description} date=${entryPagination.before} resetUrl=${feed.url} />
 		<${EntryList} items=${entries}>
-			<div class="notification notification--help">
+			<div class="notification notification--help" data-test="no-entries-message">
 				<p>
 					This feed doesn't have any entries. This might be because nothing has ${' '}
 					been published in your configured retention period, you can change ${' '}
@@ -46,7 +46,7 @@ module.exports = function renderFeedsViewPage(context) {
 		heading: html`
 			<${Breadcrumb} items=${context.breadcrumbs} />
 			<div class="content-head">
-				<h1 class="content-head__title">${context.pageTitle}</h1>
+				<h1 class="content-head__title" data-test="feed-heading">${context.pageTitle}</h1>
 				<nav class="content-head__navigation">
 					<ul>
 						<li>
