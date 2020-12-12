@@ -2,7 +2,6 @@
 
 const render = require('../middleware/render');
 const requireAuth = require('../middleware/require-auth');
-const {ValidationError} = require('@rowanmanning/app');
 
 module.exports = function mountEntriesByIdController(app) {
 	const {router} = app;
