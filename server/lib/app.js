@@ -32,7 +32,11 @@ module.exports = class AudreyApp extends App {
 		options.sessionSecret = options.sessionSecret || uuid.v4();
 		options.updateSchedule = options.updateSchedule || '0 */2 * * *'; // Every 2 hours
 		super(options);
-		this.addListener('database:connected', () => this.setupScheduledJobs());
+
+		// When we're not in the test environment, run scheduled jobs
+		if (this.env !== 'test') {
+			this.addListener('database:connected', () => this.setupScheduledJobs());
+		}
 	}
 
 	setupControllers() {

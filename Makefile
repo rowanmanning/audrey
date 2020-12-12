@@ -15,3 +15,6 @@ start-dev:
 
 test-feeds:
 	@mocha "test/feeds/**/*.test.js" --recursive --timeout 10000 --slow 6000
+
+test-integration-coverage:
+	@nyc --reporter=text --reporter=html make test-integration
