@@ -10,6 +10,14 @@ module.exports = function renderFeedsListPage(context) {
 
 	context.pageTitle = 'Feeds';
 
+	const totalCounts = Object.values(feedEntryCounts).reduce((result, counts) => {
+		return {
+			read: (result.read || 0) + counts.read,
+			total: (result.total || 0) + counts.total,
+			unread: (result.unread || 0) + counts.unread
+		};
+	}, {});
+
 	// Populate main content
 	const content = html`
 		${showUnsubscribeSuccess()}
@@ -56,7 +64,25 @@ module.exports = function renderFeedsListPage(context) {
 					</ul>
 				</nav>
 			</div>
-		`
+		`,
+
+		// Right-hand sidebar
+		rhs: (feeds.length ? html`
+			${showHelpText()}
+			<div class="notification notification--info">
+				<p>
+					You are subscribed to ${feeds.length} feeds.
+					You've read ${totalCounts.read} out of ${totalCounts.total} entries.
+				</p>
+			</div>
+			<nav class="nav-list">
+				<ul>
+					<li>
+						<a class="nav-list__link" href="/feeds.opml">Export feeds as OPML</a>
+					</li>
+				</ul>
+			</nav>
+		` : '')
 	};
 
 	function displayRefreshInProgress() {
@@ -70,15 +96,18 @@ module.exports = function renderFeedsListPage(context) {
 	}
 
 	// Right-hand sidebar
-	if (feeds.length && settings.showHelpText) {
-		context.subSections.rhs = html`
-			<div class="notification notification--help">
-				<p>
-					This page shows all of the feeds you're subscribed to. You can click ${' '}
-					a feed to view all entries from it and manage subscriptions.
-				</p>
-			</div>
-		`;
+	function showHelpText() {
+		if (settings.showHelpText) {
+			return html`
+				<div class="notification notification--help">
+					<p>
+						This page shows all of the feeds you're subscribed to. You can click ${' '}
+						a feed to view all entries from it and manage subscriptions.
+					</p>
+				</div>
+			`;
+		}
+		return '';
 	}
 
 	function showUnsubscribeSuccess() {

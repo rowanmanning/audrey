@@ -83,6 +83,11 @@ describe('GET /feeds', () => {
 				assertHasRefreshAllFeedsForm(response);
 			});
 
+			it('includes a link to export feeds as OPML', () => {
+				const {document} = response.dom();
+				assert.isNotNull(document.querySelector('a[href="/feeds.opml"]'));
+			});
+
 			it('does not include a notice that there are no feeds', () => {
 				const {document} = response.dom();
 				const message = document.querySelector('[data-test=no-feeds-message]');

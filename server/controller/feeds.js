@@ -14,6 +14,12 @@ module.exports = function mountFeedsController(app) {
 		render('page/feeds/list')
 	]);
 
+	router.get('/feeds.opml', [
+		requireAuth(),
+		listFeeds,
+		renderOpml
+	]);
+
 	async function listFeeds(request, response, next) {
 		try {
 			response.locals.feeds = await Feed.fetchAll().populate('errors');
@@ -27,6 +33,19 @@ module.exports = function mountFeedsController(app) {
 	function fetchFeedRefreshStatus(request, response, next) {
 		response.locals.isRefreshInProgress = Feed.isRefreshInProgress();
 		next();
+	}
+
+	function renderOpml(request, response) {
+		const fileName = `${request.settings.siteTitle} Feed Export.opml`;
+		response.set({
+			'Content-Description': 'File Transfer',
+			'Content-Disposition': `attachment; filename=${fileName}`,
+			'Content-Transfer-Encoding': 'binary',
+			'Content-Type': 'application/octet-stream'
+		});
+		return response.render('page/feeds/list-opml', {
+			doctype: '<?xml version="1.0" encoding="UTF-8"?>'
+		});
 	}
 
 };
