@@ -1,7 +1,7 @@
 
 # Audrey: Deploying on Heroku
 
-Running Audrey on [Heroku](https://www.heroku.com/) is relatively easy comparted to hosting on a server of your own. We provide manual instructions as well as a _nearly_ one-click button to get you set up.
+Running Audrey on [Heroku](https://www.heroku.com/) is relatively easy compared to hosting on a server of your own. We provide manual instructions as well as a _nearly_ one-click button to get you set up.
 
 
 ## Table of Contents
