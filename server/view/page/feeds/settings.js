@@ -29,7 +29,7 @@ module.exports = function renderFeedSettingsPage(context) {
 
 				<${Form.Field.Text}
 					name="customTitle"
-					label="Feed Title:"
+					label="Feed title:"
 					description="
 						Specify a custom title for this feed.
 						If you leave this field blank, the original

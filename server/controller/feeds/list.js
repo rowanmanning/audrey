@@ -1,9 +1,9 @@
 'use strict';
 
-const render = require('../middleware/render');
-const requireAuth = require('../middleware/require-auth');
+const render = require('../../middleware/render');
+const requireAuth = require('../../middleware/require-auth');
 
-module.exports = function mountFeedsController(app) {
+module.exports = function mountFeedsListController(app) {
 	const {router} = app;
 	const {Entry, Feed} = app.models;
 

@@ -1,10 +1,10 @@
 'use strict';
 
-const render = require('../middleware/render');
-const requireAuth = require('../middleware/require-auth');
+const render = require('../../middleware/render');
+const requireAuth = require('../../middleware/require-auth');
 const {ValidationError} = require('@rowanmanning/app');
 
-module.exports = function mountSettingsController(app) {
+module.exports = function mountSettingsListController(app) {
 	const {router} = app;
 	const {Settings} = app.models;
 

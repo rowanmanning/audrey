@@ -1,9 +1,9 @@
 'use strict';
 
-const cleanContent = require('../lib/clean-content');
+const cleanContent = require('../../lib/clean-content');
 const {readFile} = require('fs').promises;
-const render = require('../middleware/render');
-const requireAuth = require('../middleware/require-auth');
+const render = require('../../middleware/render');
+const requireAuth = require('../../middleware/require-auth');
 
 module.exports = function mountEntriesTestController(app) {
 	const {router} = app;
@@ -16,7 +16,7 @@ module.exports = function mountEntriesTestController(app) {
 
 	async function fetchTestEntry(request, response, next) {
 		try {
-			const content = await readFile(`${__dirname}/../../data/test-entry.html`, 'utf-8');
+			const content = await readFile(`${__dirname}/../../../data/test-entry.html`, 'utf-8');
 			request.entry = response.locals.entry = {
 				feed: {
 					displayTitle: 'Test Feed',

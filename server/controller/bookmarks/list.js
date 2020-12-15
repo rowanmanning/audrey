@@ -1,11 +1,11 @@
 'use strict';
 
 const generateNetscapeBookmarks = require('netscape-bookmarks');
-const render = require('../middleware/render');
-const requireAuth = require('../middleware/require-auth');
-const setQueryParam = require('../lib/set-query-param');
+const render = require('../../middleware/render');
+const requireAuth = require('../../middleware/require-auth');
+const setQueryParam = require('../../lib/set-query-param');
 
-module.exports = function mountBookmarksController(app) {
+module.exports = function mountBookmarksListController(app) {
 	const {router} = app;
 	const {Entry} = app.models;
 

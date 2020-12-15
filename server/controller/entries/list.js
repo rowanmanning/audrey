@@ -1,10 +1,10 @@
 'use strict';
 
-const render = require('../middleware/render');
-const requireAuth = require('../middleware/require-auth');
-const setQueryParam = require('../lib/set-query-param');
+const render = require('../../middleware/render');
+const requireAuth = require('../../middleware/require-auth');
+const setQueryParam = require('../../lib/set-query-param');
 
-module.exports = function mountEntriesController(app) {
+module.exports = function mountEntriesListController(app) {
 	const {router} = app;
 	const {Entry} = app.models;
 

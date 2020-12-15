@@ -1,7 +1,7 @@
 'use strict';
 
-const redirect = require('../middleware/redirect');
-const requireAuth = require('../middleware/require-auth');
+const redirect = require('../../middleware/redirect');
+const requireAuth = require('../../middleware/require-auth');
 
 module.exports = function mountFeedsRefreshController(app) {
 	const {router} = app;

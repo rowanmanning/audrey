@@ -1,11 +1,11 @@
 'use strict';
 
-const render = require('../middleware/render');
-const requireAuth = require('../middleware/require-auth');
-const setQueryParam = require('../lib/set-query-param');
+const render = require('../../middleware/render');
+const requireAuth = require('../../middleware/require-auth');
+const setQueryParam = require('../../lib/set-query-param');
 const {ValidationError} = require('@rowanmanning/app');
 
-module.exports = function mountFeedsByIdController(app) {
+module.exports = function mountFeedsViewController(app) {
 	const {router} = app;
 	const {Entry, Feed} = app.models;
 

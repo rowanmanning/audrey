@@ -1,9 +1,9 @@
 'use strict';
 
-const render = require('../middleware/render');
-const requireAuth = require('../middleware/require-auth');
+const render = require('../../middleware/render');
+const requireAuth = require('../../middleware/require-auth');
 
-module.exports = function mountEntriesByIdController(app) {
+module.exports = function mountEntriesViewController(app) {
 	const {router} = app;
 	const {Entry} = app.models;
 
