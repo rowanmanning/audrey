@@ -1,9 +1,9 @@
 'use strict';
 
 const assert = require('proclaim');
-const getLoginCookie = require('../helper/get-login-cookie');
-const seedDatabase = require('../helper/seed-database');
-const request = require('../helper/request');
+const getLoginCookie = require('../../helper/get-login-cookie');
+const seedDatabase = require('../../helper/seed-database');
+const request = require('../../helper/request');
 
 describe('GET /feeds/:id', () => {
 	let response;

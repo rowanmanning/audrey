@@ -1,10 +1,10 @@
 'use strict';
 
 const assert = require('proclaim');
-const getLoginCookie = require('../helper/get-login-cookie');
-const seedDatabase = require('../helper/seed-database');
+const getLoginCookie = require('../../helper/get-login-cookie');
+const seedDatabase = require('../../helper/seed-database');
 const {readFile} = require('fs').promises;
-const request = require('../helper/request');
+const request = require('../../helper/request');
 
 describe('GET /entries/test', () => {
 	let response;
@@ -43,7 +43,7 @@ describe('GET /entries/test', () => {
 
 		it('displays purified entry content', async () => {
 			const {document} = response.dom();
-			const expectedContent = await readFile(`${__dirname}/../../../data/test-entry-purified.html`, 'utf-8');
+			const expectedContent = await readFile(`${__dirname}/../../../../data/test-entry-purified.html`, 'utf-8');
 			const entryContent = document.querySelector('[data-test=entry-content]');
 			assert.isNotNull(entryContent);
 			assert.strictEqual(entryContent.innerHTML, expectedContent);
