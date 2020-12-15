@@ -158,7 +158,7 @@ module.exports = function renderSettingsListPage(context) {
 		const flashMessage = request.flash('saved');
 		if (flashMessage && flashMessage.length) {
 			return html`
-				<div class="notification notification--success">
+				<div class="notification notification--success" data-test="settings-saved">
 					<p>
 						Your settings have been saved.
 					</p>
