@@ -25,6 +25,7 @@ module.exports = function mountEntriesTestController(app) {
 				},
 				syncedAt: new Date(),
 				title: 'Test Entry',
+				displayTitle: 'Test Entry',
 				guid: 'test',
 				htmlUrl: '/entries/test',
 				content,
@@ -35,7 +36,21 @@ module.exports = function mountEntriesTestController(app) {
 				author: 'Test Author',
 				categories: [],
 				publishedAt: new Date(Date.now() - (1000 * 60 * 60 * 24)),
-				modifiedAt: new Date(Date.now() - (1000 * 60 * 60 * 24))
+				modifiedAt: new Date(Date.now() - (1000 * 60 * 60 * 24)),
+				enclosures: [
+					{
+						type: 'image',
+						url: 'http://placekitten.com/1200/640'
+					},
+					{
+						type: 'video',
+						url: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4'
+					},
+					{
+						type: 'audio',
+						url: 'https://chee.snoot.club/music/raw/blast-process.mp3'
+					}
+				]
 			};
 			next();
 		} catch (error) {
