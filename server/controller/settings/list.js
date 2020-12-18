@@ -28,7 +28,11 @@ module.exports = function mountSettingsListController(app) {
 			action: request.url,
 			errors: [],
 			data: {
-				siteTitle: request.body.siteTitle || request.settings.siteTitle,
+				siteTitle: (
+					request.body.siteTitle && typeof request.body.siteTitle === 'string' ?
+						request.body.siteTitle.trim() :
+						request.settings.siteTitle
+				),
 				removeOldEntries: (
 					typeof request.body.removeOldEntries === 'undefined' ?
 						request.settings.removeOldEntries :

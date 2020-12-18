@@ -64,7 +64,7 @@ module.exports = function renderFeedSettingsPage(context) {
 		const flashMessage = request.flash('saved');
 		if (flashMessage && flashMessage.length) {
 			return html`
-				<div class="notification notification--success">
+				<div class="notification notification--success" data-test="settings-saved">
 					<p>
 						Your feed settings have been saved. ${' '}
 						<a href=${feed.url}>Head back to the feed to view changes</a>.

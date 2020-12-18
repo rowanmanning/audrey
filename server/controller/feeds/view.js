@@ -113,7 +113,7 @@ module.exports = function mountFeedsViewController(app) {
 				customTitle: (
 					request.body.customTitle === undefined ?
 						request.feed.customTitle :
-						request.body.customTitle
+						request.body.customTitle.trim() || null
 				)
 			}
 		};

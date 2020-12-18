@@ -18,6 +18,7 @@ module.exports = function defineSettingsSchema(app) {
 			required: [true, 'Site title setting is required'],
 			maxlength: [20, 'Site title setting must be between 3 and 20 characters in length'],
 			minlength: [3, 'Site title setting must be between 3 and 20 characters in length'],
+			set: value => (typeof value === 'string' ? value.trim() : null),
 			default: app.name
 		},
 		removeOldEntries: {
