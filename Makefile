@@ -14,7 +14,7 @@ start-dev:
 	@NODE_ENV=development nodemon -e js,json .
 
 test-feeds:
-	@mocha "test/feeds/**/*.test.js" --recursive --timeout 10000 --slow 6000
+	@mocha "test/feeds/**/*.test.js" --recursive --timeout 50000 --slow 10000
 
 test-integration-coverage:
 	@nyc --reporter=text --reporter=html make test-integration
