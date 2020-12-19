@@ -1,8 +1,8 @@
 name: Daily Tests
 on:
   schedule:
-    # 8am UTC, Monday–Friday
-    - cron: '0 8 * * 1-5'
+    # 8am UTC, every day
+    - cron: '0 8 * * *'
 env:
   NODE_ENV: test
 jobs:
