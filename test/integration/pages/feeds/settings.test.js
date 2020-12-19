@@ -61,7 +61,7 @@ describe('GET /feeds/:id/settings', () => {
 				assert.isNull(message);
 			});
 
-			it.only('includes an unsubscribe button', () => {
+			it('includes an unsubscribe button', () => {
 				const {document} = response.dom();
 				const form = document.querySelector('form[action="/feeds/feed001/unsubscribe"]');
 				assert.isNotNull(form);
