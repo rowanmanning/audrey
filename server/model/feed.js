@@ -25,8 +25,8 @@ module.exports = function defineFeedSchema(app) {
 		customTitle: {
 			type: String,
 			index: true,
-			maxlength: [20, 'Feed custom title must be between 3 and 20 characters in length'],
-			minlength: [3, 'Feed custom title must be between 3 and 20 characters in length'],
+			maxlength: [50, 'Feed custom title must be between 3 and 50 characters in length'],
+			minlength: [3, 'Feed custom title must be between 3 and 50 characters in length'],
 			set: value => {
 				return (typeof value === 'string' ? value.trim() : null);
 			},

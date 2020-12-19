@@ -204,7 +204,7 @@ describe('POST /feeds/:id/settings', () => {
 				const {document} = response.dom();
 				const errors = document.querySelectorAll('[data-test=form-error]');
 				assert.lengthEquals(errors, 1);
-				assert.strictEqual(errors[0].textContent, 'Feed custom title must be between 3 and 20 characters in length');
+				assert.strictEqual(errors[0].textContent, 'Feed custom title must be between 3 and 50 characters in length');
 			});
 
 			it('displays a feed "settings" form', async () => {
