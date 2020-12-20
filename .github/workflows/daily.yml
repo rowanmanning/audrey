@@ -3,6 +3,7 @@ on:
   schedule:
     # 8am UTC, every day
     - cron: '0 8 * * *'
+  workflow_dispatch: {}
 env:
   NODE_ENV: test
 jobs:
