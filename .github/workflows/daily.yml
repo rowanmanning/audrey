@@ -27,26 +27,5 @@ jobs:
         uses: supercharge/mongodb-github-action@1.3.0
         with:
           mongodb-version: ${{ matrix.mongodb-version }}
-      - uses: actions/cache@v1
-        env:
-          cache-version: v1
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-${{ env.cache-version }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-${{ env.cache-version }}-
-            ${{ runner.os }}-
       - run: npm install
-
-      # We cache RSS feed XML for all of the tested feeds, which stops these tests
-      # from being quite as brittle
-      - uses: actions/cache@v1
-        env:
-          cache-version: v1
-        with:
-          path: ./test/feeds/cache
-          key: test-feed-cache
-          restore-keys: |
-            test-feed-cache
-
       - run: make test-feeds
