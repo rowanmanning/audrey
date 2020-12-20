@@ -37,13 +37,16 @@ for (const feed of feeds) {
 		before(async () => {
 			try {
 				await stat(feedCachePath);
+				console.log('    - Feed XML found in cache');
 			} catch (error) {
+				console.log('    - Feed XML not found in cache, fetching now');
 				const {body} = await got(feed, {
 					headers: {
 						'User-Agent': getUserAgent()
 					}
 				});
 				await writeFile(feedCachePath, body);
+				console.log('    - cache written');
 			}
 
 			// Set up a mock version of the feed
@@ -53,12 +56,14 @@ for (const feed of feeds) {
 				.replyWithFile(200, feedCachePath, {
 					'Content-Type': 'application/json'
 				});
+			console.log('    - Mock feed URL set up');
 
 			// Seed the database
 			await seedDatabase(['settings']);
 		});
 
 		it('can be subscribed to in Audrey', async () => {
+			console.log('    - Subscribing in Audrey');
 			const response = await request('POST', '/subscribe', {
 				headers: {
 					cookie: await getLoginCookie('password')
