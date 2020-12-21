@@ -40,7 +40,7 @@
     "uuid": "^8.3.2"
   },
   "devDependencies": {
-    "@rowanmanning/eslint-config": "^2.2.0",
+    "@rowanmanning/eslint-config": "^3.1.0",
     "@rowanmanning/make": "^2.1.0",
     "@rowanmanning/require-all": "^1.0.0",
     "eslint": "^7.16.0",
