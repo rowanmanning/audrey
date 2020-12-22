@@ -24,7 +24,7 @@
     "node": ">=14"
   },
   "dependencies": {
-    "@rowanmanning/app": "^1.0.0-alpha.24",
+    "@rowanmanning/app": "^1.0.0-alpha.25",
     "@rowanmanning/fetch-feed": "^1.0.0",
     "bcrypt": "^5.0.0",
     "date-fns": "^2.16.1",
