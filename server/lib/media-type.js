@@ -2,6 +2,9 @@
 
 // Return the type of media for a mime-type
 module.exports = function mediaType(mimeType) {
+	if (typeof mimeType !== 'string') {
+		return module.exports.UNKNOWN;
+	}
 	if (mimeType.startsWith('audio/')) {
 		return module.exports.AUDIO;
 	}
