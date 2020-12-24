@@ -4,7 +4,6 @@ const Breadcrumbs = require('../../component/breadcrumbs');
 const Form = require('../../component/form');
 const {h, Component, Fragment} = require('@rowanmanning/app/preact');
 const MainLayout = require('../../layout/main');
-const Notification = require('../../component/notification');
 
 module.exports = class SubscribePage extends Component {
 
