@@ -5,8 +5,7 @@ Audrey is a simple single-user feed reader, focused on a no-frills reading exper
 
 Audrey is self-hosted; you can set up an installation on your own server or cloud provider. There's no creepy harvesting of your data, and no algorithms to recommend new content.
 
-![Latest build status](https://github.com/rowanmanning/audrey/workflows/CI/badge.svg?event=push)
-![Daily test status](https://github.com/rowanmanning/audrey/workflows/Daily%20Tests/badge.svg)
+[![Latest build status](https://github.com/rowanmanning/audrey/workflows/CI/badge.svg?event=push)](https://github.com/rowanmanning/audrey/actions?query=workflow%3ACI)
 
 **[Note: Audrey is currently in beta](#beta-notice)**
 
