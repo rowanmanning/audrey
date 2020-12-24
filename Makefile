@@ -11,7 +11,7 @@ start:
 	@NODE_ENV=production node .
 
 start-dev:
-	@NODE_ENV=development nodemon -e js,json .
+	@NODE_ENV=development nodemon -e js,json,jsx .
 
 test-feeds:
 	@mocha "test/feeds/**/*.test.js" --recursive --timeout 50000 --slow 10000

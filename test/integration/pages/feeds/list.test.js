@@ -100,6 +100,12 @@ describe('GET /feeds', () => {
 				assert.isNull(message);
 			});
 
+			it('does not include a message that a feed has been unsubscribed from', () => {
+				const {document} = response.dom();
+				const message = document.querySelector('[data-test=unsubscribe-success]');
+				assert.isNull(message);
+			});
+
 		});
 
 		describe('feeds are present and a refresh is in progress', () => {

@@ -35,16 +35,21 @@ module.exports = function mountFeedsListController(app) {
 		next();
 	}
 
-	function renderOpml(request, response) {
-		const fileName = `${request.settings.siteTitle} Feed Export.opml`;
-		response.set({
-			'Content-Description': 'File Transfer',
-			'Content-Disposition': `attachment; filename=${fileName}`,
-			'Content-Transfer-Encoding': 'binary',
-			'Content-Type': 'application/octet-stream'
-		});
-		return response.render('page/feeds/list-opml', {
-			doctype: '<?xml version="1.0" encoding="UTF-8"?>'
+	function renderOpml(request, response, next) {
+		router.render('page/feeds/list-opml', response.locals, (error, output) => {
+			if (error) {
+				return next(error);
+			}
+			const fileName = `${request.settings.siteTitle} Feed Export.opml`;
+			response.set({
+				'Content-Description': 'File Transfer',
+				'Content-Disposition': `attachment; filename=${fileName}`,
+				'Content-Transfer-Encoding': 'binary',
+				'Content-Type': 'application/octet-stream'
+			});
+			response.send(
+				output.replace('<!DOCTYPE html>', '<?xml version="1.0" encoding="UTF-8"?>')
+			);
 		});
 	}
 

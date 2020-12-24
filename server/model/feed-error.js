@@ -53,32 +53,5 @@ module.exports = function defineFeedErrorSchema(app) {
 		}
 	});
 
-	feedErrorSchema.static('fetchFiltered', function(filters = {}) {
-		const query = {};
-
-		// Filter based on read status
-		switch (filters.status) {
-			case 'all':
-				break;
-			case 'read':
-				query.isRead = true;
-				break;
-			default:
-				query.isRead = false;
-		}
-
-		return this.fetchAll(query);
-	});
-
-	feedErrorSchema.static('fetchAll', function(query) {
-		return this
-			.find(query)
-			.sort({createdAt: -1});
-	});
-
-	feedErrorSchema.static('fetchAllByFeedId', function(feedId) {
-		return this.fetchAll({feed: feedId});
-	});
-
 	return feedErrorSchema;
 };

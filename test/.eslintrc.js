@@ -1,7 +1,9 @@
 'use strict';
 
-const config = module.exports = JSON.parse(JSON.stringify(require('../.eslintrc')));
-
-config.rules['max-len'] = 'off';
-config.rules['max-statements'] = 'off';
-config.rules['no-empty-function'] = 'off';
+module.exports = {
+	extends: '../.eslintrc',
+	rules: {
+		'max-len': 'off',
+		'no-empty-function': 'off'
+	}
+};

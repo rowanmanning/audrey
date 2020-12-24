@@ -46,7 +46,7 @@ describe('GET /entries/test', () => {
 			const expectedContent = await readFile(`${__dirname}/../../../../data/test-entry-purified.html`, 'utf-8');
 			const entryContent = document.querySelector('[data-test=entry-content]');
 			assert.isNotNull(entryContent);
-			assert.strictEqual(entryContent.innerHTML, expectedContent);
+			assert.strictEqual(entryContent.innerHTML.trim().replace(/[ \t]+/g, ' '), expectedContent.trim().replace(/[ \t]+/g, ' '));
 		});
 
 	});

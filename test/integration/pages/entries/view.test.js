@@ -3,6 +3,7 @@
 const assert = require('proclaim');
 const getLoginCookie = require('../../helper/get-login-cookie');
 const seedDatabase = require('../../helper/seed-database');
+const {readFile} = require('fs').promises;
 const request = require('../../helper/request');
 
 describe('GET /entries/:id', () => {
@@ -50,7 +51,7 @@ describe('GET /entries/:id', () => {
 
 				const entryContent = document.querySelector('[data-test=entry-content]');
 				assert.isNotNull(entryContent);
-				assert.strictEqual(entryContent.innerHTML, '<p>Entry 1 Content</p>');
+				assert.strictEqual(entryContent.innerHTML.trim(), '<p>Entry 1 Content</p>');
 
 				const entryLink = document.querySelector('a[href="http://mock-feeds.com/valid/001/entry-1"]');
 				assert.isNotNull(entryLink);
@@ -108,8 +109,52 @@ describe('GET /entries/:id', () => {
 
 		});
 
-		describe('the entry has unsafe HTML as content', () => {
-			it('displays purified HTML content');
+		describe('the entry has potentially unsafe HTML as content', () => {
+
+			before(async () => {
+				await seedDatabase([
+					'settings',
+					'feed-004'
+				]);
+				response = await request('GET', '/entries/feed004-entry1', {
+					headers: {
+						cookie: await getLoginCookie('password')
+					}
+				});
+			});
+
+			it('displays purified HTML content', async () => {
+				const {document} = response.dom();
+				const expectedContent = await readFile(`${__dirname}/../../../../data/test-entry-purified.html`, 'utf-8');
+				const entryContent = document.querySelector('[data-test=entry-content]');
+				assert.isNotNull(entryContent);
+				assert.strictEqual(entryContent.innerHTML.trim().replace(/[ \t]+/g, ' '), expectedContent.trim().replace(/[ \t]+/g, ' '));
+			});
+
+			it('displays entry enclosures', () => {
+				const {document} = response.dom();
+				const enclosures = document.querySelectorAll('[data-test=entry-enclosure]');
+				assert.lengthEquals(enclosures, 4);
+
+				const image = enclosures[0].querySelector('img');
+				assert.isNotNull(image);
+				assert.isNotNull(enclosures[0].querySelector('a[href="https://example.com/image.jpg"]'));
+				assert.strictEqual(image.getAttribute('src'), 'https://example.com/image.jpg');
+				assert.strictEqual(image.getAttribute('alt'), 'Mock Feed 004 - Entry 1');
+
+				const audio = enclosures[1].querySelector('audio');
+				assert.isNotNull(audio);
+				assert.isNotNull(enclosures[1].querySelector('a[href="https://example.com/audio.mp3"]'));
+				assert.strictEqual(audio.getAttribute('src'), 'https://example.com/audio.mp3');
+
+				const video = enclosures[2].querySelector('video');
+				assert.isNotNull(video);
+				assert.isNotNull(enclosures[2].querySelector('a[href="https://example.com/video.mp4"]'));
+				assert.strictEqual(video.getAttribute('src'), 'https://example.com/video.mp4');
+
+				assert.isNotNull(enclosures[3].querySelector('a[href="https://example.com/"]'));
+			});
+
 		});
 
 		describe('the `autoMarkAsRead` setting is set to `false`', () => {
