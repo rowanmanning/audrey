@@ -1,6 +1,6 @@
 'use strict';
 
-const redirect = require('../../middleware/redirect');
+const redirect = require('@rowanmanning/response-redirect-middleware');
 const requireAuth = require('../../middleware/require-auth');
 
 module.exports = function mountFeedsRefreshController(app) {

@@ -1,6 +1,6 @@
 'use strict';
 
-const render = require('../middleware/render');
+const render = require('@rowanmanning/response-render-middleware');
 
 module.exports = function mountLoginController(app) {
 	const {router} = app;

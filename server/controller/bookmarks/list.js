@@ -1,7 +1,7 @@
 'use strict';
 
 const generateNetscapeBookmarks = require('netscape-bookmarks');
-const render = require('../../middleware/render');
+const render = require('@rowanmanning/response-render-middleware');
 const requireAuth = require('../../middleware/require-auth');
 const setQueryParam = require('../../lib/set-query-param');
 

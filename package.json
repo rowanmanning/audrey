@@ -26,6 +26,8 @@
   "dependencies": {
     "@rowanmanning/app": "^1.0.0-alpha.25",
     "@rowanmanning/fetch-feed": "^1.0.0",
+    "@rowanmanning/response-redirect-middleware": "^1.0.0",
+    "@rowanmanning/response-render-middleware": "^1.0.0",
     "bcrypt": "^5.0.0",
     "date-fns": "^2.16.1",
     "dompurify": "^2.2.6",

@@ -2,7 +2,7 @@
 
 const cleanContent = require('../../lib/clean-content');
 const {readFile} = require('fs').promises;
-const render = require('../../middleware/render');
+const render = require('@rowanmanning/response-render-middleware');
 const requireAuth = require('../../middleware/require-auth');
 
 module.exports = function mountEntriesTestController(app) {

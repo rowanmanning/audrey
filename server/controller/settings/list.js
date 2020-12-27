@@ -1,6 +1,6 @@
 'use strict';
 
-const render = require('../../middleware/render');
+const render = require('@rowanmanning/response-render-middleware');
 const requireAuth = require('../../middleware/require-auth');
 const {ValidationError} = require('@rowanmanning/app');
 
