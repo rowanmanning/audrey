@@ -2,6 +2,7 @@
 
 const {h, Fragment} = require('@rowanmanning/app/preact');
 const ContentList = require('./content-list');
+const RelativeDate = require('./relative-date');
 
 /**
  * Represents a list of feeds.
@@ -32,6 +33,7 @@ module.exports = class FeedList extends ContentList {
 		_id,
 		displayTitle,
 		errors,
+		syncedAt,
 		url
 	}) {
 		const counts = this.getCountsForFeed(_id);
@@ -65,6 +67,7 @@ module.exports = class FeedList extends ContentList {
 							`, you have read ${isRead ? 'all' : counts.read} of them.` :
 							'.'
 					)}
+					{' '} Last refreshed <RelativeDate date={syncedAt} />.
 					{(
 						errors && errors.length ?
 							<Fragment>
