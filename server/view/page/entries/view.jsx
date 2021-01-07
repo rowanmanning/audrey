@@ -36,11 +36,15 @@ module.exports = class EntriesViewPage extends Component {
 
 		// Main text content
 		if (entry.content) {
+			let html = entry.cleanContent;
+			if (!entry.contentContainsHTMLTag) {
+				html += ` <a href="${entry.htmlUrl}">Read this entry on ${entry.feed.displayTitle}</a>`;
+			}
 			content.push(
 				<div
 					class="content-body"
 					data-test="entry-content"
-					dangerouslySetInnerHTML={{__html: entry.cleanContent}}
+					dangerouslySetInnerHTML={{__html: html}}
 				/>
 			);
 		}

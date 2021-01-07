@@ -33,6 +33,7 @@ module.exports = function mountEntriesTestController(app) {
 					content,
 					baseUrl: 'https://example.com/'
 				}),
+				contentContainsHTMLTag: true,
 				author: 'Test Author',
 				categories: [],
 				publishedAt: new Date(Date.now() - (1000 * 60 * 60 * 24)),

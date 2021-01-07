@@ -151,6 +151,11 @@ module.exports = function defineEntrySchema(app) {
 		});
 	});
 
+	// Whether the entry content contains an HTML tag
+	entrySchema.virtual('contentContainsHTMLTag').get(function() {
+		return /<[^>]+>/i.test(this.get('content'));
+	});
+
 	entrySchema.method('markAsRead', function() {
 		if (!this.isRead) {
 			this.isRead = true;
