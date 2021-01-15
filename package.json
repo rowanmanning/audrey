@@ -45,7 +45,7 @@
     "@rowanmanning/eslint-config": "^3.1.0",
     "@rowanmanning/make": "^2.1.0",
     "@rowanmanning/require-all": "^1.0.0",
-    "eslint": "^7.17.0",
+    "eslint": "^7.18.0",
     "mocha": "^8.2.1",
     "nock": "^13.0.5",
     "nodemon": "^2.0.7",
