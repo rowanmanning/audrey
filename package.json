@@ -32,7 +32,7 @@
     "date-fns": "^2.16.1",
     "dompurify": "^2.2.6",
     "dotenv": "^8.2.0",
-    "got": "^11.8.1",
+    "got": "^11.8.2",
     "jsdom": "^16.4.0",
     "mongoose-unique-validator": "^2.0.3",
     "netscape-bookmarks": "^0.1.1",
