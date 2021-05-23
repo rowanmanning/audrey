@@ -33,7 +33,7 @@
     "dompurify": "^2.2.6",
     "dotenv": "^8.2.0",
     "got": "^11.8.1",
-    "jsdom": "^16.4.0",
+    "jsdom": "^16.6.0",
     "mongoose-unique-validator": "^2.0.3",
     "netscape-bookmarks": "^0.1.1",
     "node-schedule": "^1.3.2",
