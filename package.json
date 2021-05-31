@@ -47,7 +47,7 @@
     "@rowanmanning/require-all": "^1.0.0",
     "eslint": "^7.17.0",
     "mocha": "^8.2.1",
-    "nock": "^13.0.5",
+    "nock": "^13.1.0",
     "nodemon": "^2.0.7",
     "nyc": "^15.1.0",
     "proclaim": "^3.6.0",
