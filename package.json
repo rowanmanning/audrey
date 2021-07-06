@@ -30,7 +30,7 @@
     "@rowanmanning/response-render-middleware": "^1.0.0",
     "bcrypt": "^5.0.0",
     "date-fns": "^2.16.1",
-    "dompurify": "^2.2.6",
+    "dompurify": "^2.3.0",
     "dotenv": "^8.2.0",
     "got": "^11.8.1",
     "jsdom": "^16.4.0",
