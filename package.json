@@ -47,7 +47,7 @@
     "netscape-bookmarks": "^0.1.1",
     "node-schedule": "^2.1.0",
     "shortid": "^2.2.8",
-    "srcset": "^4.0.0",
+    "srcset": "^5.0.0",
     "uuid": "^8.3.2"
   },
   "devDependencies": {
