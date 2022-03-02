@@ -1,6 +1,6 @@
 'use strict';
 
-const assert = require('proclaim');
+const {assert} = require('chai');
 const bcrypt = require('bcrypt');
 const getLoginCookie = require('../helper/get-login-cookie');
 const seedDatabase = require('../helper/seed-database');
@@ -43,13 +43,13 @@ describe('GET /', () => {
 			it('does not include breadcrumbs', () => {
 				const {document} = response.dom();
 				const breadcrumbs = document.querySelectorAll('[data-test=breadcrumb]');
-				assert.lengthEquals(breadcrumbs, 0);
+				assert.lengthOf(breadcrumbs, 0);
 			});
 
 			it('lists all unread entries', () => {
 				const {document} = response.dom();
 				const entries = document.querySelectorAll('[data-test=entry-summary]');
-				assert.lengthEquals(entries, 2);
+				assert.lengthOf(entries, 2);
 
 				assert.strictEqual(
 					entries[0].querySelector('[data-test=entry-heading]').textContent,
@@ -103,7 +103,7 @@ describe('GET /', () => {
 			it('lists the latest 50 unread entries', () => {
 				const {document} = response.dom();
 				const entries = document.querySelectorAll('[data-test=entry-summary]');
-				assert.lengthEquals(entries, 50);
+				assert.lengthOf(entries, 50);
 
 				assert.strictEqual(
 					entries[0].querySelector('[data-test=entry-heading]').textContent,
@@ -122,7 +122,7 @@ describe('GET /', () => {
 			it('includes pagination', () => {
 				const {document} = response.dom();
 				const next = document.querySelectorAll('[data-test=pagination-next]');
-				assert.lengthEquals(next, 1);
+				assert.lengthOf(next, 1);
 
 				// 51 days from January first
 				assert.strictEqual(next[0].getAttribute('href'), '/?before=2020-02-21T00%3A00%3A00.000Z');
@@ -159,13 +159,13 @@ describe('GET /', () => {
 			it('includes a notice that all entries have been read', () => {
 				const {document} = response.dom();
 				const messages = document.querySelectorAll('[data-test=no-entries-message]');
-				assert.lengthEquals(messages, 1);
+				assert.lengthOf(messages, 1);
 			});
 
 			it('lists no entries', () => {
 				const {document} = response.dom();
 				const entries = document.querySelectorAll('[data-test=entry-summary]');
-				assert.lengthEquals(entries, 0);
+				assert.lengthOf(entries, 0);
 			});
 
 			it('does not include a welcome message', () => {
@@ -208,7 +208,7 @@ describe('GET /', () => {
 			it('lists no entries', () => {
 				const {document} = response.dom();
 				const entries = document.querySelectorAll('[data-test=entry-summary]');
-				assert.lengthEquals(entries, 0);
+				assert.lengthOf(entries, 0);
 			});
 
 			it('does not include a notice that all entries have been read', () => {
@@ -284,7 +284,7 @@ describe('GET /?before=2020-02-21T00%3A00%3A00.000Z', () => {
 			it('lists the second page of unread entries', () => {
 				const {document} = response.dom();
 				const entries = document.querySelectorAll('[data-test=entry-summary]');
-				assert.lengthEquals(entries, 50);
+				assert.lengthOf(entries, 50);
 
 				assert.strictEqual(
 					entries[0].querySelector('[data-test=entry-heading]').textContent,
@@ -360,7 +360,7 @@ describe('POST /', () => {
 			it('includes a password error message', () => {
 				const {document} = response.dom();
 				const errors = document.querySelectorAll('[data-test=form-error]');
-				assert.lengthEquals(errors, 1);
+				assert.lengthOf(errors, 1);
 				assert.strictEqual(errors[0].textContent, 'Password must be 8 or more characters in length');
 			});
 
@@ -394,7 +394,7 @@ describe('POST /', () => {
 			it('includes a password error message', () => {
 				const {document} = response.dom();
 				const errors = document.querySelectorAll('[data-test=form-error]');
-				assert.lengthEquals(errors, 1);
+				assert.lengthOf(errors, 1);
 				assert.strictEqual(errors[0].textContent, 'Password must be 8 or more characters in length');
 			});
 

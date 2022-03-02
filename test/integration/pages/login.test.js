@@ -1,6 +1,6 @@
 'use strict';
 
-const assert = require('proclaim');
+const {assert} = require('chai');
 const getLatestSession = require('../helper/get-latest-session');
 const getLoginCookie = require('../helper/get-login-cookie');
 const seedDatabase = require('../helper/seed-database');
@@ -34,7 +34,7 @@ describe('GET /login', () => {
 		it('includes breadcrumbs for parent pages', () => {
 			const {document} = response.dom();
 			const breadcrumbs = document.querySelectorAll('[data-test=breadcrumb]');
-			assert.lengthEquals(breadcrumbs, 1);
+			assert.lengthOf(breadcrumbs, 1);
 			assert.strictEqual(breadcrumbs[0].getAttribute('href'), '/');
 			assert.strictEqual(breadcrumbs[0].textContent, 'Test Audrey');
 		});
@@ -129,7 +129,7 @@ describe('POST /login', () => {
 			it('includes an error message', () => {
 				const {document} = response.dom();
 				const errors = document.querySelectorAll('[data-test=form-error]');
-				assert.lengthEquals(errors, 1);
+				assert.lengthOf(errors, 1);
 				assert.strictEqual(errors[0].textContent, 'Credentials were incorrect');
 			});
 
@@ -158,7 +158,7 @@ describe('POST /login', () => {
 			it('includes an error message', () => {
 				const {document} = response.dom();
 				const errors = document.querySelectorAll('[data-test=form-error]');
-				assert.lengthEquals(errors, 1);
+				assert.lengthOf(errors, 1);
 				assert.strictEqual(errors[0].textContent, 'Credentials were incorrect');
 			});
 

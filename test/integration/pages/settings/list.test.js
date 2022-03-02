@@ -1,6 +1,6 @@
 'use strict';
 
-const assert = require('proclaim');
+const {assert} = require('chai');
 const getLoginCookie = require('../../helper/get-login-cookie');
 const seedDatabase = require('../../helper/seed-database');
 const request = require('../../helper/request');
@@ -39,7 +39,7 @@ describe('GET /settings', () => {
 		it('includes breadcrumbs for parent pages', () => {
 			const {document} = response.dom();
 			const breadcrumbs = document.querySelectorAll('[data-test=breadcrumb]');
-			assert.lengthEquals(breadcrumbs, 1);
+			assert.lengthOf(breadcrumbs, 1);
 			assert.strictEqual(breadcrumbs[0].getAttribute('href'), '/');
 			assert.strictEqual(breadcrumbs[0].textContent, 'Test Audrey');
 		});
@@ -140,7 +140,7 @@ describe('POST /settings', () => {
 				it('includes a notice that settings have been saved', () => {
 					const {document} = response.dom();
 					const messages = document.querySelectorAll('[data-test=settings-saved]');
-					assert.lengthEquals(messages, 1);
+					assert.lengthOf(messages, 1);
 				});
 
 			});
@@ -171,7 +171,7 @@ describe('POST /settings', () => {
 			it('includes an error message', () => {
 				const {document} = response.dom();
 				const errors = document.querySelectorAll('[data-test=form-error]');
-				assert.lengthEquals(errors, 1);
+				assert.lengthOf(errors, 1);
 				assert.strictEqual(errors[0].textContent, 'Site title setting must be between 3 and 20 characters in length');
 			});
 
@@ -230,7 +230,7 @@ function assertHasSettingsForm(response, settings) {
 	assert.strictEqual(siteTitle.getAttribute('value'), settings.siteTitle);
 
 	const removeOldEntries = form.querySelectorAll('input[name=removeOldEntries]');
-	assert.lengthEquals(removeOldEntries, 2);
+	assert.lengthOf(removeOldEntries, 2);
 	assert.strictEqual(removeOldEntries[0].getAttribute('type'), 'radio');
 	assert.strictEqual(removeOldEntries[0].getAttribute('value'), 'true');
 	assert.strictEqual(removeOldEntries[1].getAttribute('type'), 'radio');
@@ -248,14 +248,14 @@ function assertHasSettingsForm(response, settings) {
 	assert.strictEqual(schedule.getAttribute('disabled'), '');
 
 	const autoMarkAsRead = form.querySelectorAll('input[name=autoMarkAsRead]');
-	assert.lengthEquals(autoMarkAsRead, 2);
+	assert.lengthOf(autoMarkAsRead, 2);
 	assert.strictEqual(autoMarkAsRead[0].getAttribute('type'), 'radio');
 	assert.strictEqual(autoMarkAsRead[0].getAttribute('value'), 'true');
 	assert.strictEqual(autoMarkAsRead[1].getAttribute('type'), 'radio');
 	assert.strictEqual(autoMarkAsRead[1].getAttribute('value'), '');
 
 	const showHelpText = form.querySelectorAll('input[name=showHelpText]');
-	assert.lengthEquals(showHelpText, 2);
+	assert.lengthOf(showHelpText, 2);
 	assert.strictEqual(showHelpText[0].getAttribute('type'), 'radio');
 	assert.strictEqual(showHelpText[0].getAttribute('value'), 'true');
 	assert.strictEqual(showHelpText[1].getAttribute('type'), 'radio');

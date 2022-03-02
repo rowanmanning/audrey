@@ -1,6 +1,6 @@
 'use strict';
 
-const assert = require('proclaim');
+const {assert} = require('chai');
 const getLoginCookie = require('../../helper/get-login-cookie');
 const seedDatabase = require('../../helper/seed-database');
 const {readFile} = require('fs').promises;
@@ -60,7 +60,7 @@ describe('GET /entries/:id', () => {
 			it('includes breadcrumbs for parent pages', () => {
 				const {document} = response.dom();
 				const breadcrumbs = document.querySelectorAll('[data-test=breadcrumb]');
-				assert.lengthEquals(breadcrumbs, 3);
+				assert.lengthOf(breadcrumbs, 3);
 				assert.strictEqual(breadcrumbs[0].getAttribute('href'), '/');
 				assert.strictEqual(breadcrumbs[0].textContent, 'Test Audrey');
 				assert.strictEqual(breadcrumbs[1].getAttribute('href'), '/feeds');
@@ -134,7 +134,7 @@ describe('GET /entries/:id', () => {
 			it('displays entry enclosures', () => {
 				const {document} = response.dom();
 				const enclosures = document.querySelectorAll('[data-test=entry-enclosure]');
-				assert.lengthEquals(enclosures, 4);
+				assert.lengthOf(enclosures, 4);
 
 				const image = enclosures[0].querySelector('img');
 				assert.isNotNull(image);

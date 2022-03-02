@@ -1,6 +1,6 @@
 'use strict';
 
-const assert = require('proclaim');
+const {assert} = require('chai');
 const getLoginCookie = require('../../helper/get-login-cookie');
 const seedDatabase = require('../../helper/seed-database');
 const request = require('../../helper/request');
@@ -42,7 +42,7 @@ describe('GET /feeds/export/opml', () => {
 			assert.strictEqual(title.textContent, 'Test Audrey Feed Export');
 
 			const outlines = opml.querySelectorAll('outline');
-			assert.lengthEquals(outlines, 3);
+			assert.lengthOf(outlines, 3);
 
 			assert.strictEqual(outlines[0].getAttribute('type'), 'rss');
 			assert.strictEqual(outlines[0].getAttribute('text'), 'Mock Feed 001');

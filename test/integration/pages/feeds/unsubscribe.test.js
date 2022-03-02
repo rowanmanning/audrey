@@ -1,6 +1,6 @@
 'use strict';
 
-const assert = require('proclaim');
+const {assert} = require('chai');
 const getLoginCookie = require('../../helper/get-login-cookie');
 const seedDatabase = require('../../helper/seed-database');
 const request = require('../../helper/request');
@@ -42,7 +42,7 @@ describe('GET /feeds/:id/unsubscribe', () => {
 			it('includes breadcrumbs for parent pages', () => {
 				const {document} = response.dom();
 				const breadcrumbs = document.querySelectorAll('[data-test=breadcrumb]');
-				assert.lengthEquals(breadcrumbs, 3);
+				assert.lengthOf(breadcrumbs, 3);
 				assert.strictEqual(breadcrumbs[0].getAttribute('href'), '/');
 				assert.strictEqual(breadcrumbs[0].textContent, 'Test Audrey');
 				assert.strictEqual(breadcrumbs[1].getAttribute('href'), '/feeds');
@@ -138,7 +138,7 @@ describe('POST /feeds/:id/unsubscribe', () => {
 				const feed = await global.app.models.Feed.findById('feed001');
 				const entries = await global.app.models.Entry.fetchAllByFeedId('feed001');
 				assert.isNull(feed);
-				assert.lengthEquals(entries, 0);
+				assert.lengthOf(entries, 0);
 			});
 
 			it('redirects back to the feeds page', () => {
@@ -159,7 +159,7 @@ describe('POST /feeds/:id/unsubscribe', () => {
 				it('includes a notice that the feed has been unsubscribed from', () => {
 					const {document} = response.dom();
 					const messages = document.querySelectorAll('[data-test=unsubscribe-success]');
-					assert.lengthEquals(messages, 1);
+					assert.lengthOf(messages, 1);
 					assert.include(messages[0].textContent, 'Mock Feed 001');
 				});
 
@@ -192,7 +192,7 @@ describe('POST /feeds/:id/unsubscribe', () => {
 			it('includes an error message', () => {
 				const {document} = response.dom();
 				const errors = document.querySelectorAll('[data-test=form-error]');
-				assert.lengthEquals(errors, 1);
+				assert.lengthOf(errors, 1);
 				assert.strictEqual(errors[0].textContent, 'Please confirm that you want to unsubscribe from this feed');
 			});
 

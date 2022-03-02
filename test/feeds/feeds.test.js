@@ -1,6 +1,6 @@
 'use strict';
 
-const assert = require('proclaim');
+const {assert} = require('chai');
 const feeds = require('./feeds.json');
 const getUserAgent = require('../../server/lib/user-agent');
 const getLoginCookie = require('../integration/helper/get-login-cookie');
@@ -78,7 +78,7 @@ for (const feed of feeds) {
 			if (response.statusCode !== 302) {
 				const {document} = response.dom();
 				const errors = document.querySelectorAll('[data-test=form-error]');
-				assert.lengthEquals(errors, 1);
+				assert.lengthOf(errors, 1);
 				throw new Error(errors[0].textContent);
 			}
 		});

@@ -1,6 +1,6 @@
 'use strict';
 
-const assert = require('proclaim');
+const {assert} = require('chai');
 const getLoginCookie = require('../../helper/get-login-cookie');
 const seedDatabase = require('../../helper/seed-database');
 const request = require('../../helper/request');
@@ -47,7 +47,7 @@ describe('GET /feeds/:id', () => {
 			it('lists all entries in the feed', () => {
 				const {document} = response.dom();
 				const entries = document.querySelectorAll('[data-test=entry-summary]');
-				assert.lengthEquals(entries, 3);
+				assert.lengthOf(entries, 3);
 
 				assert.strictEqual(
 					entries[0].querySelector('[data-test=entry-heading]').textContent,
@@ -74,7 +74,7 @@ describe('GET /feeds/:id', () => {
 			it('includes breadcrumbs for parent pages', () => {
 				const {document} = response.dom();
 				const breadcrumbs = document.querySelectorAll('[data-test=breadcrumb]');
-				assert.lengthEquals(breadcrumbs, 2);
+				assert.lengthOf(breadcrumbs, 2);
 				assert.strictEqual(breadcrumbs[0].getAttribute('href'), '/');
 				assert.strictEqual(breadcrumbs[0].textContent, 'Test Audrey');
 				assert.strictEqual(breadcrumbs[1].getAttribute('href'), '/feeds');
@@ -170,7 +170,7 @@ describe('GET /feeds/:id', () => {
 			it('lists the latest 50 entries', () => {
 				const {document} = response.dom();
 				const entries = document.querySelectorAll('[data-test=entry-summary]');
-				assert.lengthEquals(entries, 50);
+				assert.lengthOf(entries, 50);
 
 				assert.strictEqual(
 					entries[0].querySelector('[data-test=entry-heading]').textContent,
@@ -189,7 +189,7 @@ describe('GET /feeds/:id', () => {
 			it('includes pagination', () => {
 				const {document} = response.dom();
 				const next = document.querySelectorAll('[data-test=pagination-next]');
-				assert.lengthEquals(next, 1);
+				assert.lengthOf(next, 1);
 
 				// 51 days from January first
 				assert.strictEqual(next[0].getAttribute('href'), '/feeds/feed002?before=2020-02-21T00%3A00%3A00.000Z');
@@ -216,13 +216,13 @@ describe('GET /feeds/:id', () => {
 			it('includes a notice that there are no entries', () => {
 				const {document} = response.dom();
 				const messages = document.querySelectorAll('[data-test=no-entries-message]');
-				assert.lengthEquals(messages, 1);
+				assert.lengthOf(messages, 1);
 			});
 
 			it('lists no entries', () => {
 				const {document} = response.dom();
 				const entries = document.querySelectorAll('[data-test=entry-summary]');
-				assert.lengthEquals(entries, 0);
+				assert.lengthOf(entries, 0);
 			});
 
 		});
@@ -305,7 +305,7 @@ describe('GET /feeds/:id?before=2020-02-21T00%3A00%3A00.000Z', () => {
 			it('lists the second page of entries', () => {
 				const {document} = response.dom();
 				const entries = document.querySelectorAll('[data-test=entry-summary]');
-				assert.lengthEquals(entries, 50);
+				assert.lengthOf(entries, 50);
 
 				assert.strictEqual(
 					entries[0].querySelector('[data-test=entry-heading]').textContent,

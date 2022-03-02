@@ -1,10 +1,10 @@
 'use strict';
 
-const assert = require('proclaim');
+const {assert} = require('chai');
 const getLoginCookie = require('../../helper/get-login-cookie');
 const seedDatabase = require('../../helper/seed-database');
 const request = require('../../helper/request');
-const sinon = require('sinon');
+const td = require('testdouble');
 
 describe('GET /feeds', () => {
 	let response;
@@ -45,7 +45,7 @@ describe('GET /feeds', () => {
 			it('includes breadcrumbs for parent pages', () => {
 				const {document} = response.dom();
 				const breadcrumbs = document.querySelectorAll('[data-test=breadcrumb]');
-				assert.lengthEquals(breadcrumbs, 1);
+				assert.lengthOf(breadcrumbs, 1);
 				assert.strictEqual(breadcrumbs[0].getAttribute('href'), '/');
 				assert.strictEqual(breadcrumbs[0].textContent, 'Test Audrey');
 			});
@@ -53,7 +53,7 @@ describe('GET /feeds', () => {
 			it('lists all feeds', () => {
 				const {document} = response.dom();
 				const feeds = document.querySelectorAll('[data-test=feed-summary]');
-				assert.lengthEquals(feeds, 3);
+				assert.lengthOf(feeds, 3);
 
 				assert.strictEqual(
 					feeds[0].querySelector('[data-test=feed-heading]').textContent,
@@ -117,7 +117,8 @@ describe('GET /feeds', () => {
 					'feed-002',
 					'feed-003'
 				]);
-				sinon.stub(global.app.models.Feed, 'isRefreshInProgress').returns(true);
+				td.replace(global.app.models.Feed, 'isRefreshInProgress');
+				td.when(global.app.models.Feed.isRefreshInProgress(), {ignoreExtraArgs: true}).thenReturn(true);
 				response = await request('GET', '/feeds', {
 					headers: {
 						cookie: await getLoginCookie('password')
@@ -126,7 +127,7 @@ describe('GET /feeds', () => {
 			});
 
 			after(() => {
-				global.app.models.Feed.isRefreshInProgress.restore();
+				td.reset();
 			});
 
 			it('displays the all feeds page', () => {
@@ -147,7 +148,7 @@ describe('GET /feeds', () => {
 			it('includes a message that feeds are refreshing', () => {
 				const {document} = response.dom();
 				const messages = document.querySelectorAll('[data-test=feeds-refreshing-message]');
-				assert.lengthEquals(messages, 1);
+				assert.lengthOf(messages, 1);
 			});
 
 		});
@@ -183,13 +184,13 @@ describe('GET /feeds', () => {
 			it('does not list feeds', () => {
 				const {document} = response.dom();
 				const feeds = document.querySelectorAll('[data-test=feed-summary]');
-				assert.lengthEquals(feeds, 0);
+				assert.lengthOf(feeds, 0);
 			});
 
 			it('includes a notice that there are no feeds', () => {
 				const {document} = response.dom();
 				const messages = document.querySelectorAll('[data-test=no-feeds-message]');
-				assert.lengthEquals(messages, 1);
+				assert.lengthOf(messages, 1);
 			});
 
 		});

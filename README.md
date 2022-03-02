@@ -23,16 +23,16 @@ Audrey is self-hosted; you can set up an installation on your own server or clou
 </table>
 
 
-## Table of contents
+## Table of Contents
 
   * [Requirements](#requirements)
-  * [Running locally](#running-locally)
-  * [Running on a server](#running-on-a-server)
-  * [Cloud provider guides](#cloud-provider-guides)
+  * [Running Locally](#running-locally)
+  * [Running on a Server](#running-on-a-server)
+  * [Cloud Provider Guides](#cloud-provider-guides)
     * [Glitch `↪`](docs/guide/glitch.md)
     * [Heroku `↪`](docs/guide/heroku.md)
-  * [Config options](#config-options)
-  * [Beta notice](#beta-notice)
+  * [Config Options](#config-options)
+  * [Beta Notice](#beta-notice)
   * [Contributing](#contributing)
   * [License](#license)
 
@@ -45,7 +45,7 @@ This application requires the following to run:
   * [MongoDB](https://www.mongodb.com/) v4.0.0+
 
 
-## Running locally
+## Running Locally
 
 You can run Audrey locally if you intend on making your own changes, or just want to test it out. Follow theses steps to get Audrey running on your local machine:
 
@@ -66,19 +66,19 @@ You can run Audrey locally if you intend on making your own changes, or just wan
   4. Copy the sample `.env` file to make changes to the [configuration](#config-options). You'll need to do this if you want sessions to persist between restarts of the application. The following command copies `sample.env` to `.env`:
 
         ```sh
-        make env
+        cp sample.env .env
         ```
 
   5. Start the application in production mode:
 
         ```sh
-        make start
+        npm start
         ```
 
         Or development mode if you want code changes to auto-restart the application:
 
         ```sh
-        make start-dev
+        npm run start:dev
         ```
 
   6. Visit [localhost:8080](http://localhost:8080/) in your browser (the port may be different if you made changes to the default `.env` file)
@@ -86,7 +86,7 @@ You can run Audrey locally if you intend on making your own changes, or just wan
   7. Set up a password on the locally running site. You'll need to remember this password to regain access if your session expires
 
 
-## Running on a server
+## Running on a Server
 
 The instructions for running on a server are the same as [running locally](#running-locally) apart from the following differences:
 
@@ -95,7 +95,7 @@ The instructions for running on a server are the same as [running locally](#runn
   * The URL to access the application will be whatever your public server address is, rather than `localhost`
 
 
-## Cloud provider guides
+## Cloud Provider Guides
 
 Audrey has guides for the following common cloud providers:
 
@@ -103,7 +103,7 @@ Audrey has guides for the following common cloud providers:
   * [Deploy Audrey on Heroku](docs/guide/heroku.md) (free and paid options)
 
 
-## Config options
+## Config Options
 
 This application is configured using environment variables, or an [`.env` file](https://github.com/motdotla/dotenv) if you're running locally. The following options are available:
 
@@ -124,7 +124,7 @@ This application is configured using environment variables, or an [`.env` file](
 You can also change more configurations through the settings page of a running copy of Audrey, these additional configurations are stored in the database.
 
 
-## Beta notice
+## Beta Notice
 
 Audrey is currently in beta, and may not have all of the features you expect from a feed reader yet. I'm deliberately keeping a reduced set of features, but please check the [feature label](https://github.com/rowanmanning/audrey/issues?q=is%3Aissue+label%3Afeature) in the [issues](https://github.com/rowanmanning/audrey/issues) before requesting anything
 
@@ -133,10 +133,10 @@ I really appreciate feedback on the stability of Audrey, if you're willing to gi
 
 ## Contributing
 
-[The contributing guide is available here](docs/contributing.md). All contributors must follow [Audrey's code of conduct](docs/code_of_conduct.md).
+[The contributing guide is available here](docs/contributing.md). All contributors must follow [this library's code of conduct](docs/code_of_conduct.md).
 
 
 ## License
 
-Licensed under the [GPLv3](LICENSE.md) license.<br/>
+Licensed under the [GPLv3](LICENSE) license.<br/>
 Copyright &copy; 2020, Rowan Manning.

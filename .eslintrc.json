@@ -1,0 +1,11 @@
+{
+	"extends": [
+		"@rowanmanning/eslint-config"
+	],
+	"rules": {
+		"class-methods-use-this": "off",
+		"no-invalid-this": "off",
+		"no-underscore-dangle": "off",
+		"require-atomic-updates": "off"
+	}
+}

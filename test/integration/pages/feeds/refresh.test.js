@@ -1,6 +1,6 @@
 'use strict';
 
-const assert = require('proclaim');
+const {assert} = require('chai');
 const getLoginCookie = require('../../helper/get-login-cookie');
 const seedDatabase = require('../../helper/seed-database');
 const request = require('../../helper/request');
@@ -28,7 +28,7 @@ describe('POST /feeds/:id/refresh', () => {
 
 			it('refreshes the feed, loading all new entries', async () => {
 				const allEntries = await global.app.models.Entry.find({feed: 'feed001'});
-				assert.lengthEquals(allEntries, 4);
+				assert.lengthOf(allEntries, 4);
 				assert.isTrue(allEntries.every(entry => entry.syncedAt > new Date('2020-01-04T00:00:00Z')));
 			});
 
@@ -50,7 +50,7 @@ describe('POST /feeds/:id/refresh', () => {
 				it('includes a notice that the feed has been refreshed', () => {
 					const {document} = response.dom();
 					const messages = document.querySelectorAll('[data-test=refresh-success]');
-					assert.lengthEquals(messages, 1);
+					assert.lengthOf(messages, 1);
 				});
 
 			});

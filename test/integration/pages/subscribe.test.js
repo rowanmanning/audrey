@@ -1,6 +1,6 @@
 'use strict';
 
-const assert = require('proclaim');
+const {assert} = require('chai');
 const getLoginCookie = require('../helper/get-login-cookie');
 const seedDatabase = require('../helper/seed-database');
 const request = require('../helper/request');
@@ -37,7 +37,7 @@ describe('GET /subscribe', () => {
 		it('includes breadcrumbs for parent pages', () => {
 			const {document} = response.dom();
 			const breadcrumbs = document.querySelectorAll('[data-test=breadcrumb]');
-			assert.lengthEquals(breadcrumbs, 1);
+			assert.lengthOf(breadcrumbs, 1);
 			assert.strictEqual(breadcrumbs[0].getAttribute('href'), '/');
 			assert.strictEqual(breadcrumbs[0].textContent, 'Test Audrey');
 		});
@@ -107,7 +107,7 @@ describe('POST /subscribe', () => {
 				assert.strictEqual(feed.htmlUrl, 'http://mock-feeds.com/valid/001/');
 
 				const entries = await global.app.models.Entry.find({feed: feed._id});
-				assert.lengthEquals(entries, 4);
+				assert.lengthOf(entries, 4);
 
 				const entry1 = entries.find(entry => entry.title === 'Mock Feed 001 - Entry 1');
 				assert.strictEqual(entry1.htmlUrl, 'http://mock-feeds.com/valid/001/entry-1');
@@ -150,7 +150,7 @@ describe('POST /subscribe', () => {
 				it('includes a notice that the feed has been subscribed to', () => {
 					const {document} = response.dom();
 					const messages = document.querySelectorAll('[data-test=subscribe-success]');
-					assert.lengthEquals(messages, 1);
+					assert.lengthOf(messages, 1);
 				});
 
 			});
@@ -181,7 +181,7 @@ describe('POST /subscribe', () => {
 				it('includes an error message', () => {
 					const {document} = response.dom();
 					const errors = document.querySelectorAll('[data-test=form-error]');
-					assert.lengthEquals(errors, 1);
+					assert.lengthOf(errors, 1);
 					assert.strictEqual(errors[0].textContent, 'Feed URL responded with an error status');
 				});
 
@@ -213,7 +213,7 @@ describe('POST /subscribe', () => {
 				it('includes an error message', () => {
 					const {document} = response.dom();
 					const errors = document.querySelectorAll('[data-test=form-error]');
-					assert.lengthEquals(errors, 1);
+					assert.lengthOf(errors, 1);
 					assert.strictEqual(errors[0].textContent, 'Feed URL is not a valid ATOM or RSS feed');
 				});
 
@@ -245,7 +245,7 @@ describe('POST /subscribe', () => {
 				it('includes an error message', () => {
 					const {document} = response.dom();
 					const errors = document.querySelectorAll('[data-test=form-error]');
-					assert.lengthEquals(errors, 1);
+					assert.lengthOf(errors, 1);
 					assert.strictEqual(errors[0].textContent, 'Feed URL is not a valid ATOM or RSS feed');
 				});
 

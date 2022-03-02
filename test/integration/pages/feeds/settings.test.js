@@ -1,6 +1,6 @@
 'use strict';
 
-const assert = require('proclaim');
+const {assert} = require('chai');
 const getLoginCookie = require('../../helper/get-login-cookie');
 const seedDatabase = require('../../helper/seed-database');
 const request = require('../../helper/request');
@@ -42,7 +42,7 @@ describe('GET /feeds/:id/settings', () => {
 			it('includes breadcrumbs for parent pages', () => {
 				const {document} = response.dom();
 				const breadcrumbs = document.querySelectorAll('[data-test=breadcrumb]');
-				assert.lengthEquals(breadcrumbs, 3);
+				assert.lengthOf(breadcrumbs, 3);
 				assert.strictEqual(breadcrumbs[0].getAttribute('href'), '/');
 				assert.strictEqual(breadcrumbs[0].textContent, 'Test Audrey');
 				assert.strictEqual(breadcrumbs[1].getAttribute('href'), '/feeds');
@@ -171,7 +171,7 @@ describe('POST /feeds/:id/settings', () => {
 				it('includes a notice that feed settings have been saved', () => {
 					const {document} = response.dom();
 					const messages = document.querySelectorAll('[data-test=settings-saved]');
-					assert.lengthEquals(messages, 1);
+					assert.lengthOf(messages, 1);
 				});
 
 			});
@@ -203,7 +203,7 @@ describe('POST /feeds/:id/settings', () => {
 			it('includes an error message', () => {
 				const {document} = response.dom();
 				const errors = document.querySelectorAll('[data-test=form-error]');
-				assert.lengthEquals(errors, 1);
+				assert.lengthOf(errors, 1);
 				assert.strictEqual(errors[0].textContent, 'Feed custom title must be between 3 and 50 characters in length');
 			});
 
