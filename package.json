@@ -26,8 +26,9 @@
     "start": "node .",
     "start:dev": "nodemon .",
     "verify": "eslint .",
-    "test:integration": "mocha 'test/integration/**/*.test.js'",
     "test": "npm run test:integration",
+    "test:integration": "mocha 'test/integration/**/*.test.js'",
+    "test:feeds": "mocha 'test/feeds/**/*.test.js' --timeout 50000 --slow 10000",
     "project:verify": "npx --yes @rowanmanning/validate-project --type git node-express-app",
     "project:fix": "npx --yes @rowanmanning/validate-project --type git node-express-app --fix"
   },
