@@ -9,10 +9,7 @@
     "reader",
     "rss"
   ],
-  "author": {
-    "name": "Rowan Manning",
-    "url": "https://rowanmanning.com/"
-  },
+  "author": "Rowan Manning (https://rowanmanning.com/)",
   "repository": {
     "type": "git",
     "url": "https://github.com/rowanmanning/audrey.git"
@@ -21,7 +18,17 @@
   "bugs": "https://github.com/rowanmanning/audrey/issues",
   "license": "GPL-3.0",
   "engines": {
-    "node": ">=14"
+    "node": ">=14",
+    "npm": ">=7",
+    "mongodb": "4 || 5"
+  },
+  "scripts": {
+    "start": "node .",
+    "verify": "eslint .",
+    "test:integration": "mocha 'test/integration/**/*.test.js'",
+    "test": "npm run test:integration",
+    "project:verify": "npx --yes @rowanmanning/validate-project --type git node",
+    "project:fix": "npx --yes @rowanmanning/validate-project --type git node --fix"
   },
   "dependencies": {
     "@rowanmanning/app": "^1.0.0-alpha.25",
@@ -43,18 +50,14 @@
   },
   "devDependencies": {
     "@rowanmanning/eslint-config": "^3.1.0",
-    "@rowanmanning/make": "^2.1.0",
     "@rowanmanning/require-all": "^1.0.0",
     "eslint": "^7.17.0",
     "mocha": "^8.2.1",
     "nock": "^13.0.5",
     "nodemon": "^2.0.7",
-    "nyc": "^15.1.0",
-    "proclaim": "^3.6.0",
-    "sinon": "^9.2.3"
+    "nyc": "^15.1.0"
   },
-  "main": "./index.js",
-  "scripts": {
-    "start": "node ."
+  "mocha": {
+    "timeout": 10000
   }
 }
