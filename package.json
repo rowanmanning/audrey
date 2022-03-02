@@ -39,7 +39,7 @@
     "bcrypt": "^5.0.1",
     "date-fns": "^2.28.0",
     "dompurify": "^2.3.6",
-    "dotenv": "^8.2.0",
+    "dotenv": "^16.0.0",
     "got": "^11.8.3",
     "jsdom": "^16.4.0",
     "mongoose-unique-validator": "^2.0.3",
