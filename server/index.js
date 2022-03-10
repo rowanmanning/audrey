@@ -12,7 +12,7 @@ const schedule = require('node-schedule');
 module.exports = async function audrey() {
 
 	// Create a MongoDB connection
-	const mongoConnectionUrl = 'mongodb://localhost:27017/audrey';
+	const mongoConnectionUrl = process.env.MONGODB_URI || 'mongodb://localhost:27017/audrey';
 	const db = await mongoose.createConnection(mongoConnectionUrl).asPromise();
 
 	// Create and export an express app
