@@ -13,7 +13,7 @@ module.exports = function defineEntrySchema(app) {
 	const enclosureSchema = new Schema({
 		_id: {
 			type: String,
-			default: nanoid(12)
+			default: () => nanoid(12)
 		},
 		url: {
 			type: String
@@ -34,7 +34,7 @@ module.exports = function defineEntrySchema(app) {
 	const entrySchema = new Schema({
 		_id: {
 			type: String,
-			default: nanoid(12)
+			default: () => nanoid(12)
 		},
 		feed: {
 			type: String,

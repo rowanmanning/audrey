@@ -8,7 +8,7 @@ module.exports = function defineFeedErrorSchema(app) {
 	const feedErrorSchema = new Schema({
 		_id: {
 			type: String,
-			default: nanoid(12)
+			default: () => nanoid(12)
 		},
 		feed: {
 			type: String,

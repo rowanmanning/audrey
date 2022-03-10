@@ -11,7 +11,7 @@ module.exports = function defineSettingsSchema() {
 	const settingsSchema = new Schema({
 		_id: {
 			type: String,
-			default: nanoid(12)
+			default: () => nanoid(12)
 		},
 		siteTitle: {
 			type: String,

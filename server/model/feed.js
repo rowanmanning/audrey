@@ -16,7 +16,7 @@ module.exports = function defineFeedSchema(app) {
 	const feedSchema = new Schema({
 		_id: {
 			type: String,
-			default: nanoid(12)
+			default: () => nanoid(12)
 		},
 		title: {
 			type: String,
