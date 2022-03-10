@@ -39,6 +39,7 @@
   "dependencies": {
     "@rowanmanning/express-config": "^1.1.0",
     "@rowanmanning/fetch-feed": "^1.0.1",
+    "@rowanmanning/require-all": "^2.0.1",
     "@rowanmanning/response-redirect-middleware": "^1.0.2",
     "@rowanmanning/response-render-middleware": "^1.0.2",
     "bcrypt": "^5.0.1",
@@ -60,7 +61,6 @@
   },
   "devDependencies": {
     "@rowanmanning/eslint-config": "^3.3.0",
-    "@rowanmanning/require-all": "^2.0.1",
     "chai": "^4.3.6",
     "eslint": "^8.10.0",
     "mocha": "^9.2.1",
