@@ -49,6 +49,7 @@
     "express": "^4.17.3",
     "got": "^11.8.3",
     "jsdom": "^19.0.0",
+    "mongodb": "^4.4.1",
     "mongoose": "^6.2.5",
     "netscape-bookmarks": "^0.1.1",
     "node-schedule": "^2.1.0",
