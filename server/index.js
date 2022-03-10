@@ -9,162 +9,163 @@ const path = require('path');
 const requireAll = require('@rowanmanning/require-all');
 const schedule = require('node-schedule');
 
-// Create a MongoDB connection
-const db = mongoose.createConnection(
-	process.env.MONGODB_URI || 'mongodb://localhost:27017/audrey'
-);
+module.exports = async function audrey() {
 
-// Create and export an express app
-const app = module.exports = configureExpress(express(), {
+	// Create a MongoDB connection
+	const mongoConnectionUrl = 'mongodb://localhost:27017/audrey';
+	const db = await mongoose.createConnection(mongoConnectionUrl).asPromise();
 
-	// Configure paths
-	viewPath: path.join(__dirname, 'view'),
-	publicPath: path.join(__dirname, '..', 'client', 'public'),
+	// Create and export an express app
+	const app = module.exports = configureExpress(express(), {
 
-	// Configure logger
-	pino: {
-		name: 'Audrey',
-		level: process.env.LOG_LEVEL || (
-			process.env.NODE_ENV === 'production' ?
-				'info' :
-				'debug'
-		)
-	},
+		// Configure paths
+		viewPath: path.join(__dirname, 'view'),
+		publicPath: path.join(__dirname, '..', 'client', 'public'),
 
-	// Configure sessions
-	sessionName: 'Audrey Session',
-	sessionSecret: process.env.SESSION_SECRET,
-	sessionStore: MongoStore.create({client: db.getClient()}),
-
-	// Configure security
-	helmet: {
-		contentSecurityPolicy: {
-			directives: {
-				'default-src': [`'self'`],
-				'block-all-mixed-content': [],
-				'font-src': [`'self'`, 'https:', 'data:'],
-				'frame-ancestors': [`'self'`],
-				'img-src': ['*'],
-				'media-src': ['*'],
-				'frame-src': [
-					'https://*.youtube.com/',
-					'https://*.spotify.com/'
-				],
-				'object-src': [`'none'`],
-				'script-src-attr': [`'none'`],
-				'style-src': [`'self'`, 'https://fonts.googleapis.com/'],
-				'upgrade-insecure-requests': []
-			}
+		// Configure logger
+		pino: {
+			name: 'Audrey',
+			level: process.env.LOG_LEVEL || (
+				process.env.NODE_ENV === 'production' ?
+					'info' :
+					'debug'
+			)
 		},
-		crossOriginEmbedderPolicy: false,
-		crossOriginOpenerPolicy: false,
-		crossOriginResourcePolicy: {
-			policy: 'cross-origin'
-		}
-	}
-});
 
-// Store the database on the app and log when connected
-app.db = db;
-db.on('connected', () => {
-	app.log.debug('MongoDB connected');
-});
+		// Configure sessions
+		sessionName: 'Audrey Session',
+		sessionSecret: process.env.SESSION_SECRET,
+		sessionStore: MongoStore.create({client: db.getClient()}),
 
-// Load the models
-app.models = {};
-const modelModules = requireAll(path.join(__dirname, 'model'));
-for (const {name, moduleExports: setupModel} of modelModules) {
-	const camelcaseName = camelcase(name);
-	app.models[camelcaseName] = db.model(camelcaseName, setupModel(app));
-	app.log.debug(`${camelcaseName} model initialised`);
-}
-
-// Set up the scheduled feed refresh job
-let scheduledJob;
-const updateSchedule = app.updateSchedule = process.env.UPDATE_SCHEDULE || '0 */2 * * *'; // Every 2 hours
-if (process.env.NODE_ENV !== 'test') {
-	db.on('connected', () => {
-		try {
-			scheduledJob = schedule.scheduleJob(updateSchedule, async () => {
-				try {
-					await app.models.Entry.performScheduledJobs();
-					await app.models.Feed.performScheduledJobs();
-					app.log.info({
-						name: 'Scheduler',
-						msg: 'Scheduled jobs complete'
-					});
-				} catch (error) {
-					app.log.error({
-						name: 'Scheduler',
-						msg: `Scheduled jobs failed: ${error.message}`
-					});
+		// Configure security
+		helmet: {
+			contentSecurityPolicy: {
+				directives: {
+					'default-src': [`'self'`],
+					'block-all-mixed-content': [],
+					'font-src': [`'self'`, 'https:', 'data:'],
+					'frame-ancestors': [`'self'`],
+					'img-src': ['*'],
+					'media-src': ['*'],
+					'frame-src': [
+						'https://*.youtube.com/',
+						'https://*.spotify.com/'
+					],
+					'object-src': [`'none'`],
+					'script-src-attr': [`'none'`],
+					'style-src': [`'self'`, 'https://fonts.googleapis.com/'],
+					'upgrade-insecure-requests': []
 				}
-			});
-			app.log.info({
-				name: 'Scheduler',
-				msg: `Started with cron "${updateSchedule}"`
-			});
-		} catch (error) {
-			app.log.error({
-				name: 'Scheduler',
-				msg: `Setup failed: ${error.message}`
-			});
+			},
+			crossOriginEmbedderPolicy: false,
+			crossOriginOpenerPolicy: false,
+			crossOriginResourcePolicy: {
+				policy: 'cross-origin'
+			}
 		}
 	});
-}
 
-// Augment the application `stop` method to also close the database connection
-const stop = app.stop;
-app.stop = async () => {
-	if (scheduledJob) {
-		scheduledJob.cancel();
+	// Store the database on the app
+	app.db = db;
+
+	// Load the models
+	app.models = {};
+	const modelModules = requireAll(path.join(__dirname, 'model'));
+	for (const {name, moduleExports: setupModel} of modelModules) {
+		const camelcaseName = camelcase(name);
+		app.models[camelcaseName] = db.model(camelcaseName, setupModel(app));
+		app.log.debug(`${camelcaseName} model initialised`);
 	}
-	await db.close();
-	await stop();
-};
 
-// Set up pre-route middleware
-app.use(app.preRoute);
-
-// Add the app to the locals
-app.locals.app = app;
-
-// Add request data to response locals
-app.use((request, response, next) => {
-	response.locals.request = request;
-	response.locals.currentUrl = request.url;
-	response.locals.currentPath = request.path;
-	next();
-});
-
-// Load settings into each request
-app.use(async (request, response, next) => {
-	try {
-		request.settings = response.locals.settings = await app.models.Settings.get();
-		next();
-	} catch (error) {
-		next(error);
-	}
-});
-
-// Add a home breadcrumb if we're not on the home page
-app.use((request, response, next) => {
-	response.locals.breadcrumbs = [];
-	if (request.path !== '/') {
-		response.locals.breadcrumbs.push({
-			label: request.settings.siteTitle,
-			url: '/'
+	// Set up the scheduled feed refresh job
+	let scheduledJob;
+	const updateSchedule = app.updateSchedule = process.env.UPDATE_SCHEDULE || '0 */2 * * *'; // Every 2 hours
+	if (process.env.NODE_ENV !== 'test') {
+		db.on('connected', () => {
+			try {
+				scheduledJob = schedule.scheduleJob(updateSchedule, async () => {
+					try {
+						await app.models.Entry.performScheduledJobs();
+						await app.models.Feed.performScheduledJobs();
+						app.log.info({
+							name: 'Scheduler',
+							msg: 'Scheduled jobs complete'
+						});
+					} catch (error) {
+						app.log.error({
+							name: 'Scheduler',
+							msg: `Scheduled jobs failed: ${error.message}`
+						});
+					}
+				});
+				app.log.info({
+					name: 'Scheduler',
+					msg: `Started with cron "${updateSchedule}"`
+				});
+			} catch (error) {
+				app.log.error({
+					name: 'Scheduler',
+					msg: `Setup failed: ${error.message}`
+				});
+			}
 		});
 	}
-	next();
-});
 
-// Load the controllers
-const controllerModules = requireAll(path.join(__dirname, 'controller'));
-for (const {name, moduleExports: setupController} of controllerModules) {
-	setupController(app);
-	app.log.debug(`${name} controller initialised`);
-}
+	// Augment the application `stop` method to also close the database connection
+	const stop = app.stop;
+	app.stop = async () => {
+		if (scheduledJob) {
+			scheduledJob.cancel();
+		}
+		await db.close();
+		await stop();
+	};
 
-// Set up post-route middleware
-app.use(app.postRoute);
+	// Set up pre-route middleware
+	app.use(app.preRoute);
+
+	// Add the app to the locals
+	app.locals.app = app;
+
+	// Add request data to response locals
+	app.use((request, response, next) => {
+		response.locals.request = request;
+		response.locals.currentUrl = request.url;
+		response.locals.currentPath = request.path;
+		next();
+	});
+
+	// Load settings into each request
+	app.use(async (request, response, next) => {
+		try {
+			request.settings = response.locals.settings = await app.models.Settings.get();
+			next();
+		} catch (error) {
+			next(error);
+		}
+	});
+
+	// Add a home breadcrumb if we're not on the home page
+	app.use((request, response, next) => {
+		response.locals.breadcrumbs = [];
+		if (request.path !== '/') {
+			response.locals.breadcrumbs.push({
+				label: request.settings.siteTitle,
+				url: '/'
+			});
+		}
+		next();
+	});
+
+	// Load the controllers
+	const controllerModules = requireAll(path.join(__dirname, 'controller'));
+	for (const {name, moduleExports: setupController} of controllerModules) {
+		setupController(app);
+		app.log.debug(`${name} controller initialised`);
+	}
+
+	// Set up post-route middleware
+	app.use(app.postRoute);
+
+	return app;
+};
