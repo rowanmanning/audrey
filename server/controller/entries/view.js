@@ -4,17 +4,16 @@ const render = require('@rowanmanning/response-render-middleware');
 const requireAuth = require('../../middleware/require-auth');
 
 module.exports = function mountEntriesViewController(app) {
-	const {router} = app;
 	const {Entry} = app.models;
 
-	router.get('/entries/:entryId', [
+	app.get('/entries/:entryId', [
 		requireAuth(),
 		fetchEntryById,
 		autoMarkEntryAsRead,
 		render('page/entries/view')
 	]);
 
-	router.post('/entries/:entryId/mark', [
+	app.post('/entries/:entryId/mark', [
 		requireAuth(),
 		fetchEntryById,
 		handleMarkEntryForm,

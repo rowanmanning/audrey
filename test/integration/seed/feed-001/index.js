@@ -22,7 +22,7 @@ module.exports = async function seedDatabase(models) {
 	]);
 
 	function createEntry(number, date, entry = {}) {
-		return Entry.create(Object.assign({
+		return Object.assign({
 			_id: `feed001-entry${number}`,
 			feed: 'feed001',
 			title: `Mock Feed 001 - Entry ${number}`,
@@ -35,11 +35,11 @@ module.exports = async function seedDatabase(models) {
 			publishedAt: date,
 			modifiedAt: date,
 			syncedAt: new Date('2020-01-04T00:00:00Z')
-		}, entry));
+		}, entry);
 	}
 
 	// Create test entries
-	await Promise.all([
+	await Entry.insertMany([
 		createEntry(1, new Date('2020-01-01T00:00:00Z')),
 		createEntry(2, new Date('2020-01-02T00:00:00Z'), {isBookmarked: true}),
 		createEntry(3, new Date('2020-01-03T00:00:00Z'), {isRead: true})

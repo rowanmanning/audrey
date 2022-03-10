@@ -2,7 +2,7 @@
 'use strict';
 
 const BaseField = require('./base');
-const {h} = require('@rowanmanning/app/preact');
+const {h} = require('preact');
 const shortid = require('shortid');
 
 /**

@@ -2,7 +2,7 @@
 
 const Breadcrumbs = require('../../component/breadcrumbs');
 const FeedList = require('../../component/feed-list');
-const {h, Component, Fragment} = require('@rowanmanning/app/preact');
+const {h, Component, Fragment} = require('preact');
 const MainLayout = require('../../layout/main');
 const Notification = require('../../component/notification');
 

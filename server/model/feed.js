@@ -3,9 +3,9 @@
 const cleanTitle = require('../lib/clean-title');
 const cleanUrl = require('../lib/clean-url');
 const fetchFeed = require('@rowanmanning/fetch-feed');
-const {Schema, ValidationError} = require('@rowanmanning/app');
+const {Schema} = require('mongoose');
+const {ValidationError} = require('mongoose').Error;
 const shortid = require('shortid');
-const uniqueValidator = require('mongoose-unique-validator');
 const userAgent = require('../lib/user-agent');
 
 module.exports = function defineFeedSchema(app) {
@@ -35,6 +35,10 @@ module.exports = function defineFeedSchema(app) {
 		xmlUrl: {
 			type: String,
 			required: [true, 'Feed URL is required'],
+			validate: [
+				uniqueValidator('xmlUrl'),
+				'A feed with that URL already exists'
+			],
 			unique: true,
 			index: true,
 			set: cleanUrl
@@ -66,10 +70,15 @@ module.exports = function defineFeedSchema(app) {
 		collation: {locale: 'en'}
 	});
 
-	// Add unique property validation
-	feedSchema.plugin(uniqueValidator, {
-		message: `A feed with that {PATH} already exists`
-	});
+	function uniqueValidator(property) {
+		return async function validate(value) {
+			if (this.isNew) {
+				const count = await app.models.Feed.countDocuments({[property]: value});
+				return !count;
+			}
+			return true;
+		};
+	}
 
 	// Virtual display title
 	feedSchema.virtual('displayTitle').get(function() {
@@ -137,7 +146,10 @@ module.exports = function defineFeedSchema(app) {
 
 		// Fetch the feed
 		try {
-			app.log.info(`[feeds:${feedId}]: starting refresh`);
+			app.log.info({
+				name: `Feeds:${feedId}`,
+				msg: 'Starting refresh'
+			});
 			await fetchFeed({
 
 				// Pass in the feed URL and request options
@@ -156,9 +168,15 @@ module.exports = function defineFeedSchema(app) {
 						}
 						this.syncedAt = new Date();
 						await this.save();
-						app.log.info(`[feeds:${feedId}]: feed info refreshed`);
+						app.log.info({
+							name: `Feeds:${feedId}`,
+							msg: 'Feed info refreshed'
+						});
 					} catch (error) {
-						app.log.error(`[feeds:${feedId}]: failed to save: ${error.message}`);
+						app.log.warn({
+							name: `Feeds:${feedId}`,
+							msg: `Failed to save: ${error.message}`
+						});
 						await throwFeedError(error);
 					}
 				},
@@ -171,20 +189,35 @@ module.exports = function defineFeedSchema(app) {
 								syncedAt: new Date(),
 								...app.models.Feed._transformFeedEntry(entry)
 							});
-							app.log.info(`[feeds:${feedId}]: found entry ${entry.guid}`);
+							app.log.debug({
+								name: `Feeds:${feedId}`,
+								msg: `Found entry ${entry.guid}`
+							});
 						} else {
-							app.log.info(`[feeds:${feedId}]: entry ${entry.guid} is too old`);
+							app.log.debug({
+								name: `Feeds:${feedId}`,
+								msg: `Entry ${entry.guid} is too old`
+							});
 						}
 					} catch (error) {
-						app.log.error(`[feeds:${feedId}]: failed to save entry ${entry.guid}: ${error.message}`);
+						app.log.warn({
+							name: `Feeds:${feedId}`,
+							msg: `Failed to save entry ${entry.guid}: ${error.message}`
+						});
 						await throwFeedError(error);
 					}
 				}
 
 			});
-			app.log.info(`[feeds:${feedId}]: refresh complete`);
+			app.log.info({
+				name: `Feeds:${feedId}`,
+				msg: 'Refresh complete'
+			});
 		} catch (error) {
-			app.log.error(`[feeds:${feedId}]: failed to load: ${error.message}`);
+			app.log.warn({
+				name: `Feeds:${feedId}`,
+				msg: `Failed to load ${error.message}`
+			});
 			await throwFeedError(error);
 		}
 	});
@@ -233,11 +266,17 @@ module.exports = function defineFeedSchema(app) {
 				try {
 					await feed.refresh();
 				} catch (error) {
-					app.log.error(`[feeds:${feed._id}]: error refreshing: ${error.message}`);
+					app.log.warn({
+						name: `Feeds:${feed._id}`,
+						msg: `Error refreshing: ${error.message}`
+					});
 				}
 			}
 		} catch (error) {
-			app.log.error(`[feeds]: error loading feeds: ${error.message}`);
+			app.log.error({
+				name: `Feeds`,
+				msg: `Error loading feeds: ${error.message}`
+			});
 		}
 		feedRefreshFlags.inProgress = false;
 
@@ -248,7 +287,10 @@ module.exports = function defineFeedSchema(app) {
 	});
 
 	feedSchema.static('performScheduledJobs', async function() {
-		app.log.info(`[scheduler:feeds]: refreshing all feeds`);
+		app.log.info({
+			name: 'Scheduler',
+			msg: 'Refreshing all feeds'
+		});
 		await this.refreshAll();
 	});
 
@@ -272,7 +314,10 @@ module.exports = function defineFeedSchema(app) {
 				xmlUrl: feedInfo.xmlUrl || xmlUrl,
 				...this._transformFeedInfo(feedInfo)
 			});
-			app.log.info(`[feeds:${feed._id}]: subscribed`);
+			app.log.info({
+				name: `Feeds:${feed._id}`,
+				msg: 'Subscribed'
+			});
 			return feed;
 		} catch (error) {
 			throw this._feedErrorToValidationError(error);

@@ -3,15 +3,14 @@
 const render = require('@rowanmanning/response-render-middleware');
 
 module.exports = function mountLoginController(app) {
-	const {router} = app;
 	const {Settings} = app.models;
 
-	router.get('/login', [
+	app.get('/login', [
 		handleLoginForm,
 		render('page/auth/login')
 	]);
 
-	router.post('/login', [
+	app.post('/login', [
 		handleLoginForm,
 		render('page/auth/login')
 	]);

@@ -1,6 +1,6 @@
 'use strict';
 
-const {h, Fragment} = require('@rowanmanning/app/preact');
+const {h, Fragment} = require('preact');
 const ContentList = require('./content-list');
 const RelativeDate = require('./relative-date');
 

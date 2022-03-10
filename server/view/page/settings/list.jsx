@@ -2,7 +2,7 @@
 
 const Breadcrumbs = require('../../component/breadcrumbs');
 const Form = require('../../component/form');
-const {h, Component, Fragment} = require('@rowanmanning/app/preact');
+const {h, Component, Fragment} = require('preact');
 const MainLayout = require('../../layout/main');
 const Notification = require('../../component/notification');
 
@@ -122,7 +122,7 @@ module.exports = class SubscribePage extends Component {
 								not editable via the interface, please configure
 								via the UPDATE_SCHEDULE environment variable
 							"
-							value={app.options.updateSchedule}
+							value={app.updateSchedule}
 							min="1"
 						/>
 

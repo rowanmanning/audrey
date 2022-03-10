@@ -5,10 +5,9 @@ const requireAuth = require('../../middleware/require-auth');
 const setQueryParam = require('../../lib/set-query-param');
 
 module.exports = function mountEntriesListController(app) {
-	const {router} = app;
 	const {Entry} = app.models;
 
-	router.get('/entries', [
+	app.get('/entries', [
 		requireAuth(),
 		listPaginatedEntries,
 		render('page/entries/list')

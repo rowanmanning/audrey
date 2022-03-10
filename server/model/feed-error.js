@@ -1,6 +1,6 @@
 'use strict';
 
-const {Schema} = require('@rowanmanning/app');
+const {Schema} = require('mongoose');
 const shortid = require('shortid');
 
 module.exports = function defineFeedErrorSchema(app) {
@@ -37,7 +37,10 @@ module.exports = function defineFeedErrorSchema(app) {
 				feed: feedId
 			});
 		} catch (error) {
-			app.log.error(`[feed-error]: feed errors failed to delete: ${error.message}`);
+			app.log.error({
+				name: 'FeedError',
+				msg: `Feed errors failed to delete: ${error.message}`
+			});
 		}
 	});
 
@@ -49,7 +52,10 @@ module.exports = function defineFeedErrorSchema(app) {
 			});
 			return feedError;
 		} catch (error) {
-			app.log.error(`[feed-error]: feed error failed to throw: ${error.message}`);
+			app.log.error({
+				name: 'FeedError',
+				msg: `Feed error failed to throw: ${error.message}`
+			});
 		}
 	});
 

@@ -3,7 +3,7 @@
 const format = require('date-fns/format');
 const formatISO = require('date-fns/formatISO');
 const formatDistance = require('date-fns/formatDistance');
-const {h, Component} = require('@rowanmanning/app/preact');
+const {h, Component} = require('preact');
 
 /**
  * Represents a relative date element.

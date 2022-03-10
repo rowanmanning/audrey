@@ -2,19 +2,18 @@
 
 const render = require('@rowanmanning/response-render-middleware');
 const requireAuth = require('../../middleware/require-auth');
-const {ValidationError} = require('@rowanmanning/app');
+const {ValidationError} = require('mongoose').Error;
 
 module.exports = function mountSettingsListController(app) {
-	const {router} = app;
 	const {Settings} = app.models;
 
-	router.get('/settings', [
+	app.get('/settings', [
 		requireAuth(),
 		handleUpdateSettingsForm,
 		render('page/settings/list')
 	]);
 
-	router.post('/settings', [
+	app.post('/settings', [
 		requireAuth(),
 		handleUpdateSettingsForm,
 		render('page/settings/list')

@@ -1,6 +1,6 @@
 'use strict';
 
-const {h} = require('@rowanmanning/app/preact');
+const {h} = require('preact');
 const ContentList = require('./content-list');
 const RelativeDate = require('./relative-date');
 

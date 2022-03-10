@@ -6,16 +6,15 @@ const requireAuth = require('../../middleware/require-auth');
 const setQueryParam = require('../../lib/set-query-param');
 
 module.exports = function mountBookmarksListController(app) {
-	const {router} = app;
 	const {Entry} = app.models;
 
-	router.get('/bookmarks', [
+	app.get('/bookmarks', [
 		requireAuth(),
 		listBookmarkedEntries,
 		render('page/bookmarks/list')
 	]);
 
-	router.get('/bookmarks/export/html', [
+	app.get('/bookmarks/export/html', [
 		requireAuth(),
 		renderNetscapeBookmarks
 	]);

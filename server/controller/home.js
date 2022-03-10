@@ -3,13 +3,12 @@
 const render = require('@rowanmanning/response-render-middleware');
 const requireAuth = require('../middleware/require-auth');
 const setQueryParam = require('../lib/set-query-param');
-const {ValidationError} = require('@rowanmanning/app');
+const {ValidationError} = require('mongoose').Error;
 
 module.exports = function mountHomeController(app) {
-	const {router} = app;
 	const {Entry, Feed, Settings} = app.models;
 
-	router.get('/', [
+	app.get('/', [
 		setPassword,
 		requireAuth(),
 		fetchStats,
@@ -17,7 +16,7 @@ module.exports = function mountHomeController(app) {
 		render('page/home')
 	]);
 
-	router.post('/', [
+	app.post('/', [
 		setPassword
 	]);
 

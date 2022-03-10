@@ -2,7 +2,7 @@
 
 const Breadcrumbs = require('../../component/breadcrumbs');
 const Enclosure = require('../../component/enclosure');
-const {h, Component, Fragment} = require('@rowanmanning/app/preact');
+const {h, Component, Fragment} = require('preact');
 const MainLayout = require('../../layout/main');
 const Notification = require('../../component/notification');
 const RelativeDate = require('../../component/relative-date');

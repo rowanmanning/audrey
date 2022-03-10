@@ -3,7 +3,7 @@
 const Breadcrumbs = require('../../component/breadcrumbs');
 const EntryList = require('../../component/entry-list');
 const FeedErrorList = require('../../component/feed-error-list');
-const {h, Component, Fragment} = require('@rowanmanning/app/preact');
+const {h, Component, Fragment} = require('preact');
 const MainLayout = require('../../layout/main');
 const Notification = require('../../component/notification');
 const PaginationDescription = require('../../component/pagination/description');

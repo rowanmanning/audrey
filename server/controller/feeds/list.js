@@ -4,17 +4,16 @@ const render = require('@rowanmanning/response-render-middleware');
 const requireAuth = require('../../middleware/require-auth');
 
 module.exports = function mountFeedsListController(app) {
-	const {router} = app;
 	const {Entry, Feed} = app.models;
 
-	router.get('/feeds', [
+	app.get('/feeds', [
 		requireAuth(),
 		listFeeds,
 		fetchFeedRefreshStatus,
 		render('page/feeds/list')
 	]);
 
-	router.get('/feeds/export/opml', [
+	app.get('/feeds/export/opml', [
 		requireAuth(),
 		listFeeds,
 		renderOpml
@@ -36,7 +35,7 @@ module.exports = function mountFeedsListController(app) {
 	}
 
 	function renderOpml(request, response, next) {
-		router.render('page/feeds/list-opml', response.locals, (error, output) => {
+		app.render('page/feeds/list-opml', response.locals, (error, output) => {
 			if (error) {
 				return next(error);
 			}

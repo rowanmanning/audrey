@@ -4,10 +4,9 @@ const redirect = require('@rowanmanning/response-redirect-middleware');
 const requireAuth = require('../../middleware/require-auth');
 
 module.exports = function mountFeedsRefreshController(app) {
-	const {router} = app;
 	const {Feed} = app.models;
 
-	router.post('/feeds/refresh', [
+	app.post('/feeds/refresh', [
 		requireAuth(),
 		handleRefreshForm,
 		redirect('/feeds')

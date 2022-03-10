@@ -3,55 +3,54 @@
 const render = require('@rowanmanning/response-render-middleware');
 const requireAuth = require('../../middleware/require-auth');
 const setQueryParam = require('../../lib/set-query-param');
-const {ValidationError} = require('@rowanmanning/app');
+const {ValidationError} = require('mongoose').Error;
 
 module.exports = function mountFeedsViewController(app) {
-	const {router} = app;
 	const {Entry, Feed} = app.models;
 
-	router.get('/feeds/:feedId', [
+	app.get('/feeds/:feedId', [
 		requireAuth(),
 		fetchFeedById,
 		fetchFeedEntries,
 		render('page/feeds/view')
 	]);
 
-	router.post('/feeds/:feedId/refresh', [
+	app.post('/feeds/:feedId/refresh', [
 		requireAuth(),
 		fetchFeedById,
 		handleRefreshFeedForm,
 		render('page/feeds/view')
 	]);
 
-	router.get('/feeds/:feedId/settings', [
+	app.get('/feeds/:feedId/settings', [
 		requireAuth(),
 		fetchFeedById,
 		handleFeedSettingsForm,
 		render('page/feeds/settings')
 	]);
 
-	router.post('/feeds/:feedId/settings', [
+	app.post('/feeds/:feedId/settings', [
 		requireAuth(),
 		fetchFeedById,
 		handleFeedSettingsForm,
 		render('page/feeds/settings')
 	]);
 
-	router.get('/feeds/:feedId/unsubscribe', [
+	app.get('/feeds/:feedId/unsubscribe', [
 		requireAuth(),
 		fetchFeedById,
 		handleUnsubscribeForm,
 		render('page/feeds/unsubscribe')
 	]);
 
-	router.post('/feeds/:feedId/unsubscribe', [
+	app.post('/feeds/:feedId/unsubscribe', [
 		requireAuth(),
 		fetchFeedById,
 		handleUnsubscribeForm,
 		render('page/feeds/unsubscribe')
 	]);
 
-	router.post('/feeds/:feedId/mark', [
+	app.post('/feeds/:feedId/mark', [
 		requireAuth(),
 		fetchFeedById,
 		handleMarkFeedForm,

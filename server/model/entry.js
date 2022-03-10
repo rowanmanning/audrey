@@ -5,9 +5,8 @@ const cleanTitle = require('../lib/clean-title');
 const cleanUrl = require('../lib/clean-url');
 const manifest = require('../../package.json');
 const mediaType = require('../lib/media-type');
-const {Schema} = require('@rowanmanning/app');
+const {Schema} = require('mongoose');
 const shortid = require('shortid');
-const uniqueValidator = require('mongoose-unique-validator');
 
 module.exports = function defineEntrySchema(app) {
 
@@ -50,6 +49,10 @@ module.exports = function defineEntrySchema(app) {
 		guid: {
 			type: String,
 			required: [true, 'Entry GUID is required'],
+			validate: [
+				uniqueValidator('guid'),
+				'A feed with that GUID already exists'
+			],
 			unique: true
 		},
 		htmlUrl: {
@@ -103,10 +106,15 @@ module.exports = function defineEntrySchema(app) {
 		collation: {locale: 'en'}
 	});
 
-	// Add unique property validation
-	entrySchema.plugin(uniqueValidator, {
-		message: `An entry with that {PATH} already exists`
-	});
+	function uniqueValidator(property) {
+		return async function validate(value) {
+			if (this.isNew) {
+				const count = await app.models.Entry.countDocuments({[property]: value});
+				return !count;
+			}
+			return true;
+		};
+	}
 
 	// Always populate the feed
 	entrySchema.pre(['find', 'findOne'], function() {
@@ -305,7 +313,10 @@ module.exports = function defineEntrySchema(app) {
 
 	entrySchema.static('performScheduledJobs', async function() {
 		const removedEntries = await this.removeOldEntries();
-		app.log.info(`[scheduler:entries]: removed ${removedEntries} old entries`);
+		app.log.info({
+			name: 'Scheduler',
+			msg: `Removed ${removedEntries} old entries`
+		});
 	});
 
 	entrySchema.static('countGroupedByFeedId', async function() {

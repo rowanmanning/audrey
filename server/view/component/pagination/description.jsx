@@ -1,7 +1,7 @@
 'use strict';
 
 const AbsoluteDate = require('../absolute-date');
-const {h, Component} = require('@rowanmanning/app/preact');
+const {h, Component} = require('preact');
 
 /**
  * Represents website pagination description.

@@ -1,14 +1,14 @@
 'use strict';
 
-const {Schema} = require('@rowanmanning/app');
+const {Schema} = require('mongoose');
 
 /**
  * Define a Session schema to be used as a model.
  * This is mostly here to allow tests to easily access session data.
  *
- * @param {module:@rowanmanning/app~App} app
+ * @param {import('@rowanmanning/express-config').ConfiguredExpressApplication} app
  *     The application to mount routes on.
- * @returns {module:mongoose~Schema}
+ * @returns {Schema}
  *     Returns a new Mongoose schema representing a session.
  */
 module.exports = function defineSessionSchema() {

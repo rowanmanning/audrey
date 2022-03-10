@@ -25,7 +25,7 @@ module.exports = async function seedDatabase(models) {
 	]);
 
 	function createEntry(number, days, entry = {}) {
-		return Entry.create(Object.assign({
+		return Object.assign({
 			_id: `feed002-entry${number}`,
 			feed: 'feed002',
 			title: `Mock Feed 002 - Entry ${number}`,
@@ -38,12 +38,13 @@ module.exports = async function seedDatabase(models) {
 			publishedAt: addDays(publishDate, days),
 			modifiedAt: addDays(publishDate, days),
 			syncedAt: new Date()
-		}, entry));
+		}, entry);
 	}
 
 	// Create test entries
-	await Promise.all(Object.keys(Array(100).fill(0)).reverse().map((key, index) => {
+	const entries = Object.keys(Array(100).fill(0)).reverse().map((key, index) => {
 		return createEntry(index + 1, -key);
-	}));
+	});
+	await Entry.insertMany(entries);
 
 };

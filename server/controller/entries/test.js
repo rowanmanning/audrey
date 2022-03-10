@@ -6,9 +6,8 @@ const render = require('@rowanmanning/response-render-middleware');
 const requireAuth = require('../../middleware/require-auth');
 
 module.exports = function mountEntriesTestController(app) {
-	const {router} = app;
 
-	router.get('/entries/test', [
+	app.get('/entries/test', [
 		requireAuth(),
 		fetchTestEntry,
 		render('page/entries/view')

@@ -3,7 +3,7 @@
 
 const BaseField = require('./base');
 const Field = require('./');
-const {h} = require('@rowanmanning/app/preact');
+const {h} = require('preact');
 
 /**
  * Represents a form grouped field.

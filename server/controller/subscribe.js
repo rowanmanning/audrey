@@ -2,19 +2,18 @@
 
 const render = require('@rowanmanning/response-render-middleware');
 const requireAuth = require('../middleware/require-auth');
-const {ValidationError} = require('@rowanmanning/app');
+const {ValidationError} = require('mongoose').Error;
 
 module.exports = function mountSubscribeController(app) {
-	const {router} = app;
 	const {Feed} = app.models;
 
-	router.get('/subscribe', [
+	app.get('/subscribe', [
 		requireAuth(),
 		handleSubscribeForm,
 		render('page/subscribe')
 	]);
 
-	router.post('/subscribe', [
+	app.post('/subscribe', [
 		requireAuth(),
 		handleSubscribeForm,
 		render('page/subscribe')

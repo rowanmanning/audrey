@@ -23,7 +23,7 @@ module.exports = async function seedDatabase(models) {
 	]);
 
 	function createEntry(number, date, entry = {}) {
-		return Entry.create(Object.assign({
+		return Object.assign({
 			_id: `feed004-entry${number}`,
 			feed: 'feed004',
 			title: `Mock Feed 004 - Entry ${number}`,
@@ -36,30 +36,32 @@ module.exports = async function seedDatabase(models) {
 			publishedAt: date,
 			modifiedAt: date,
 			syncedAt: new Date('2020-01-04T00:00:00Z')
-		}, entry));
+		}, entry);
 	}
 
 	// Create test entries
-	await createEntry(1, new Date('2020-01-01T00:00:00Z'), {
-		content: await readFile(`${__dirname}/../../../../data/test-entry.html`, 'utf-8'),
-		enclosures: [
-			{
-				mimeType: 'image/jpeg',
-				url: 'https://example.com/image.jpg'
-			},
-			{
-				mimeType: 'audio/mpeg',
-				url: 'https://example.com/audio.mp3'
-			},
-			{
-				mimeType: 'video/mp4',
-				url: 'https://example.com/video.mp4'
-			},
-			{
-				mimeType: 'text/html',
-				url: 'https://example.com/'
-			}
-		]
-	});
+	await Entry.insertMany([
+		createEntry(1, new Date('2020-01-01T00:00:00Z'), {
+			content: await readFile(`${__dirname}/../../../../data/test-entry.html`, 'utf-8'),
+			enclosures: [
+				{
+					mimeType: 'image/jpeg',
+					url: 'https://example.com/image.jpg'
+				},
+				{
+					mimeType: 'audio/mpeg',
+					url: 'https://example.com/audio.mp3'
+				},
+				{
+					mimeType: 'video/mp4',
+					url: 'https://example.com/video.mp4'
+				},
+				{
+					mimeType: 'text/html',
+					url: 'https://example.com/'
+				}
+			]
+		})
+	]);
 
 };

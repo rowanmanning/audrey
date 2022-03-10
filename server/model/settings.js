@@ -1,12 +1,12 @@
 'use strict';
 
-const {Schema} = require('@rowanmanning/app');
+const {Schema} = require('mongoose');
 const shortid = require('shortid');
 const {comparePasswordToHash, hashPassword} = require('../lib/crypto/password');
 
 const day = 1000 * 60 * 60 * 24;
 
-module.exports = function defineSettingsSchema(app) {
+module.exports = function defineSettingsSchema() {
 
 	const settingsSchema = new Schema({
 		_id: {
@@ -19,7 +19,7 @@ module.exports = function defineSettingsSchema(app) {
 			maxlength: [20, 'Site title setting must be between 3 and 20 characters in length'],
 			minlength: [3, 'Site title setting must be between 3 and 20 characters in length'],
 			set: value => (typeof value === 'string' ? value.trim() : null),
-			default: app.name
+			default: 'Audrey'
 		},
 		removeOldEntries: {
 			type: Boolean,

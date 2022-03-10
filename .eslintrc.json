@@ -1,6 +1,7 @@
 {
 	"extends": [
-		"@rowanmanning/eslint-config"
+		"@rowanmanning/eslint-config",
+		"@rowanmanning/eslint-config/jsx"
 	],
 	"rules": {
 		"class-methods-use-this": "off",

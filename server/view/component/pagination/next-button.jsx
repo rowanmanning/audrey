@@ -1,6 +1,6 @@
 'use strict';
 
-const {h, Component} = require('@rowanmanning/app/preact');
+const {h, Component} = require('preact');
 
 /**
  * Represents website pagination next page button.
