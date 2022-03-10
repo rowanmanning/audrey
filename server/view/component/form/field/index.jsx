@@ -3,7 +3,7 @@
 
 const BaseField = require('./base');
 const {h} = require('preact');
-const shortid = require('shortid');
+const {nanoid} = require('nanoid');
 
 /**
  * Represents a form field.
@@ -20,7 +20,7 @@ module.exports = class Field extends BaseField {
 		if (!this.props.name) {
 			throw new Error('Field `name` is required');
 		}
-		this.props.fieldId = this.props.fieldId || shortid.generate();
+		this.props.fieldId = this.props.fieldId || nanoid(10);
 	}
 
 	/**

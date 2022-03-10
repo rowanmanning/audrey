@@ -1,7 +1,7 @@
 'use strict';
 
 const {Schema} = require('mongoose');
-const shortid = require('shortid');
+const {nanoid} = require('nanoid');
 const {comparePasswordToHash, hashPassword} = require('../lib/crypto/password');
 
 const day = 1000 * 60 * 60 * 24;
@@ -11,7 +11,7 @@ module.exports = function defineSettingsSchema() {
 	const settingsSchema = new Schema({
 		_id: {
 			type: String,
-			default: shortid.generate
+			default: nanoid(12)
 		},
 		siteTitle: {
 			type: String,

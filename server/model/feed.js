@@ -5,7 +5,7 @@ const cleanUrl = require('../lib/clean-url');
 const fetchFeed = require('@rowanmanning/fetch-feed');
 const {Schema} = require('mongoose');
 const {ValidationError} = require('mongoose').Error;
-const shortid = require('shortid');
+const {nanoid} = require('nanoid');
 const userAgent = require('../lib/user-agent');
 
 module.exports = function defineFeedSchema(app) {
@@ -16,7 +16,7 @@ module.exports = function defineFeedSchema(app) {
 	const feedSchema = new Schema({
 		_id: {
 			type: String,
-			default: shortid.generate
+			default: nanoid(12)
 		},
 		title: {
 			type: String,

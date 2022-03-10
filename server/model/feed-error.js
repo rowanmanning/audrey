@@ -1,14 +1,14 @@
 'use strict';
 
 const {Schema} = require('mongoose');
-const shortid = require('shortid');
+const {nanoid} = require('nanoid');
 
 module.exports = function defineFeedErrorSchema(app) {
 
 	const feedErrorSchema = new Schema({
 		_id: {
 			type: String,
-			default: shortid.generate
+			default: nanoid(12)
 		},
 		feed: {
 			type: String,

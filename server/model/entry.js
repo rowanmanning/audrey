@@ -6,14 +6,14 @@ const cleanUrl = require('../lib/clean-url');
 const manifest = require('../../package.json');
 const mediaType = require('../lib/media-type');
 const {Schema} = require('mongoose');
-const shortid = require('shortid');
+const {nanoid} = require('nanoid');
 
 module.exports = function defineEntrySchema(app) {
 
 	const enclosureSchema = new Schema({
 		_id: {
 			type: String,
-			default: shortid.generate
+			default: nanoid(12)
 		},
 		url: {
 			type: String
@@ -34,7 +34,7 @@ module.exports = function defineEntrySchema(app) {
 	const entrySchema = new Schema({
 		_id: {
 			type: String,
-			default: shortid.generate
+			default: nanoid(12)
 		},
 		feed: {
 			type: String,
