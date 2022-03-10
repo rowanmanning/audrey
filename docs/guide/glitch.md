@@ -34,6 +34,12 @@ Click the button below and wait for the application to set up.
 
 Before the application will run properly on Glitch, you'll need to configure it via the `.env` file which is created in the root of the project. The [configuration notes for Glitch](#configuration-notes) explain what each of this values needs to be set to.
 
+You'll also need to manually run the build script in the Terminal on Glitch by entering the following:
+
+```
+npm run build
+```
+
 Once your app is up-and-running, you'll need to set up a password via the interface. You need to remember this password to regain access if your session expires. Now you're ready to start using Audrey!
 
 

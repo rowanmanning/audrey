@@ -25,6 +25,10 @@
   "scripts": {
     "start": "node .",
     "start:dev": "nodemon . | pino-pretty",
+    "build": "npm run build:css",
+    "watch": "npm run watch:css",
+    "build:css": "sass client/sass/main.scss:client/public/main.css --style=compressed",
+    "watch:css": "sass client/sass/main.scss:client/public/main.css --style=compressed --watch",
     "verify": "eslint .",
     "test": "npm run test:integration",
     "test:integration": "mocha 'test/integration/**/*.test.js'",
@@ -64,6 +68,7 @@
     "nock": "^13.2.4",
     "nodemon": "^2.0.15",
     "pino-pretty": "^7.5.3",
+    "sass": "^1.49.9",
     "testdouble": "^3.16.4"
   },
   "mocha": {

@@ -69,7 +69,19 @@ You can run Audrey locally if you intend on making your own changes, or just wan
         cp sample.env .env
         ```
 
-  5. Start the application in production mode:
+  5. Build client-side assets (Sass):
+
+        ```sh
+        npm run build
+        ```
+
+        Or run the following if you want assets to automatically rebuild:
+
+        ```sh
+        npm run watch
+        ```
+
+  6. Start the application in production mode:
 
         ```sh
         npm start
@@ -81,9 +93,9 @@ You can run Audrey locally if you intend on making your own changes, or just wan
         npm run start:dev
         ```
 
-  6. Visit [localhost:8080](http://localhost:8080/) in your browser (the port may be different if you made changes to the default `.env` file)
+  7. Visit [localhost:8080](http://localhost:8080/) in your browser (the port may be different if you made changes to the default `.env` file)
 
-  7. Set up a password on the locally running site. You'll need to remember this password to regain access if your session expires
+  8. Set up a password on the locally running site. You'll need to remember this password to regain access if your session expires
 
 
 ## Running on a Server
@@ -91,6 +103,8 @@ You can run Audrey locally if you intend on making your own changes, or just wan
 The instructions for running on a server are the same as [running locally](#running-locally) apart from the following differences:
 
   * It may not be possible to create an `.env` file, dependent on your setup. You'll need a different way to provide configurations via environment variables
+
+  * You'll need to run the `npm run build` command at some point before the deployment of the application finishes
 
   * The URL to access the application will be whatever your public server address is, rather than `localhost`
 
