@@ -36,6 +36,14 @@ module.exports = async function audrey() {
 		sessionName: 'Audrey Session',
 		sessionSecret: process.env.SESSION_SECRET,
 		sessionStore: MongoStore.create({client: db.getClient()}),
+		session: {
+			cookie: {
+				sameSite: 'lax',
+				secure: (process.env.NODE_ENV === 'production')
+			},
+			resave: false,
+			saveUninitialized: false
+		},
 
 		// Configure security
 		helmet: {
