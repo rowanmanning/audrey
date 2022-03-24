@@ -40,7 +40,7 @@
     "@rowanmanning/express-config": "^1.1.0",
     "@rowanmanning/fetch-feed": "^1.0.2",
     "@rowanmanning/require-all": "^2.0.1",
-    "@rowanmanning/response-redirect-middleware": "^1.0.2",
+    "@rowanmanning/response-redirect-middleware": "^1.0.3",
     "@rowanmanning/response-render-middleware": "^1.0.3",
     "bcrypt": "^5.0.1",
     "connect-mongo": "^4.6.0",
