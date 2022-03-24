@@ -86,34 +86,32 @@ module.exports = async function audrey() {
 	let scheduledJob;
 	const updateSchedule = app.updateSchedule = process.env.UPDATE_SCHEDULE || '0 */2 * * *'; // Every 2 hours
 	if (process.env.NODE_ENV !== 'test') {
-		db.on('connected', () => {
-			try {
-				scheduledJob = schedule.scheduleJob(updateSchedule, async () => {
-					try {
-						await app.models.Entry.performScheduledJobs();
-						await app.models.Feed.performScheduledJobs();
-						app.log.info({
-							name: 'Scheduler',
-							msg: 'Scheduled jobs complete'
-						});
-					} catch (error) {
-						app.log.error({
-							name: 'Scheduler',
-							msg: `Scheduled jobs failed: ${error.message}`
-						});
-					}
-				});
-				app.log.info({
-					name: 'Scheduler',
-					msg: `Started with cron "${updateSchedule}"`
-				});
-			} catch (error) {
-				app.log.error({
-					name: 'Scheduler',
-					msg: `Setup failed: ${error.message}`
-				});
-			}
-		});
+		try {
+			scheduledJob = schedule.scheduleJob(updateSchedule, async () => {
+				try {
+					await app.models.Entry.performScheduledJobs();
+					await app.models.Feed.performScheduledJobs();
+					app.log.info({
+						name: 'Scheduler',
+						msg: 'Scheduled jobs complete'
+					});
+				} catch (error) {
+					app.log.error({
+						name: 'Scheduler',
+						msg: `Scheduled jobs failed: ${error.message}`
+					});
+				}
+			});
+			app.log.info({
+				name: 'Scheduler',
+				msg: `Started with cron "${updateSchedule}"`
+			});
+		} catch (error) {
+			app.log.error({
+				name: 'Scheduler',
+				msg: `Setup failed: ${error.message}`
+			});
+		}
 	}
 
 	// Augment the application `stop` method to also close the database connection
