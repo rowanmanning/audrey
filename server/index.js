@@ -65,11 +65,6 @@ module.exports = async function audrey() {
 		}
 	});
 
-	// Set trust proxy
-	// TODO move this into `@rowanmanning/express-config`
-	// See https://github.com/rowanmanning/app/tree/db6f624351b1739b117aacd96ec6a72bd8c8e7d7#app-options (trustProxy)
-	app.set('trust proxy', true);
-
 	// Store the database on the app
 	app.db = db;
 
