@@ -113,6 +113,7 @@ The instructions for running on a server are the same as [running locally](#runn
 
 Audrey has guides for the following common cloud providers:
 
+  * [Deploy Audrey on DigitalOcean](docs/guide/digitalocean.md) (paid options)
   * [Deploy Audrey on Glitch](docs/guide/glitch.md) (free and paid options)
   * [Deploy Audrey on Heroku](docs/guide/heroku.md) (free and paid options)
 

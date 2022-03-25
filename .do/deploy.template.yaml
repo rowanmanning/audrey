@@ -1,0 +1,31 @@
+spec:
+  name: audrey
+  services:
+    - name: web
+      build_command: npm run build
+      run_command: npm start
+      environment_slug: node-js
+      instance_count: 1
+      instance_size_slug: basic-xxs
+      http_port: 8080
+      source_dir: /
+      git:
+        branch: main
+        repo_clone_url: https://github.com/rowanmanning/audrey.git
+      routes:
+        - path: /
+      envs:
+        - key: MONGODB_URI
+          scope: RUN_TIME
+        - key: NODE_ENV
+          scope: RUN_TIME
+          value: "production"
+        - key: NODE_ENV
+          scope: BUILD_TIME
+          value: "development"
+        - key: SESSION_SECRET
+          scope: RUN_TIME
+          type: SECRET
+        - key: UPDATE_SCHEDULE
+          scope: RUN_TIME
+          value: "0 */2 * * *"

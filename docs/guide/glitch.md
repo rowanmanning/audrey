@@ -59,4 +59,4 @@ Some of the configurations should be adjusted slightly when running Audrey on Gl
 
   - **`SESSION_SECRET`**: Failing to set this will cause sessions to be dropped every time your Glitch app restarts (which is frequently on the free tier). Use something like a [UUID generator](https://www.uuidgenerator.net/) for this secret – you don't need to remember it.
 
-  - **`UPDATE_SCHEDULE`**: If you're using Glitch's free tier, you should set this to a refresh feeds more frequently. This is because the app won't be running unless you've recently accessed it via the web. We normally configure to every 15 minutes: `0,15,30,45 * * * *`.
+  - **`UPDATE_SCHEDULE`**: If you're using Glitch's free tier, you should set this to a refresh feeds more frequently. This is because the app won't be running unless you've recently accessed it via the web. We normally configure to every 15 minutes: `*/15 * * * *`.

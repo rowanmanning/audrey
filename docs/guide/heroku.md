@@ -79,4 +79,4 @@ Some of the configurations should be adjusted slightly when running Audrey on He
 
   - **`SESSION_SECRET`**: This is automatically generated for the one-click deploy. In the manual deploy, failing to set this will cause sessions to be dropped every 24 hours when your Heroku app restarts. Use something like a [UUID generator](https://www.uuidgenerator.net/) for this secret – you don't need to remember it.
 
-  - **`UPDATE_SCHEDULE`**: If you're using Heroku's free tier, you should set this to a refresh feeds more frequently. This is because the app won't be running unless you've recently accessed it via the web. We normally configure to every 15 minutes: `0,15,30,45 * * * *`.
+  - **`UPDATE_SCHEDULE`**: If you're using Heroku's free tier, you should set this to a refresh feeds more frequently. This is because the app won't be running unless you've recently accessed it via the web. We normally configure to every 15 minutes: `*/15 * * * *`.
