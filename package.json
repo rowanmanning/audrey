@@ -55,7 +55,7 @@
     "nanoid": "^3.3.2",
     "netscape-bookmarks": "^0.1.1",
     "node-schedule": "^2.1.0",
-    "preact": "^10.7.0",
+    "preact": "^10.7.1",
     "srcset": "^4.0.0",
     "varname": "^3.0.1"
   },
