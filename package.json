@@ -38,7 +38,7 @@
   },
   "dependencies": {
     "@rowanmanning/express-config": "^2.1.1",
-    "@rowanmanning/fetch-feed": "^1.0.2",
+    "@rowanmanning/fetch-feed": "^2.0.0",
     "@rowanmanning/require-all": "^2.0.1",
     "@rowanmanning/response-redirect-middleware": "^1.0.3",
     "@rowanmanning/response-render-middleware": "^1.0.3",
@@ -57,7 +57,7 @@
     "node-schedule": "^2.1.0",
     "preact": "^10.7.0",
     "srcset": "^4.0.0",
-    "varname": "^3.0.1"
+    "varname": "^3.1.0"
   },
   "devDependencies": {
     "@rowanmanning/eslint-config": "^3.3.1",
