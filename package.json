@@ -52,7 +52,7 @@
     "jsdom": "^19.0.0",
     "mongodb": "^4.5.0",
     "mongoose": "^6.3.0",
-    "nanoid": "^3.3.2",
+    "nanoid": "^3.3.3",
     "netscape-bookmarks": "^0.1.1",
     "node-schedule": "^2.1.0",
     "preact": "^10.7.1",
