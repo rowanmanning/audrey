@@ -60,7 +60,7 @@
     "varname": "^4.0.0"
   },
   "devDependencies": {
-    "@rowanmanning/eslint-config": "^3.4.0",
+    "@rowanmanning/eslint-config": "^3.5.0",
     "chai": "^4.3.6",
     "eslint": "^8.15.0",
     "mocha": "^10.0.0",
