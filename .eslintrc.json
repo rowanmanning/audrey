@@ -7,6 +7,11 @@
 		"class-methods-use-this": "off",
 		"no-invalid-this": "off",
 		"no-underscore-dangle": "off",
-		"require-atomic-updates": "off"
+		"require-atomic-updates": "off",
+		"jsdoc/check-param-names": "off",
+		"jsdoc/check-types": "off",
+		"jsdoc/no-undefined-types": "off",
+		"jsdoc/require-jsdoc": "off",
+		"jsdoc/require-param": "off"
 	}
 }

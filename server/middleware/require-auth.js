@@ -21,6 +21,7 @@ module.exports = function requireAuth() {
 
 /**
  * A middleware function.
+ *
  * @callback ExpressMiddleware
  * @param {Object} request
  *     An Express Request object.
@@ -34,6 +35,7 @@ module.exports = function requireAuth() {
 
 /**
  * A callback function.
+ *
  * @callback ExpressMiddlewareCallback
  * @param {Error} error
  *     An HTTP error.
