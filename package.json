@@ -39,7 +39,7 @@
   "dependencies": {
     "@rowanmanning/express-config": "^2.4.1",
     "@rowanmanning/fetch-feed": "^2.1.1",
-    "@rowanmanning/require-all": "^2.1.1",
+    "@rowanmanning/require-all": "^2.2.0",
     "@rowanmanning/response-redirect-middleware": "^2.0.0",
     "@rowanmanning/response-render-middleware": "^2.0.1",
     "bcrypt": "^5.0.1",
