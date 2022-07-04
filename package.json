@@ -37,7 +37,7 @@
     "project:fix": "npx --yes @rowanmanning/validate-project --type git node-express-app --fix"
   },
   "dependencies": {
-    "@rowanmanning/express-config": "^2.4.1",
+    "@rowanmanning/express-config": "^2.5.0",
     "@rowanmanning/fetch-feed": "^2.1.1",
     "@rowanmanning/require-all": "^2.2.0",
     "@rowanmanning/response-redirect-middleware": "^2.0.0",
@@ -55,7 +55,7 @@
     "nanoid": "^3.3.4",
     "netscape-bookmarks": "^0.1.1",
     "node-schedule": "^2.1.0",
-    "preact": "^10.7.3",
+    "preact": "^10.8.2",
     "srcset": "^4.0.0",
     "varname": "^4.0.1"
   },
