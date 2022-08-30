@@ -62,7 +62,7 @@
   "devDependencies": {
     "@rowanmanning/eslint-config": "^4.0.5",
     "chai": "^4.3.6",
-    "eslint": "^8.22.0",
+    "eslint": "^8.23.0",
     "mocha": "^10.0.0",
     "nock": "^13.2.9",
     "nodemon": "^2.0.19",
