@@ -67,7 +67,7 @@
     "nock": "^13.2.9",
     "nodemon": "^2.0.19",
     "pino-pretty": "^9.1.0",
-    "sass": "^1.54.8",
+    "sass": "^1.54.9",
     "testdouble": "^3.16.6"
   },
   "mocha": {
