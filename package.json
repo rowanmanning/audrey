@@ -37,7 +37,7 @@
     "project:fix": "npx --yes @rowanmanning/validate-project --type git node-express-app --fix"
   },
   "dependencies": {
-    "@rowanmanning/express-config": "^2.8.0",
+    "@rowanmanning/express-config": "^2.8.1",
     "@rowanmanning/fetch-feed": "^2.2.1",
     "@rowanmanning/require-all": "^2.2.1",
     "@rowanmanning/response-redirect-middleware": "^2.1.1",
