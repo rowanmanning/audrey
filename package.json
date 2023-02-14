@@ -57,7 +57,7 @@
     "node-schedule": "^2.1.1",
     "preact": "^10.12.1",
     "srcset": "^4.0.0",
-    "varname": "^4.1.3"
+    "varname": "^4.1.4"
   },
   "devDependencies": {
     "@rowanmanning/eslint-config": "^5.0.8",
