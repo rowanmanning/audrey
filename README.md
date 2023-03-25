@@ -41,13 +41,13 @@ Audrey is self-hosted; you can set up an installation on your own server or clou
 
 This application requires the following to run:
 
-  * [Node.js](https://nodejs.org/) v14.0.0+
+  * [Node.js](https://nodejs.org/) v16.0.0+
   * [MongoDB](https://www.mongodb.com/) v4.0.0+
 
 
 ## Running Locally
 
-You can run Audrey locally if you intend on making your own changes, or just want to test it out. Follow theses steps to get Audrey running on your local machine:
+You can run Audrey locally if you intend on making your own changes, or just want to test it out. Follow these steps to get Audrey running on your local machine:
 
   1. Make sure you have all of the software listed in [Requirements](#requirements)
 

@@ -18,8 +18,8 @@
   "bugs": "https://github.com/rowanmanning/audrey/issues",
   "license": "GPL-3.0",
   "engines": {
-    "node": ">=14 <=16",
-    "npm": ">=7 <=16",
+    "node": "16.x || 18.x",
+    "npm": "8.x || 9.x",
     "mongodb": "4 || 5"
   },
   "scripts": {
