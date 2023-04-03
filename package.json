@@ -38,7 +38,7 @@
   },
   "dependencies": {
     "@rowanmanning/express-config": "^2.8.10",
-    "@rowanmanning/fetch-feed": "^2.2.6",
+    "@rowanmanning/fetch-feed": "^3.0.0",
     "@rowanmanning/require-all": "^2.2.4",
     "@rowanmanning/response-redirect-middleware": "^3.0.0",
     "@rowanmanning/response-render-middleware": "^2.1.4",
