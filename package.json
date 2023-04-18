@@ -50,7 +50,7 @@
     "express": "^4.18.2",
     "got": "^11.8.6",
     "jsdom": "^21.1.1",
-    "mongodb": "^4.15.0",
+    "mongodb": "^4.16.0",
     "mongoose": "^7.0.3",
     "nanoid": "^3.3.6",
     "netscape-bookmarks": "^0.1.1",
