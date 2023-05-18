@@ -68,7 +68,7 @@
     "nodemon": "^2.0.22",
     "pino-pretty": "^10.0.0",
     "sass": "^1.62.1",
-    "testdouble": "^3.17.2"
+    "testdouble": "^3.18.0"
   },
   "mocha": {
     "timeout": 20000
