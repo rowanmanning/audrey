@@ -19,6 +19,7 @@ audrey()
 		}
 		process.on('SIGINT', handleClose);
 		process.on('SIGTERM', handleClose);
+		process.on('SIGUSR2', handleClose);
 
 		return app.start(process.env.PORT || 8080);
 	})
